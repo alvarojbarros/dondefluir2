@@ -1,0 +1,156 @@
+body{
+  font-family: 'Abel', sans-serif;
+}
+.aviones{
+
+  padding: 0px 15px;
+}
+
+.dFlight{
+  padding: 0 0 0 0;
+}
+
+.fOrigin {
+  display: inline;
+  width: 17%;
+}
+
+.fDestination {
+  display: inline;
+}
+
+.fNumber {
+  display: inline;
+  color: brown;
+}
+
+.fDeparture {
+  display: inline;
+  color: blue;
+  width: 50%;
+}
+
+.fArrival {
+  display: inline;
+  color: blue;
+}
+
+.fInput{
+  width: 100%;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.avion{
+  text-align: center;
+  border-right: 1px solid #DDD;
+  padding: 10px 0px;
+}
+
+.dias{
+  padding: 0px 15px;
+}
+
+.dias .row {
+    border-bottom: 3px solid #DDD;
+}
+
+.dia{
+  text-align: center;
+  border-right: 1px solid #DDD;
+  padding: 5px;
+}
+
+.tagline {
+  position: relative;
+  margin-top: 0;
+}
+.tagline-text {
+  vertical-align: middle;
+}
+.__slackin {
+  float: right;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.gh-fork {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+.container-dragula#right-copy  {
+    height: 50%;
+    display: table-row;
+}
+
+.container-dragula#temp-copy  {
+    height: 50%;
+    background-color: rgba(255, 255, 0, 0);
+    display: table-row;
+}
+
+.container-dragula#trash  {
+    bottom: 0;
+    height: 100px;
+    background-color: rgba(255, 255, 0, 0);
+    display: table-row;
+}
+.container-dragula:nth-child(odd) {
+  background-color: #EEE;
+}
+/*
+ * note that styling gu-mirror directly is a bad practice because it's too generic.
+ * you're better off giving the draggable elements a unique class and styling that directly!
+ */
+.container-dragula > div,
+.gu-mirror {
+  margin: 2px;
+  padding: 5px;
+  background-color: #DDD;
+  transition: opacity 0.4s ease-in-out;
+}
+.container-dragula > div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.gu-mirror {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+.container-dragula .ex-moved {
+  background-color: #e74c3c;
+}
+.container-dragula.ex-over {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+#left-lovehandles > div,
+#right-lovehandles > div {
+  cursor: initial;
+}
+.handle {
+  padding: 0 5px;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: move;
+}
+.image-thing {
+  margin: 20px 0;
+  display: block;
+  text-align: center;
+}
+.slack-join {
+  position: absolute;
+  font-weight: normal;
+  font-size: 14px;
+  right: 10px;
+  top: 50%;
+  margin-top: -8px;
+  line-height: 16px;
+}

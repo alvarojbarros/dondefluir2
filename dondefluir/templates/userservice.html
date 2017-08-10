@@ -1,0 +1,12 @@
+{% extends "recordtable.html" %}
+{% block title %}
+<h2>Servicios por Profesional</h2>
+{% endblock %}
+
+{% block button_script %}
+<script type=text/javascript>
+  refreshList();
+  columns = "{0:('Usuario','.UserId'),1:('Servicio','.ServiceId')}"
+  getRecordList('UserService','UserId,ServiceId,CompanyId,id',null,null,false,columns);
+</script>
+{% endblock %}

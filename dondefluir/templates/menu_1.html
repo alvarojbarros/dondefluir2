@@ -1,0 +1,88 @@
+<li class="user-pro" >
+  <a href="#" class="waves-effect" >
+    <i data-icon="F" class="fa fa-fort-awesome fa-fw"></i>
+    <span class="hide-menu">  <b>Empresa</b>
+      <span class="fa arrow">
+      </span>
+    </span>
+  </a>
+  <ul class="nav nav-second-level" >
+    <li>
+      <a href="#" onClick="getMyCompany({{current_user.CompanyId}})">
+        <i data-icon="F" class="fa ti-user fa-fw"></i>Mi Empresa</a>
+    </li>
+    <li>
+      <a href="#" onClick="getServices()">
+        <i data-icon="F" class="fa fa-coffee fa-fw"></i>Servicios</a>
+    </li>
+    <li>
+      <a href="#" onClick="getProfServices()">
+        <i data-icon="F" class="fa fa-suitcase fa-fw"></i>Servicios por Profesional</a>
+    </li>
+    <li>
+      <a href="#" onClick="getPayments()">
+        <i data-icon="F" class="fa fa-envelope-o fa-fw"></i>Pagos Recibidos</a>
+    </li>
+    <li>
+      <a href="#" onClick="getCustomers(false)">
+        <i data-icon="F" class="fa fa-smile-o fa-fw"></i>Buscar Clientes</a>
+    </li>
+    <li>
+      <a href="#" onClick="getUsers()">
+        <i data-icon="F" class="fa fa-users fa-fw"></i>Administrar Usuarios</a>
+    </li>
+  </ul>
+</li>
+<li class="user-pro" >
+  <a href="#" onClick="getCustomers(true)" class="waves-effect">
+    <i data-icon="F" class="fa fa-smile-o fa-fw"></i>
+      <span class="hide-menu"> <b>Mis Clientes</b>
+      </span>
+  </a>
+</li>
+
+<li class="user-pro" >
+  <a href="#" class="waves-effect" >
+    <i data-icon="F" class="fa ti-calendar p-r-10 fa-fw"></i>
+    <span class="hide-menu">  <b>Agenda</b>
+      <span class="fa arrow">
+      </span>
+    </span>
+  </a>
+  <ul class="nav nav-second-level" >
+    <li>
+      <a href="#" onClick="getCalendarView({{current_user.id}},{{current_user.name}})">
+        <i data-icon="F" class="fa ti-calendar p-r-10 fa-fw"></i>Vista de Calendario</a>
+    </li>
+    <li>
+      <a href="#" onClick="getMySchedule({{current_user.id}})">
+        <i data-icon="F" class="fa fa-magic fa-fw"></i>Vista de lista</a>
+    </li>
+  </ul>
+</li>
+<li class="user-pro" >
+  <a href="#" class="waves-effect" >
+    <i data-icon="F" class="fa fa-sun-o p-r-10 fa-fw"></i>
+    <span class="hide-menu">  <b>Actividades</b>
+      <span class="fa arrow">
+      </span>
+    </span>
+  </a>
+  <ul class="nav nav-second-level" >
+    <li>
+      <a href="#" onClick="getActivities({{current_user.id}})">
+        <i data-icon="F" class="fa fa-sun-o fa-fw"></i>Todas las actividades</a>
+    </li>
+    <li>
+      <a href="#" onClick="getEvents()">
+        <i data-icon="F" class="fa fa-star fa-fw"></i>Cursos y Eventos</a>
+    </li>
+  </ul>
+</li>
+<li class="user-pro" >
+  <a href="#" onClick="getNotifications()" class="waves-effect">
+    <i data-icon="F" class="fa fa-envelope-o fa-fw"></i>
+      <span class="hide-menu"> <b>Notificaciones</b>
+      </span>
+  </a>
+</li>

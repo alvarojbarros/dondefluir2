@@ -1,0 +1,21 @@
+{% extends "recordtable.html" %}
+{% block fields_view %}
+<tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
+    <td v-for="row in record.Columns">
+        <a href="#" :onClick="'showEvent(\'' + record.id + '\')'">
+            {%raw%}{{row}}{%endraw%}
+        </a>
+    </td>
+</tr>
+{% endblock %}
+
+
+{% block button_script %}
+<script type=text/javascript>
+  columns = "{0:('Descripción','.Comment')" +
+    ",1:('Empresa','.CompanyId')" +
+    ",2:('Profesional','.ProfId')" +
+    ",3:('Fecha de Inicio','.TransDate de .StartTime a .EndTime')}"
+  getEventList('Comment,StartTime,EndTime,TransDate,id,ServiceId,CompanyId,ProfId',columns);
+</script>
+{% endblock %}

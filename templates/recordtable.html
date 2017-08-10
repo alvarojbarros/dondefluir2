@@ -1,0 +1,87 @@
+ <div class="row bg-title" id="vue_title">
+    <!-- .page title -->
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+       {% block title %}
+       <h4 class="page-title">{%raw%}{{Title}}{%endraw%}</h4>
+       {% endblock %}
+    </div>
+    <!-- /.page title -->
+    <!-- .breadcrumb -->
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+      <ol class="breadcrumb">
+         {% block title2 %}
+          <li><a href="#" onClick="showDashboard()" >Inicio</a></li>
+          <li class="active">{%raw%}{{Title}}{%endraw%}</li>
+         {% endblock %}
+       </ol>
+    </div>
+    <!-- /.breadcrumb -->
+ </div>
+ <!-- .row -->
+ <div class="row" id="record_list">
+    <div class="col-md-12">
+       <div class="white-box">
+         {% block title3 %}
+          <h3 class="box-title">Buscar</h3>
+         {% endblock %}
+           <div class="row">
+              <div class="col-xs-12 col-md-10 p-b-20">
+                   <form class="p-b-20">
+                     <div class="form-group">
+                        <div class="input-group">
+                           <input type="text" id="example-input1-group2" name="example-input1-group2" class="live-search-box form-control" placeholder="Introducir texto para buscar">
+                           <span class="input-group-btn"><button type="button" class="btn waves-effect waves-light btn-info"><i class="fa fa-search"></i></button></span>
+                        </div>
+                     </div>
+                  </form>
+              </div>
+              {% block button_new %}
+              {% if getCanUserCreate(var['Table']) %}
+                <div class="col-xs-12 col-md-2 p-b-20">
+                  <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="newRecord('{{var['Table']}}','{{var['TemplateForm']}}')" >
+                  <span class="btn-label"><i class="fa fa-plus"></i></span>Crear nuevo</button>
+                </div>
+              {% endif %}
+              {% endblock %}
+           </div>
+           <div class="row">
+                <div class="col-xs-12 col-md-4 p-b-20" v-for="(field,key) in filters" >
+                      <select class="form-control" :id="key"  name="select-filter"
+                        :onchange="'updateRecordList(this,\''+ key + '\')'">
+                        <option :value="key">{% raw %} {{filtersNames[key]}} {% endraw %}</option>
+                        <option v-for="value in field"  :value="value">{% raw %} {{value}} {% endraw %}</option>
+                      </select>
+                </div>
+                <hr class="col-xs-12">
+                <div class="col-xs-12">
+                    <table class="table">
+                      <tr v-if="values[0]">
+                          <td v-for="row in values[0].Titles">{%raw%}{{row}}{%endraw%}</td>
+                      </tr>
+                    {% block fields_view %}
+                      <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
+                          <td v-for="row in record.Columns">
+                              <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">
+                                {%raw%}{{row}}{%endraw%}
+                              </a>
+                          </td>
+                      </tr>
+                    {% endblock %}
+                    </table>
+                </div>
+            </div>
+       </div>
+    </div>
+ </div>
+
+<script src="{{ url_for('static', filename='js/vuerecordlist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuetitle.js') }}"></script>
+
+{% block button_script %}
+<script type=text/javascript>
+  refreshList();
+  columns = "{0:('Nombre','.Name')}";
+  getRecordList('{{var['Table']}}','Name,id',null,null,false,columns);
+</script>
+{% endblock %}
+

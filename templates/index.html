@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- Tell the browser to be responsive to screen width -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Plataforma para la gestión de los sueños, el tiempo, el espacio y la energía.">
+      <meta name="author" content="DondeFluir">
+
+      <!-- Bootstrap Core CSS -->
+      <link href="{{ url_for('static', filename='bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+      <link href="{{ url_for('static', filename='bootstrap/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet">
+      <link href="{{ url_for('static', filename='bootstrap/dist/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+      <!-- animation CSS -->
+      <link href="{{ url_for('static', filename='css/animate.css') }}" rel="stylesheet">
+      <!-- This is a Custom CSS -->
+      <link href="{{ url_for('static', filename='css/theme.css') }}" rel="stylesheet">
+      <link href="{{ url_for('static', filename='css/andesla.css') }}" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+      {% block link_imports %}
+      {% endblock %}
+
+
+      {% block apptitle %}
+      <title>My Application</title>
+      {% endblock %}
+
+      <link href="{{ url_for('static', filename='css/fullcalendar.min.css') }}" rel='stylesheet' />
+      <link href="{{ url_for('static', filename='css/fullcalendar.print.css') }}" rel='stylesheet' media='print' />
+      <link href="{{ url_for('static', filename='css/fullcalendar.1.css') }}" rel='stylesheet'/>
+
+      <script src="{{ url_for('static', filename='js/vue.js') }}"></script>
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      {% set image_url = getImageURL('User',current_user.id,'ImageProfile') %}
+
+      {% block script_imports1 %}
+      {% endblock %}
+
+      <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      </script>
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/functions.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/lodash.min.js') }}"></script>
+
+      <!-- Preloader -->
+      <div class="preloader">
+         <div class="cssload-speeding-wheel"></div>
+      </div>
+      <div id="wrapper">
+         <!-- Top Navigation -->
+         {% include getTemplate("navbar") %}
+         <!-- Left navbar-sidebar -->
+         <!-- Left navbar-sidebar end -->
+         {% include getTemplate("sidebar") %}
+         <!-- Page Content -->
+         <div id="page-wrapper">
+
+           {% block container %}
+            {% include getTemplate("container") %}
+           {% endblock %}
+           {% include getTemplate("footer") %}
+            <!-- /.container-fluid -->
+         </div>
+         <!-- /#page-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+
+        <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/fullcalendar.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/fullcalendar.1.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/locale-all.js') }}"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <!--slimscroll JavaScript -->
+        <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+        <!--Wave Effects -->
+        <script src="{{ url_for('static', filename='js/waves.js') }}"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="{{ url_for('static', filename='js/jasny-bootstrap.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/mask.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/vuetitle.js') }}"></script>
+
+        {% block script_imports2 %}
+        {% endblock %}

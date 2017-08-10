@@ -1,0 +1,15 @@
+{% extends "recordtable.html" %}
+
+{% block button_script %}
+<script type=text/javascript>
+  columns = "{0:('Usuario','.UserId')" +
+    ",1:('Empresa','.CompanyId')" +
+    ",2:('Actividad','.ActivityId')" +
+    ",3:('Respuesta','.Response')" +
+    ",4:('Valor','.Amount')" +
+    ",5:('Fecha','.TransDate')}"
+  getRecordList('Payment','UserId,CompanyId,ActivityId,Response,id,Amount,TransDate',null,null,false,columns);
+</script>
+{% endblock %}
+
+

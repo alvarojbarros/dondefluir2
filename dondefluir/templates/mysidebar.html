@@ -1,0 +1,22 @@
+
+<div class="navbar-default sidebar" role="navigation">
+  <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+     <ul class="nav" id="side-menu">
+        <li class="user-pro">
+           <a href="#" onClick="showDashboard()" class="waves-effect active"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu"><b>Inicio</b></span></a>
+        </li>
+		 {% if current_user.UserType==0 %}
+		 	{% include "menu_0.html" %}
+		 {% endif %}
+		 {% if current_user.UserType==1 %}
+		 	{% include "menu_1.html" %}
+		 {% endif %}
+		 {% if current_user.UserType==2 %}
+		 	{% include "menu_2.html" %}
+		 {% endif %}
+		 {% if current_user.UserType==3 %}
+		 	{% include "menu_3.html" %}
+		 {% endif %}
+     </ul>
+  </div>
+</div>

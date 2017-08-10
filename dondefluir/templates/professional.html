@@ -1,0 +1,27 @@
+{% extends "recordtable.html" %}
+{% block title %}
+<h4>Profesionales</h4>
+{% endblock %}
+
+{% block title2 %}
+<li class="active"><a href="#" onClick="getTemplate({'Template':'professional.html','Name':'Profesionales','favorite':{{var['favorite']}}})">
+  Lista</a></li>
+<li><a href="#" onClick="getTemplate({'Template':'professional_icon.html','Name':'Profesionales','favorite':{{var['favorite']}}})">
+  Íconos grandes</a></li>
+{% endblock %}
+
+{% block button_new %}
+{% endblock %}
+{% block fields_view %}
+  <li v-for="record in values"  :data-search-term="record.Name" class="list-group-item" >
+  <a href="#"  :onClick="'showProfessional(\''+record.id+'\',\''+record.Name+'\',\''+user_id+'\')'">{%raw%}{{record.CompanyName}} - {{record.Name}}{%endraw%}</a></li>
+{% endblock %}
+
+
+{% block button_script %}
+<script type=text/javascript>
+  getProfessionalList({{var['favorite']}},'{{current_user.id}}');
+</script>
+{% endblock %}
+
+

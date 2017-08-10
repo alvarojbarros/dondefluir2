@@ -1,0 +1,48 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Andes Lineas Aereas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Programacion de vuelos<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tripulacion<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('logout') }}">Personal</a></li>
+            <li><a href="{{ url_for('logout') }}">Programacion solicitada</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sistema<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('import_table') }}">Importar Tabla</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" id="user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+
+              <li><a href="#" onClick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><i class="ti-user"></i>Perfil</a></li>
+              <li><a href="#" onClick="getTemplate({'Template':'changepwd.html'})"><i class="ti-user"></i>Modificar Password</a></li>
+              <li><a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i> Cerrar sesión</a></li>
+
+              <li><a href="{{ url_for('logout') }}"> Cerrar sesión</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+

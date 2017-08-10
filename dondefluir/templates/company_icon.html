@@ -1,0 +1,52 @@
+ <div class="row bg-title" id="vue_title">
+    <!-- .page title -->
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+       <h4 class="page-title">Empresas</h4>
+    </div>
+    <!-- /.page title -->
+    <!-- .breadcrumb -->
+    <!--div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+      <ol class="breadcrumb">
+        <li class="active"><a href="#" onClick="getTemplate({'Template':'company.html','Name':'Empresas','Table':'Company'})">
+          Lista</a></li>
+        <li><a href="#" onClick="getTemplate({'Template':'company_icon.html','Name':'Empresas'})">
+          Íconos grandes</a></li>
+       </ol>
+    </div-->
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+      <ol class="breadcrumb">
+        <li><a href="#" onclick="showDashboard()">Inicio</a></li>
+        <li>Empresas</li>
+      </ol>
+    </div>
+
+    <!-- /.breadcrumb -->
+ </div>
+ <!-- .row -->
+ <div id="record_list">
+   <div class="row" v-for="i in parseInt(values.length/3) + 1" >
+     <div class="col-md-4 col-sm-4" v-for="k in [0+(3*(i-1)),1+(3*(i-1)),2+(3*(i-1))]" v-if="values[k] && values[k].Closed==0">
+        <div class="white-box" v-if="values[k]">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 text-center">
+                    <a href="#"><img :src="values[k].ImageProfile" alt="user" class="img-circle img-responsive"></a>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    <h3 class="box-title m-b-0"><a href="#" :onClick="'showCompany(\''+values[k].id+'\',\''+values[k].Name+'\',\''+user_id+'\')'">
+                    {%raw%}{{values[k].Name}}{%endraw%}</a></h3>
+                    <small>{%raw%}{{values[k].City}}{%endraw%}</small>
+                    <p align="justify">{%raw%}{{values[k].Comment}}{%endraw%}</p>
+                </div>
+            </div>
+        </div>
+     </div>
+   </div>
+ </div>
+
+<script src="{{ url_for('static', filename='js/vuerecordlist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuetitle.js') }}"></script>
+
+<script type=text/javascript>
+    getRecordList('Company','Name,id,Comment,ImageProfile,City,Closed');
+</script>
+

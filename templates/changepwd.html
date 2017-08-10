@@ -1,0 +1,48 @@
+
+ <div class="row bg-title" id="vue_title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 p-b-20">
+       <h4 class="page-title" id="title1">Modificar Password</h4>
+    </div>
+ </div>
+
+<form autocomplete="off" action="/" id="" class="form-material form-horizontal">
+  <div class="row">
+    <div class="col-xs-12 p-b-20">
+      <div class="white-box">
+        <div class="form-group">
+          <label class="col-xs-12 p-b-20" for="password">Password Actual</label>
+          <div class="col-xs-12 p-b-20">
+            <input class="form-control" type="password" required="" placeholder="Password Actual" name="password" id="password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 p-b-20" for="password1">Nuevo Password</label>
+          <div class="col-xs-12 p-b-20">
+            <input class="form-control" type="password" required="" placeholder="Nuevo Password" name="password1" id="password1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 p-b-20" for="password2">Confirmar Nuevo Password</label>
+          <div class="col-xs-12 p-b-20">
+            <input class="form-control" type="password" required="" placeholder="Confirmar Nuevo Password" name="password2" id="password2">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12 p-b-20">
+            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" onClick="changePassword()">Aceptar</button>
+          </div>
+        </div>
+        <div id='messages'>
+          <p class='alert alert-danger' v-if='error_msg'>
+            {%raw%}{{ error_msg }}{%endraw%}
+          </p>
+          <p class='alert alert-success' v-if='success_msg'>
+            {%raw%}{{ success_msg }}{%endraw%}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+ <script src="{{ url_for('static', filename='js/vuemessages.js') }}"></script>
