@@ -1,8 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String
 from tools.dbconnect import engine,Session
 from sqlalchemy.ext.declarative import declarative_base
-import getsettings
-settings = getsettings.getSettings()
+import settings
 
 Base = declarative_base()
 

@@ -1,7 +1,7 @@
 from main import mail
 from flask_mail import Message
-import getsettings
-settings = getsettings.getSettings()
+import settings
+
 
 def sendFlaskMail(email,subject,message):
     sender = "%s <%s>" % (settings.AccountName,settings.Sender)

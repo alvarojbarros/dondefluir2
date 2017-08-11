@@ -2,10 +2,9 @@
 
 from datetime import datetime,timedelta,date,time
 import json
-import copy
 import random
-import getsettings
-db_foder = getsettings.getDbFolder()
+
+db_foder = 'db'
 
 WeekName = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
 

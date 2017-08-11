@@ -1,6 +1,5 @@
 from tools.DBVersion import DBVersion
-import getsettings
-settings = getsettings.getSettings()
+import settings
 from tools.dbconnect import Session
 
 session = Session()

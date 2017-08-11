@@ -1,0 +1,157 @@
+<script src="{{ url_for('static', filename='js/vueschedule.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vueprofessional.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuetitle.js') }}"></script>
+
+<div class="row bg-title" id="vue_title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 ">
+        <h4 class="page-title"><label> {%raw%}{{Title}}{%endraw%} </label></h4>
+        <input type="hidden" id="id" value="">
+        <input type="hidden" id="record_id" value="">
+    </div>
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb" v-if="tableName!='Profesionales'">
+            <li><a href="#" onClick="showDashboard()" >Inicio</a></li>
+            <li><a href="#" :onclick="'showCompany(\''+companyId+'\',\''+companyName+'\',\''+ companyId +'\')'">
+                {%raw%}{{companyName}}{%endraw%}</a></li>
+            <li class="active"> {%raw%}{{Title}}{%endraw%} </li>
+        </ol>
+        <ol class="breadcrumb" v-if="tableName=='Profesionales'">
+            <li><a href="#" onClick="showDashboard()" >Inicio</a></li>
+            <li class="active"> {%raw%}{{Title}}{%endraw%} </li>
+        </ol>
+
+    </div>
+</div>
+<!-- /.row -->
+<!-- .row -->
+<div class="row" >
+    <div class="col-md-3 col-xs-12" id="recordFields">
+        <div class="white-box">
+            {% set image_url = getImageURL('User',var['profId'],'ImageProfile') %}
+            <div class="user-bg"> <img width="100%" alt="user" src="{{image_url}}"> </div>
+            <div class="user-btm-box">
+                <!-- .row -->
+                <div class="row text-center m-t-10">
+                    <div class="col-md-12 b-r"><strong>Nombre</strong>
+                        <p> {%raw%}{{values.Name}}{%endraw%} </p>
+                    </div>
+                    <div class="col-md-12"><strong>Especialidad</strong>
+                        <p id="user_title"> {%raw%}{{values.Title}}{%endraw%} </p>
+                    </div>
+                    <button :class="classname" type="button" id="favorite" onclick="setFavorite(this,'0')">
+                      <span class="btn-label">
+                        <i class="fa fa-heart">
+                        </i>
+                      </span>{%raw%}{{favorite}}{%endraw%}
+                    </button>
+                </div>
+                <!-- /.row -->
+                <hr>
+               <!-- .row -->
+                <div class="row text-center m-t-10">
+                    <div class="col-md-12"><strong>Perfil profesional</strong>
+                        <p id="record_comment"> {%raw%}{{values.Comment}}{%endraw%} </p>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <hr>
+                <!-- .row -->
+                <div class="row text-center m-t-10">
+                    <div class="col-md-12 b-r"><strong>E-mail</strong>
+                        <p id="record_email"> {%raw%}{{values.Email}}{%endraw%} </p>
+                    </div>
+                    <div class="col-md-12"><strong>Teléfono</strong>
+                        <p id="record_phone">  {%raw%}{{values.Phone}}{%endraw%} </p>
+                    </div>
+                    <div class="col-md-12"><strong>Dirección</strong>
+                        <p id="record_address">{%raw%}{{values.Address}}{%endraw%}</p>
+                        <p id="record_city">{%raw%}{{values.City}}{%endraw%}</p>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 col-xs-12">
+        <div class="white-box">
+            <!-- .tabs -->
+            <ul class="nav nav-tabs tabs customtab" id="vue_tabs">
+                <li class="active tab">
+                    <a href="#citas" data-toggle="tab"> <span><i class="fa fa-calendar"></i></span> <span class="hidden-xs">Reservar cita</span> </a>
+                </li>
+                <li class="tab">
+                    <a href="#cursos" data-toggle="tab"> <span><i class="fa fa-book"></i></span> <span class="hidden-xs">Ver cursos y eventos</span> </a>
+                </li>
+                <li class="tab" v-if="{{current_user.UserType}}==0">
+                    <a href="#agenda" data-toggle="tab"><span><i class="fa fa-book"></i></span> <span class="hidden-xs">Agenda</span></a>
+                </li>
+            </ul>
+            <div class="tab-content" id="vue_schedule">
+                <!-- .tabs 1 -->
+                <div class="tab-pane active" id="citas">
+                  <h3 class="box-title">Reservar cita</h3>
+                  <div class="list-group">
+                    <div v-for="d in values">
+                      <a href="javascript:void(0)" class="list-group-item active">{%raw%}{{d[0]['FechaStr']}}{%endraw%}</a>
+                      <a v-for="value in d" href="#" class="list-group-item"
+                        :onclick="'createActivity(\''+value['Date']+'\',\''+value['StartTime']+'\',\''+value['EndTime']+'\',\''+profId+'\',\''+value['CompanyId']+'\',\''+current_user_id+'\')'">
+                        {%raw%}{{value['StartTime']}} a {{value['EndTime']}} {%endraw%}
+                        <div v-if="value['Service']">Servicio: {%raw%}{{value['Service']}}{%endraw%}</div>
+                        <div v-if="value['Comment']">{%raw%}{{value['Comment']}}{%endraw%}</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- .tabs 2 -->
+
+                <div class="tab-pane" id="cursos">
+                  <div v-for="(event,e) in events">
+
+                    <h3 class="box-title">{%raw%}{{event[0]['Comment']}}{%endraw%}</h3>
+
+                    <div class="row" >
+                      <div class="col-md-3 col-xs-12 b-r"> <strong>Fechas y Horarios</strong>
+                        <br>
+                        <div v-for="(k,j) in event">
+                          <p class="text-muted">{%raw%}{{k['TransDate']}} de {{k['StartTime']}} a {{k['EndTime']}}{%endraw%}</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 col-xs-12 b-r">
+                          <strong>Valor</strong>
+                          <br>
+                          <p class="text-muted">$ {%raw%}{{event[0]['Price']}}{%endraw%}</p>
+                      </div>
+                      <div class="col-md-3 col-xs-12"> <strong>Cupo máximo</strong>
+                        <br>
+                        <p class="text-muted">{%raw%}{{event[0]['MaxPersons']}}{%endraw%} asistentes<br>Quedan {%raw%}{{event[0]['MaxPersons'] - event[0]['Persons']}}{%endraw%} cupos disponibles</p>
+                        <div class="progress progress-lg">
+                          <div class="progress-bar progress-bar-primary"
+                            :style="'width: '+100*event[0]['Persons']/event[0]['MaxPersons']+'%;'" role="progressbar">
+                            {%raw%}{{100*event[0]['Persons']/event[0]['MaxPersons']}}{%endraw%}%</div>
+                        </div>
+                      </div>
+
+                    </div> <!-- row -->
+
+
+                    <button class="btn btn-primary btn-rounded waves-effect waves-light m-t-20"
+                    type="button" :id="e" :onclick="'setCustomerToEvent(\''+e+'\')'">{%raw%}{{event[0]['Status']}}{%endraw%}</button>
+                    <p class="m-t-30"><strong>Descripción</strong></p>
+                    <p>{%raw%}{{event[0]['Description']}}{%endraw%}</p>
+                    <hr/>
+
+                  </div>
+                </div> <!-- cursos -->
+                <div class="tab-pane" id="agenda">
+                    <a href="#" :onClick="'getTemplate({\'Template\':\'calendar.html\',\'UserId\':\''+ profId +'\',\'UserName\':\''+ profName +'\'})'">
+                      <span><i class="fa fa-book"></i></span> <span class="hidden-xs">Ver Agenda</span>
+                    </a>
+                </div>
+            </div> <!-- tab-content -->
+        </div>
+    </div>
+  </div>
+    </div>
+</div>
+<!-- /.row -->

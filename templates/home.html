@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block link_imports %}
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90726427-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='plugins/images/favicon.png') }}">
+
+
+<!-- This is Sidebar menu CSS -->
+<link href="{{ url_for('static', filename='plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+<!-- page CSS -->
+<!-- Date picker plugins css -->
+<link href="{{ url_for('static', filename='plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
+<!-- Time picker plugins css -->
+<link href="{{ url_for('static', filename='plugins/bower_components/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet">
+
+
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+<!-- color CSS you can use different color css from css/colors folder -->
+<!-- We have chosen the skin-blue (blue.css) for this starter
+   page. However, you can choose any other skin from folder css / colors .
+   -->
+<link href="{{ url_for('static', filename='css/colors/purple.css') }}" id="theme"  rel="stylesheet">
+{% endblock %}
+
+{% block apptitle %}
+<title>Donde Fluir • Plataforma para la gestión de los sueños, el tiempo, el espacio y la energía</title>
+{% endblock %}
+
+{% block script_imports1 %}
+<script src="{{ url_for('static', filename='js/myfunctions.js') }}"></script>
+{% endblock %}
+
+
+{% block script_imports2 %}
+
+<script src="{{ url_for('static', filename='js/custom.min.js') }}"></script>
+<!-- Menu Plugin JavaScript -->
+<script src="{{ url_for('static', filename='plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="{{ url_for('static', filename='plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+<!-- Clock Plugin JavaScript -->
+<script src="{{ url_for('static', filename='plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
+<!-- Date range Plugin JavaScript -->
+<script src="{{ url_for('static', filename='plugins/bower_components/timepicker/bootstrap-timepicker.min.js') }}"></script>
+
+<!-- jQuery -->
+{% endblock %}
+

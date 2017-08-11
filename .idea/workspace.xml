@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="442434ac-cc38-4d35-beb0-6b28c24578d4" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/MailTools.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/Activity.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/Company.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/Notification.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/Payment.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/Service.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/User.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/UserFavorite.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/UserNote.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/UserService.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/db/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/main.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/reports/NewUsers.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/reports/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/css/colors/purple.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/css/spinners.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/css/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/images/DondeFluirLogo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/images/facebook.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/images/instagram.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/images/twitter.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/images/whatsapp.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/custom.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/epayco.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/myfunctions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vueactivity.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vuecompany.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vuedashboard.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vueevent.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vuenotifications.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vueprofessional.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/js/vueschedule.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/css/font-awesome.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/css/font-awesome.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/FontAwesome.otf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/fontawesome-webfont-old.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/fontawesome-webfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/fontawesome-webfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/fontawesome-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/fontawesome-webfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/font-awesome/fonts/fontawesome-webfont.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-arrows-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-arrows-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-arrows-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-arrows-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-elaboration-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-elaboration-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-elaboration-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-basic-elaboration-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-ecommerce-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-ecommerce-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-ecommerce-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-ecommerce-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-music-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-music-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-music-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-music-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-software-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-software-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-software-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-software-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-weather-10.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-weather-10.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-weather-10.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/fonts/linea-weather-10.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/linea-icons/linea.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/simple-line-icons/css/simple-line-icons.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/simple-line-icons/fonts/Simple-Line-Icons.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/simple-line-icons/fonts/Simple-Line-Icons.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/simple-line-icons/fonts/Simple-Line-Icons.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/simple-line-icons/fonts/Simple-Line-Icons.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/simple-line-icons/fonts/Simple-Line-Icons.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/fonts/themify.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/fonts/themify.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/fonts/themify.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/fonts/themify.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/ie7/ie7.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/ie7/ie7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/themify-icons/themify-icons.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/css/weather-icons-core.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/css/weather-icons-variables.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/css/weather-icons-wind.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/css/weather-icons-wind.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/css/weather-icons.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/css/weather-icons.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/font/weathericons-regular-webfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/font/weathericons-regular-webfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/font/weathericons-regular-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/font/weathericons-regular-webfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/less/icons/weather-icons/font/weathericons-regular-webfont.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/clockpicker/dist/bootstrap-clockpicker.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/clockpicker/dist/bootstrap-clockpicker.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/dist/jquery.min.js1" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/jsonp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/load.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/parseJSON.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/parseXML.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/script.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/var/nonce.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/var/rquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/ajax/xhr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/attributes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/attributes/attr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/attributes/classes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/attributes/prop.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/attributes/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/attributes/val.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/callbacks.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/core.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/core/access.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/core/init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/core/parseHTML.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/core/ready.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/core/var/rsingleTag.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/addGetHookIf.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/curCSS.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/defaultDisplay.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/hiddenVisibleSelectors.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/swap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/var/cssExpand.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/var/getStyles.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/var/isHidden.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/var/rmargin.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/css/var/rnumnonpx.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/data.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/data/Data.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/data/accepts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/data/var/data_priv.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/data/var/data_user.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/deferred.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/deprecated.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/dimensions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/effects.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/effects/Tween.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/effects/animatedSelector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/event.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/event/ajax.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/event/alias.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/event/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/exports/amd.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/exports/global.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/intro.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/manipulation.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/manipulation/_evalUrl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/manipulation/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/manipulation/var/rcheckableType.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/offset.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/outro.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/queue.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/queue/delay.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/selector-native.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/selector-sizzle.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/selector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/serialize.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/sizzle/dist/sizzle.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/sizzle/dist/sizzle.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/sizzle/dist/sizzle.min.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/traversing.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/traversing/findFilter.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/traversing/var/rneedsContext.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/arr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/class2type.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/concat.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/hasOwn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/indexOf.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/pnum.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/push.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/rnotwhite.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/slice.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/strundefined.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/var/toString.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/jquery/src/wrap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/.bower.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/Gruntfile.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/bower.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/src/metisMenu.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/sidebar-nav/src/metisMenu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/timepicker/bootstrap-timepicker.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/bower_components/timepicker/bootstrap-timepicker.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/busy.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/error-bg.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/favicon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/headline.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/login-register.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/multiple-arrow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/professionals/d2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/sort_asc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/sort_asc_disabled.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/sort_both.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/sort_desc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/sort_desc_disabled.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/Euclid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/shape1.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/shape2.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/shape3.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/tooltip1.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/tooltip2.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/static/plugins/images/tooltip/tooltip3.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/activity.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/activityform.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/company.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/company_icon.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/customer.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/customerform.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/epayco_res.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/event.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/events.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/home.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/menu_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/menu_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/menu_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/menu_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/mycontainer.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/myfooter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/mylogin.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/mynavbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/myschedule.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/mysidebar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesCambioPassword.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesCancelacionCita.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesConfirmacionCita.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesCreacionCita.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesCreacionUsuario.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesModificacionCita.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesNuevosClientesActividad.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notificacionesProximidadCita.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/notification.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/payment.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/professional.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/professional_icon.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/service.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/showcompany.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/showprofessional.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/usernote.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/users.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dondefluir/templates/userservice.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/getsettings.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/User.py" afterPath="$PROJECT_DIR$/db/User.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/style.css" afterPath="$PROJECT_DIR$/static/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/container.html" afterPath="$PROJECT_DIR$/templates/container.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/login.html" afterPath="$PROJECT_DIR$/templates/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/navbar.html" afterPath="$PROJECT_DIR$/templates/navbar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/sidebar.html" afterPath="$PROJECT_DIR$/templates/sidebar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/DBTools.py" afterPath="$PROJECT_DIR$/tools/DBTools.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/DBUpdates.py" afterPath="$PROJECT_DIR$/tools/DBUpdates.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/DBVersion.py" afterPath="$PROJECT_DIR$/tools/DBVersion.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/FlaskMail.py" afterPath="$PROJECT_DIR$/tools/FlaskMail.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/MailTools.py" afterPath="$PROJECT_DIR$/tools/MailTools.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/Tools.py" afterPath="$PROJECT_DIR$/tools/Tools.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/dbconnect.py" afterPath="$PROJECT_DIR$/tools/dbconnect.py" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBUpdates.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/DBUpdates.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBVersion.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/DBVersion.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dbconnect.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/dbconnect.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tools.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/Tools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MailTools.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/MailTools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+              <folding>
+                <element signature="e#24#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBTools.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/DBTools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="183" column="79" lean-forward="false" selection-start-line="183" selection-start-column="66" selection-end-line="183" selection-end-column="79" />
+              <folding>
+                <element signature="e#25#64#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlaskMail.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/FlaskMail.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>gets</find>
+      <find>getse</find>
+      <find>c</find>
+      <find>custom</find>
+      <find>custom_</find>
+      <find>user</find>
+      <find>user.</find>
+      <find>user.jo</find>
+      <find>user.j</find>
+      <find>images_url</find>
+      <find>images_url</find>
+      <find>images_url  =</find>
+      <find>images_url =</find>
+      <find>fr</find>
+      <find>fram</find>
+      <find>framwe</find>
+      <find>framw</find>
+      <find>framewo</find>
+      <find>framew</find>
+      <find>frame</find>
+      <find>images_url</find>
+      <find>images_folder</find>
+      <find>images_folder =</find>
+      <find>static_folder</find>
+      <find>folder</find>
+      <find>template_folder</find>
+      <find>report_folder</find>
+      <find>images_folder</find>
+      <find>myFunction</find>
+      <find>getMyFunction</find>
+    </findStrings>
+    <dirStrings>
+      <dir>C:\Datos\Flask\dondefluir2</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/dondefluir/static/js/myfunctions.js" />
+        <option value="$PROJECT_DIR$/db/UserNote.py" />
+        <option value="$PROJECT_DIR$/db/UserFavorite.py" />
+        <option value="$PROJECT_DIR$/db/UserService.py" />
+        <option value="$PROJECT_DIR$/db/Service.py" />
+        <option value="$PROJECT_DIR$/db/Payment.py" />
+        <option value="$PROJECT_DIR$/db/Notification.py" />
+        <option value="$PROJECT_DIR$/dondefluir/reports/NewUsers.py" />
+        <option value="$PROJECT_DIR$/getsettings.py" />
+        <option value="$PROJECT_DIR$/dondefluir/MailTools.py" />
+        <option value="$PROJECT_DIR$/db/Activity.py" />
+        <option value="$PROJECT_DIR$/db/User.py" />
+        <option value="$PROJECT_DIR$/templates/login.html" />
+        <option value="$PROJECT_DIR$/templates/navbar.html" />
+        <option value="$PROJECT_DIR$/templates/showcompany.html" />
+        <option value="$PROJECT_DIR$/templates/epayco_res.html" />
+        <option value="$PROJECT_DIR$/templates/myschedule.html" />
+        <option value="$PROJECT_DIR$/templates/event.html" />
+        <option value="$PROJECT_DIR$/templates/container.html" />
+        <option value="$PROJECT_DIR$/templates/home.html" />
+        <option value="$PROJECT_DIR$/templates/showprofessional.html" />
+        <option value="$PROJECT_DIR$/templates/activityform.html" />
+        <option value="$PROJECT_DIR$/dondefluir/main.py" />
+        <option value="$PROJECT_DIR$/tools/FlaskMail.py" />
+        <option value="$PROJECT_DIR$/tools/dbconnect.py" />
+        <option value="$PROJECT_DIR$/tools/DBUpdates.py" />
+        <option value="$PROJECT_DIR$/tools/Tools.py" />
+        <option value="$PROJECT_DIR$/tools/DBVersion.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/tools/DBTools.py" />
+        <option value="$PROJECT_DIR$/tools/MailTools.py" />
+        <option value="$PROJECT_DIR$/settings.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dondefluir2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dondefluir2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dondefluir2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dondefluir2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dondefluir2" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dondefluir2" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dondefluir2" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="dondefluir2" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="442434ac-cc38-4d35-beb0-6b28c24578d4" name="Default" comment="" />
+      <created>1502458849311</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1502458849311</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/dondefluir/static/js/myfunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="239" column="0" lean-forward="false" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/UserNote.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="5" lean-forward="false" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/UserFavorite.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" lean-forward="false" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/UserService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="5" lean-forward="false" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/Service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" lean-forward="false" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/Payment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="5" lean-forward="false" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/Notification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="5" lean-forward="false" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/reports/NewUsers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="5" lean-forward="false" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/MailTools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/Activity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/User.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="167" column="23" lean-forward="false" selection-start-line="167" selection-start-column="23" selection-end-line="167" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="238" column="33" lean-forward="false" selection-start-line="238" selection-start-column="33" selection-end-line="238" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/navbar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="90" column="25" lean-forward="false" selection-start-line="90" selection-start-column="25" selection-end-line="90" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/showcompany.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/epayco_res.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="80" column="25" lean-forward="false" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/myschedule.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/event.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="25" lean-forward="false" selection-start-line="0" selection-start-column="25" selection-end-line="0" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/container.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="197" column="25" lean-forward="false" selection-start-line="197" selection-start-column="25" selection-end-line="197" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="56" column="25" lean-forward="false" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/showprofessional.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/activityform.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/notificacionesCancelacionCita.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="49" column="44" lean-forward="true" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getsettings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/FlaskMail.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/dbconnect.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/DBUpdates.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/Tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/DBVersion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/DBTools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="183" column="79" lean-forward="false" selection-start-line="183" selection-start-column="66" selection-end-line="183" selection-end-column="79" />
+          <folding>
+            <element signature="e#25#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/MailTools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="e#24#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

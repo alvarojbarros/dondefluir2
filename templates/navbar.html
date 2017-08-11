@@ -1,48 +1,92 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Andes Lineas Aereas</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Programacion de vuelos<span class="caret"></span></a>
-          <ul class="dropdown-menu">
+<nav class="navbar navbar-default navbar-static-top m-b-0">
+  <div class="navbar-header">
+     <!-- Toggle icon for mobile view -->
+     <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+     <!-- Logo -->
+     <div class="top-left-part">
+        <a class="logo" href="#" onClick="showDashboard()">
+           <!-- Logo icon image, you can use font-icon also -->
+           <b>• <i class="wi wi-moon-full"></i> •</b>
+           <!-- Logo text image you can use text also -->
+           <span class="hidden-xs">{{app_name}}</span>
+        </a>
+     </div>
+     <!-- /Logo -->
+     <!-- Search input and Toggle icon -->
+     <ul class="nav navbar-top-links navbar-left hidden-xs">
+        <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+        <!--li>
+           <form role="search" class="app-search hidden-xs">
+              <input type="text" placeholder="Search..." class="form-control">
+              <a href="#"><i class="fa fa-search"></i></a>
+           </form>
+        </li-->
+     </ul>
+     <!-- This is the message dropdown -->
+     <ul class="nav navbar-top-links navbar-right pull-right">
+        <li class="dropdown" id="notifications-menu">
+           <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#">
+              <i class="icon-envelope"></i>
+              <div class="notify" v-if="cnt>0"><span class="heartbit"></span><span class="point"></span></div>
+           </a>
+           <ul class="dropdown-menu mailbox animated bounceInDown">
+              <li>
+                 <div class="drop-title">{%raw%}{{news}}{%endraw%}</div>
+              </li>
+              <li v-for="value in values">
+                 <div class="message-center">
+                    <a href="#">
+                       <div class="mail-contnet">
+                          <h5>Mensaje del Sistema</h5>
+                          <span class="mail-desc">{%raw%}{{value.Comment}}{%endraw%}</span> <span class="time">{%raw%}{{value.TransDate}}{%endraw%}</span>
+                       </div>
+                    </a>
+                 </div>
+              </li>
 
-          </ul>
+              <li> <a class="text-center" href="javascript:void(0);" onclick="getTemplateNotification()"> <strong>Ver todas las Notificaciones</strong> <i class="fa fa-angle-right"></i> </a></li>
+           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tripulacion<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{{ url_for('logout') }}">Personal</a></li>
-            <li><a href="{{ url_for('logout') }}">Programacion solicitada</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sistema<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{{ url_for('import_table') }}">Importar Tabla</a></li>
-          </ul>
-        </li>
+        <!--li class="dropdown">
+           <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#">
+              <i class="icon-note"></i>
+              <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+           </a>
+           <ul class="dropdown-menu dropdown-tasks animated slideInUp">
+              <li>
+                 <a href="javascript:void(0)">
+                    <div>
+                       <p> <strong>Task 1</strong> <span class="pull-right text-muted">40% Complete</span> </p>
+                       <div class="progress progress-striped active">
+                          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                       </div>
+                    </div>
+                 </a>
+              </li>
+              <li class="divider"></li>
+              <li> <a class="text-center" href="#"> <strong>See All Tasks</strong> <i class="fa fa-angle-right"></i> </a> </li>
+           </ul>
+        </li-->
+        <!-- .user dropdown -->
         <li class="dropdown" id="user-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-
-              <li><a href="#" onClick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><i class="ti-user"></i>Perfil</a></li>
-              <li><a href="#" onClick="getTemplate({'Template':'changepwd.html'})"><i class="ti-user"></i>Modificar Password</a></li>
-              <li><a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i> Cerrar sesión</a></li>
-
-              <li><a href="{{ url_for('logout') }}"> Cerrar sesión</a></li>
-          </ul>
+           <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{image_url}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{current_user.Name}}</b> </a>
+           <ul class="dropdown-menu dropdown-user animated flipInY">
+              <li><a href="#" onClick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><i class="ti-user"></i>  Perfil</a></li>
+              <li><a href="#" onClick="getTemplate({'Template':'changepwd.html','runFunction':'OpenCloseMenu()'})"><i class="ti-user"></i>  Modificar Password</a></li>
+              <li><a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i>  Ayuda</a></li>
+              <li><a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i>  Cerrar sesión</a></li>
+           </ul>
+           <!-- /.user dropdown-user -->
         </li>
-      </ul>
-    </div><!--/.nav-collapse -->
+        <!-- /.user dropdown -->
+        <!--li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li-->
+        <!-- /.dropdown -->
+     </ul>
   </div>
+  <!-- /.navbar-header -->
+  <!-- /.navbar-top-links -->
+  <!-- /.navbar-static-side -->
 </nav>
 
+<script src="{{ url_for('static', filename='js/vuenotifications.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vueusermenu.js') }}"></script>

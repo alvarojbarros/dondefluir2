@@ -1,0 +1,36 @@
+{% extends "recordform.html" %}
+
+{% block record_imports %}
+<script src="{{ url_for('static', filename='js/vueactivity.js') }}"></script>
+{% endblock %}
+
+{% block add_buttons %}
+    <button v-if="id && Status!=2"
+      onclick="cancelActivity()" class="btn btn-danger btn-rounded waves-effect waves-light m-r-10 m-b-10" >
+      <span class="btn-label">
+        <i class="fa fa-minus">
+        </i>
+      </span>Cancelar Actividad
+    </button>
+{% endblock %}
+
+{% block extra_fields %}
+
+<div class="row" id="activity-payment">
+  <div class="col-xs-12">
+    <div class="white-box">
+      <div v-if="record && record.OnlinePayment && record.Price">
+        <div v-if="Paid==false" id="form-activity">
+          <p style="color: green"><b><i>NO has pagado por este curso</i></b><p>
+          <form ref="form-activity">
+          </form>
+        </div>
+        <div v-if="Paid==true">
+          <p style="color: green"><b><i>Ya has realizado tu pago</i></b><p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

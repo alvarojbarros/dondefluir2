@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Text
-import getsettings
-settings = getsettings.getSettings()
+import settings
+
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
