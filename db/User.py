@@ -66,14 +66,14 @@ class User(Base,Record,UserMixin):
             ,'LinkTo':{'Table':'Company','Show':['Name']},'ShowIf':['UserType',["0","1","2"],-1]}
         res['Name'] = {'Type': 'text', 'Label': 'Nombre', 'Input': 'text'}
         res['Title'] = {'Type': 'text', 'Label': 'Profesión', 'Input': 'text','Level':[0,1,2]}
-        res['FindMe'] = {'Type': 'integer', 'Label': 'Aparecer en Buscador', 'Input': 'checkbox','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
+        res['FindMe'] = {'Type': 'integer', 'Label': 'Perfil Público. Activa esta opción para que los usuarios puedan ver tu perfil en la plataforma', 'Input': 'checkbox','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
         res['FixedSchedule'] = {'Type': 'integer', 'Label': 'Horarios Fijos', 'Input': 'checkbox','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
         res['MinTime'] = {'Type': 'integer', 'Label': 'Tiempo Mínimo', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
         res['MaxTime'] = {'Type': 'integer', 'Label': 'Tiempo Máximo', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['ShowDays'] = {'Type': 'integer', 'Label': 'Disponibilidad Hasta (Cantidad de días)', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['ShowFromDays'] = {'Type': 'integer', 'Label': 'Disponibilidad Desde (Cantidad de días)', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
+        res['ShowDays'] = {'Type': 'integer', 'Label': 'Disponibilidad de horarios desde: Días de anterioridad mínima para solicitar citas.', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
+        res['ShowFromDays'] = {'Type': 'integer', 'Label': 'Disponibilidad de horarios hasta: cantidad máxima de días visibles en la agenda para los usuarios.', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
         res['Phone'] = {'Type': 'text', 'Label': 'Teléfono', 'Input': 'text'}
-        res['Comment'] = {'Type': 'text', 'Label': 'Descripción','Input':'textarea','rows':'4','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
+        res['Comment'] = {'Type': 'text', 'Label': 'Perfil Profesional','Input':'textarea','rows':'4','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
         res['Address'] = {'Type': 'text', 'Label': 'Dirección', 'Input': 'text'}
         res['City'] = {'Type': 'text', 'Label': 'Ciudad', 'Input': 'text'}
         res['EditSchedule'] = {'Type': 'integer', 'Label': 'Editar Agenda', 'Input': 'combo', \
@@ -81,7 +81,7 @@ class User(Base,Record,UserMixin):
         res['Schedules'] = {'Type':[],'Label':'Horarios','Class':'UserSchedule',\
             'fieldsDefinition': UserSchedule.fieldsDefinition(),'Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
         res['Favorite'] = {'Type': 'integer', 'Label': 'Agregar a Favoritos', 'Input': 'button','Level':[0,1,2],'Persistent':False, \
-            'Method':'getFavorite()','onClick': 'setFavorite(this,"1")','Class':'btn btn-primary btn-rounded waves-effect waves-light m-t-20' }
+            'Method':'getFavorite()','onClick': 'setFavorite(this,"1")','Class':'btn btn-primary btn-rounded waves-effect waves-light m-t-20'}
         res['ImageProfile'] = {'Type': 'text', 'Label': 'Imagen de Perfil', 'Input': 'fileinput' ,\
                                'SubLabel':'Tamaño sugerido: 300px x 300px. Peso máximo: 150kb'}
         res['NtfActivityNew'] = {'Type': 'integer', 'Label': 'Nueva Actividad', 'Input': 'checkbox'}
