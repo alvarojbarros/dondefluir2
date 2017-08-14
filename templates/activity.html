@@ -14,8 +14,19 @@
 <script type=text/javascript>
   columns = "{0:('Horario','.TransDate de .StartTime a .EndTime')" +
     ",1:('Servicio','.ServiceId')" +
-    ",2:('Profesional','.ProfId')" +
-    ",3:('Estado','.Status')}"
+    ",2:('Estado','.Status')"
+  if ({{current_user.UserType}}==1){
+    columns += ",3:('Profesional','.ProfId')";
+    columns += ",4:('Cliente','.CustId')";
+  }
+  if ({{current_user.UserType}}==2){
+    columns += ",3:('Cliente','.CustId')";
+  }
+  if ({{current_user.UserType}}==3){
+    columns += ",3:('Profesional','.ProfId')";
+  }
+  columns += "}";
+
   getRecordList('Activity','Comment,StartTime,EndTime,TransDate,id,Status,ServiceId,CustId,CompanyId,ProfId,Type','','TransDate',false,columns);
 </script>
 {% endblock %}

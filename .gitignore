@@ -50,3 +50,6 @@ dondefluir/static/files/User/ImageProfile.11
 dondefluir/static/files/User/ImageProfile.2
 dondefluir/static/files/User/ImageProfile.6
 *.pyc
+*.pyc
+tools/__pycache__/DBTools.cpython-35.pyc
+*.pyc

@@ -20,7 +20,7 @@ function getCalendar(user_id) {
 		editable: true,
 		eventLimit: true, // allow "more" link when too many events
 		events: {
-			url: 'data',
+			url: 'calendar_data',
 			data: {UserId: user_id},
 			error: function() {
 			$('#script-warning').show();
@@ -31,10 +31,15 @@ function getCalendar(user_id) {
 		},
 
 		eventRender: function(event, element) {
-			//element.attr('title', event.tooltip);
+			//console.log(event.title)
+			//console.log(element)
+			//element.attr('outerHTML', event.title);
+			//element.attr('innerHTML', event.title);
+			//element.attr('text', event.title);
+			//element.attr('content', event.title);
 			//element.attr('data-toggle', 'tooltip');
 			//$(element).tooltip({title: event.tooltip});
-			//element.attr('id', event.id);
+			//element.attr('id', 'event.id');
 		},
 
 		eventClick: function(event) {

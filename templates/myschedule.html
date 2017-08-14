@@ -35,17 +35,19 @@
                       <div v-for="value in d" href="#" class="list-group-item">
                         <a v-if="value['id']" href="#"
                           :onClick="'getRecordForm(\'Activity\',\'activityform.html\',\'' + value['id'] + '\')'">
-                          {%raw%}{{value['StartTime']}} a {{value['EndTime']}} {%endraw%}
-                          <div v-if="value['Service']">Servicio: {%raw%}{{value['Service']}}{%endraw%}</div>
-                          <div v-if="value['Comment']">{%raw%}{{value['Comment']}}{%endraw%}</div>
-                          <div v-if="value['Customer']">Cliente: {%raw%}{{value['Customer']}}{%endraw%}</div>
+                            <strong>{%raw%}{{value['StartTime']}} a {{value['EndTime']}} {%endraw%}</strong>
+                          <div style="display: inline;" v-if="value['Service'] || value['Comment'] || value['Customer']"> - </div>
+                          <div style="display: inline;" v-if="value['Service']">Servicio: {%raw%}{{value['Service']}}{%endraw%}</div>
+                          <div style="display: inline;" v-if="value['Comment']">{%raw%}{{value['Comment']}}{%endraw%}</div>
+                          <div style="display: inline;" v-if="value['Customer']">Cliente: {%raw%}{{value['Customer']}}{%endraw%}</div>
                         </a>
                         <a v-if="!value['id']" href="#"
                           :onclick="'createActivity(\''+value['Date']+'\',\''+value['StartTime']+'\',\''+value['EndTime']+'\',\''+profId+'\',\''+value['CompanyId']+'\',\''+current_user_id+'\')'">
-                          {%raw%}{{value['StartTime']}} a {{value['EndTime']}} {%endraw%}
-                          <div v-if="value['Service']">Servicio: {%raw%}{{value['Service']}}{%endraw%}</div>
-                          <div v-if="value['Comment']">{%raw%}{{value['Comment']}}{%endraw%}</div>
-                          <div v-if="value['Customer']">Cliente: {%raw%}{{value['Customer']}}{%endraw%}</div>
+                          <strong>{%raw%}{{value['StartTime']}} a {{value['EndTime']}} {%endraw%}</strong>
+                          <div style="display: inline;" v-if="value['Service'] || value['Comment'] || value['Customer']"> - </div>
+                          <div style="display: inline;" v-if="value['Service']">Servicio: {%raw%}{{value['Service']}}{%endraw%}</div>
+                          <div style="display: inline;" v-if="value['Comment']">{%raw%}{{value['Comment']}}{%endraw%}</div>
+                          <div style="display: inline;" v-if="value['Customer']">Cliente: {%raw%}{{value['Customer']}}{%endraw%}</div>
                         </a>
                       </div>
                     </div>

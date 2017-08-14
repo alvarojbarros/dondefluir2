@@ -49,7 +49,7 @@
                       <select class="form-control" :id="key"  name="select-filter"
                         :onchange="'updateRecordList(this,\''+ key + '\')'">
                         <option :value="key">{% raw %} {{filtersNames[key]}} {% endraw %}</option>
-                        <option v-for="value in field"  :value="value">{% raw %} {{value}} {% endraw %}</option>
+                        <option v-for="value in field"  :value="value" v-if="value">{% raw %} {{value}} {% endraw %}</option>
                       </select>
                 </div>
                 <hr class="col-xs-12">

@@ -833,11 +833,16 @@ def getCalendarData(UserId):
         elif record.Status==2:
             BGColor = 'gray'
             textColor = 'white'
-        list.append({'title': record.Comment,'start':st,'end':st,'onclick':onclick,'id':id,'backgroundColor':BGColor, \
-            'textColor': textColor})
+        comment = ''
+        if record.Type:
+            comment = record.Comment
+        elif record.CustName:
+            comment = record.CustName
+        list.append({'title': comment,'start':st,'end':st,'onclick':onclick,'id':id,'backgroundColor':BGColor, \
+            'textColor': textColor, 'actType': record.Type})
     return list
 
-@app.route('/data')
+@app.route('/calendar_data')
 def return_data():
     UserId = request.args.get('UserId', '')
     res = getCalendarData(UserId)
@@ -1040,7 +1045,7 @@ def utility_processor():
     def getCanUserDeleteRow(table):
         return canUserDeleteRow(table)
     def myFunction(function,params=None):
-        return settings.getMyFunction(function,params)
+        return getMyFunction(function,params)
     def getTemplate(template):
         if "%s_template" % template in settings.templates:
             return settings.templates["%s_template" % template]

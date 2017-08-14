@@ -7,7 +7,7 @@ from tools.Tools import *
 from flask import url_for
 import os
 import settings
-
+from main import getMyFunction
 
 FormatTypes = {'str':'String','datetime':'DateTime','integer':'Integer'}
 
@@ -158,7 +158,7 @@ def get_linkto(linkto,record=None):
     filters = linkto.get('Filters',None)
     TableClass = getTableClass(table)
     if method:
-        records = settings.getMyFunction(method,params)
+        records = getMyFunction(method,params)
     elif record:
         records = record.getLinkToFromRecord(TableClass)
     else:

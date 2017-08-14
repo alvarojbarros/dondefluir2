@@ -65,7 +65,7 @@ class Activity(Base,Record):
         res['CompanyId'] = {'Type': 'text', 'Label': 'Empresa', 'Input': 'combo','LinkTo':{'Table':'Company','Show':['Name']}}
         res['ServiceId'] = {'Type': 'text', 'Label': 'Servicio', 'Input': 'combo','LinkTo':{'Table':'Service','Show':['Name']} \
             ,'AfterChange':'setServicePrice()'}
-        res['Comment'] = {'Type': 'text', 'Label': 'Comentario', 'Input':'text'}
+        res['Comment'] = {'Type': 'text', 'Label': 'Comentario', 'Input':'text','ShowIf':['Type',["1","2"],-1]}
         res['Type'] = {'Type': 'integer', 'Label': 'Tipo de actividad', 'Input': 'combo' \
             ,'Values': {0: 'Cita',1: 'Curso',2:'Evento'},'OnChange':'updateLinkTo()'}
         if current_user.UserType==3:
@@ -87,7 +87,7 @@ class Activity(Base,Record):
             ,[5,["Price","OnlinePayment"]]]}
         Tabs[1] = {"Name":"Horarios","Fields": [[0,["Schedules"]]]}
         Tabs[2] = {"Name":"Curso/Evento",'Level':[0,1,2],"Fields": [[0,["MaxPersons","Image"]],[1,["Description"]]],'ShowIf':['Type',["1","2"],-1]}
-        Tabs[3] = {"Name":"Clientes",'Level':[0,1,2],"Fields": [[0,["Users"]]],'ShowIf':['Type',["1","2"],-1]}
+        Tabs[3] = {"Name":"Participantes",'Level':[0,1,2],"Fields": [[0,["Users"]]],'ShowIf':['Type',["1","2"],-1]}
         return Tabs
 
     @classmethod
@@ -143,7 +143,7 @@ class Activity(Base,Record):
         else:
             records = records.with_entities(cls.Comment, UserProf.id.label('ProfId'), ActivitySchedules.TransDate \
                 ,ActivitySchedules.StartTime , ActivitySchedules.EndTime, cls.id, cls.Status, UserCust.id.label('CustId')\
-                , cls.CompanyId, Service.id.label('ServiceId'), cls.Type)
+                , cls.CompanyId, Service.id.label('ServiceId'), cls.Type, UserCust.Name.label('CustName'))
         if not custId and current_user.UserType in (1,2):
             records = records.filter(Activity.CompanyId==current_user.CompanyId)
         if order_by and desc: records = records.order_by(ActivitySchedules.TransDate.desc())
@@ -179,7 +179,11 @@ class Activity(Base,Record):
 
     @classmethod
     def recordListFilters(cls):
-        return ['Type','ServiceId','Status','ProfId']
+        if current_user.UserType==2:
+            return ['Type','ServiceId','Status','CustId']
+        if current_user.UserType==3:
+            return ['Type','ServiceId','Status','ProfId']
+        return ['Type','ServiceId','Status','ProfId','CustId']
 
     def defaults(self):
         if current_user.UserType in (0,1,2):
