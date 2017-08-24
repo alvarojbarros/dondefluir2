@@ -49,6 +49,11 @@ class Activity(Base,Record):
     CONFIRMED = 1
     CANCELLED = 2
 
+    TYPE_MEETING = 0
+    TYPE_COURSE = 1
+    TYPE_EVENT = 2
+    TYPE_BLOCK = 3
+
     def __init__(self):
         super(self.__class__,self).__init__()
         #super().__init__()
@@ -83,11 +88,17 @@ class Activity(Base,Record):
     @classmethod
     def htmlView(cls):
         Tabs = {}
-        Tabs[0] = {"Name":"Información", "Fields": [[0,["CompanyId","ProfId"]],[4,["Type","Comment"]],[2,["CustId","ServiceId","Status"]] \
-            ,[5,["Price","OnlinePayment"]]]}
-        Tabs[1] = {"Name":"Horarios","Fields": [[0,["Schedules"]]]}
-        Tabs[2] = {"Name":"Curso/Evento",'Level':[0,1,2],"Fields": [[0,["MaxPersons","Image"]],[1,["Description"]]],'ShowIf':['Type',["1","2"],-1]}
-        Tabs[3] = {"Name":"Participantes",'Level':[0,1,2],"Fields": [[0,["Users"]]],'ShowIf':['Type',["1","2"],-1]}
+        if current_user.UserType==3:
+            pass
+            Tabs[0] = {"Name":"Información", "Fields": [[0,["CompanyId","ProfId"]],[4,["Type","Comment"]],[2,["ServiceId","Status"]] \
+                ,[5,["Price","OnlinePayment"]]]}
+            Tabs[1] = {"Name": "Horarios", "Fields": [[0, ["Schedules"]]]}
+        else:
+            Tabs[0] = {"Name":"Información", "Fields": [[0,["CompanyId","ProfId"]],[4,["Type","Comment"]],[2,["CustId","ServiceId","Status"]] \
+                ,[5,["Price","OnlinePayment"]]]}
+            Tabs[1] = {"Name":"Horarios","Fields": [[0,["Schedules"]]]}
+            Tabs[2] = {"Name":"Curso/Evento",'Level':[0,1,2],"Fields": [[0,["MaxPersons","Image"]],[1,["Description"]]],'ShowIf':['Type',["1","2"],-1]}
+            Tabs[3] = {"Name":"Participantes",'Level':[0,1,2],"Fields": [[0,["Users"]]],'ShowIf':['Type',["1","2"],-1]}
         return Tabs
 
     @classmethod
@@ -182,7 +193,7 @@ class Activity(Base,Record):
         if current_user.UserType==2:
             return ['Type','ServiceId','Status','CustId']
         if current_user.UserType==3:
-            return ['Type','ServiceId','Status','ProfId']
+            return ['CompanyId','ServiceId','Status','ProfId']
         return ['Type','ServiceId','Status','ProfId','CustId']
 
     def defaults(self):
@@ -399,6 +410,54 @@ class Activity(Base,Record):
             return records
         else:
             return TableClass.getRecordList(TableClass)
+
+    @classmethod
+    def getLinksTo(self):
+        res = {'CompanyId':{},'ProfId':{},'ServiceId':{},'Type':{},'Status':{},'CustId':{}}
+        session = Session()
+        records = session.query(Company)
+        if current_user.UserType>0:
+            records = records.filter_by(id=current_user.CompanyId)
+        print(records)
+        for record in records:
+            res['CompanyId'][record.id] = [record.Name,record.Closed]
+
+        records = session.query(User)
+        if current_user.UserType>0:
+            records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType<3)
+        for record in records:
+            res['ProfId'][record.id] = [record.Name,record.Closed]
+
+        records = session.query(User)
+        if current_user.UserType>0:
+            records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType==3)
+        for record in records:
+            res['CustId'][record.id] = [record.Name,record.Closed]
+
+        if self.ProfId:
+            records = session.query(UserService)\
+                .filter_by(UserId=self.ProfId)\
+                .join(Service,UserService.ServiceId==Service.id)\
+                .with_entities(Service.id,Service.Name)
+        else:
+            records = session.query(UserService).join(Service,UserService.ServiceId==Service.id)\
+                .filter_by(CompanyId=self.CompanyId)\
+                .with_entities(Service.id,Service.Name)
+        for record in records:
+            res['ServiceId'][record.id] = [record.Name,0]
+
+        res['Type'][self.TYPE_MEETING] = ['Cita',0]
+        res['Type'][self.TYPE_COURSE] = ['Curso',0]
+        res['Type'][self.TYPE_EVENT] = ['Evento',0]
+        res['Type'][self.TYPE_BLOCK] = ['Bloqueo de Horarios',0]
+
+        res['Status'][self.REQUESTED] = ['Solicitada',0]
+        res['Status'][self.CANCELLED] = ['Confirmada',0]
+        res['Status'][self.CONFIRMED] = ['Cancelada',0]
+
+
+        session.close()
+        return res
 
     @classmethod
     def getRecordTitle(self):

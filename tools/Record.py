@@ -8,6 +8,50 @@ from flask_login import current_user
 import copy
 import threading
 
+
+def toJSONValue(class_type,value):
+    if class_type== 'Integer':
+        value = value if (value!=None) else ''
+    elif class_type == 'Boolean':
+        value = True if value else False
+    elif class_type== 'Float':
+        value = "%.2f" % value if value else ''
+    elif class_type== 'String':
+        value = value if value else ''
+    elif class_type== 'Variant':
+        value = value if value else ''
+    elif class_type== 'DateTime':
+        value = value.strftime("%Y-%m-%dT%H:%M:%S") if value else ''
+    elif class_type== 'Date':
+        value = value.strftime("%Y-%m-%d") if value else ''
+    elif class_type== 'Time':
+        value = value.strftime("%H:%M:%S") if value else ''
+    return value
+
+def fromJSONValue(class_type,value):
+    if class_type == 'Integer':
+        value = int(value)
+    elif class_type == 'Boolean':
+        value = True if value=='true' else False
+    elif class_type == 'Float':
+        value = float(value)
+    elif class_type == 'String':
+        pass
+    elif class_type == 'Variant':
+        pass
+    elif class_type == 'DateTime':
+        value = stringToDateTime(value)
+    elif class_type == 'Date':
+        value = stringToDate(value)
+    elif class_type == 'Time':
+        value = stringToTime(value)
+    return value
+
+def getRowById(detail,id):
+    for row in detail:
+        if str(row.id) == id:
+            return row
+
 class Record(object):
     syncVersion = Column(Integer)
 
@@ -17,6 +61,68 @@ class Record(object):
         res['syncVersion'] = {'Type': 'integer','Hidde': True}
         res['id'] = {'Type': 'integer','Hidde': True}
         return res
+
+    @classmethod
+    def getFields(cls):
+        res = {}
+        for column in cls.__table__.columns:
+            res[column.key] = column.type.__class__.__name__
+        relationships = cls.__mapper__.relationships
+        for relational in relationships.items():
+            res[relational[0]] = {}
+            for r_column in relational[1].table.columns:
+                res[relational[0]][r_column.key] = r_column.type.__class__.__name__
+        return res
+
+    def toJSON(self):
+        res = {}
+        for column in self.__table__.columns:
+            value = self.__getattribute__(column.key)
+            res[column.key] = toJSONValue(column.type.__class__.__name__, value)
+        relationships = self.__mapper__.relationships.keys()
+        for relational in relationships:
+            res[relational] = [row.toJSON() for row in self.__getattribute__(relational)]
+        return res
+
+    def fromJSON(self,json):
+        for column in self.__table__.columns:
+            value = json.get(column.key,None)
+            if value:
+                value = fromJSONValue(column.type.__class__.__name__ ,value)
+                self.__setattr__(column.key,value)
+        relationships = self.__mapper__.relationships
+        for relational in relationships.items():
+            relational_key = relational[0]
+            detail = self.__getattribute__(relational_key)
+
+            json_rows = json.get(relational_key, [])
+
+            #delete missed rows
+            missed_rows = []
+            for row in detail:
+                if str(row.id) not in [json_row.get('id','') for json_row in json_rows]:
+                    missed_rows.append(row)
+            for row in missed_rows:
+                detail.remove(row)
+
+            for json_row in json_rows:
+                id = json_row.get('id','')
+                detail_row = None
+                if id:
+                    #update existing rows
+                    detail_row = getRowById(detail,id)
+                else:
+                    RowClass = relational[1].mapper.class_
+                    detail_row = RowClass()
+                    detail.append(detail_row)
+                if detail_row:
+                    for r_column in relational[1].table.columns:
+                        row_name = r_column.key
+                        value = json_row.get(row_name, None)
+                        if value:
+                            value = fromJSONValue(r_column.type.__class__.__name__, value)
+                            detail_row.__setattr__(r_column.key, value)
+
 
     def defaults(self):
         pass
@@ -206,6 +312,10 @@ class Record(object):
         session.close()
         return record
 
+    @classmethod
+    def getLinksTo(self):
+        return {}
+
     def getLinkToFromRecord(self,TableClass):
         return TableClass.getRecordList(TableClass)
 
@@ -233,7 +343,7 @@ class DetailRecord(object):
     @classmethod
     def htmlView(cls):
         rows = {}
-        Tabs[0] = cls.fieldsDefinition().keys()
+        rows[0] = cls.fieldsDefinition().keys()
         return rows
 
     @classmethod
@@ -247,3 +357,12 @@ class DetailRecord(object):
     @classmethod
     def getUserFieldsReadOnly(cls,fieldname):
         return 0
+
+    def toJSON(self):
+        res = {}
+        for column in self.__table__.columns:
+            value = self.__getattribute__(column.key)
+
+            res[column.key] = toJSONValue(column.type.__class__.__name__ ,value)
+        return res
+

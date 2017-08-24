@@ -65,4 +65,11 @@ class Notification(Base,Record):
     def afterSaveJS(self):
         return 'getNotifications()'
 
+    @classmethod
+    def getLinksTo(cls):
+        res = {'Status': {}}
+        res['Status'][0] = ['No Leída',0]
+        res['Status'][1] = ['Leída',0]
+        return res
+
 Base.metadata.create_all(engine)

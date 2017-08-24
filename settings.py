@@ -10,7 +10,7 @@ templates = {
 'home_template':'home.html'}
 
 app_name = "Donde Fluir"
-app_folder = '/home/ubuntu/envflask/flaskapp'
+app_folder = '/home/ubuntu/envflask/flaskapp2'
 app_folder = 'C:/Datos/Flask/dondefluir2'
 images_url = '%s/static' % app_folder
 images_folder = 'files'

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_login import UserMixin
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Time, DateTime, Index, or_, Date
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Time, DateTime, Index, or_, Date, Boolean
 from tools.dbconnect import engine,MediumText,Session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -11,6 +11,7 @@ import tools.DBTools
 from tools.Record import Record,DetailRecord
 from sqlalchemy.ext.declarative import declarative_base
 from tools.Tools import *
+import enum
 
 Base = declarative_base()
 
@@ -19,14 +20,14 @@ class User(Base,Record,UserMixin):
     id = Column(Integer, primary_key=True,autoincrement=True)
     Email = Column(String(50))
     Password = Column(String(20))
-    Active = Column(Integer)
+    Active = Column(Boolean)
     UserType = Column(Integer)
     CompanyId = Column(Integer, ForeignKey(Company.id))
     Name = Column(String(40))
     Title = Column(String(40))
-    FindMe = Column(Integer)
+    FindMe = Column(Boolean)
     EditSchedule = Column(Integer)
-    FixedSchedule = Column(Integer)
+    FixedSchedule = Column(Boolean)
     MinTime = Column(Integer)
     MaxTime = Column(Integer)
     ShowDays = Column(Integer)
@@ -35,22 +36,27 @@ class User(Base,Record,UserMixin):
     City = Column(String(100))
     Address = Column(String(100))
     ImageProfile = Column(String(100))
-    NtfActivityCancel = Column(Integer)
-    NtfActivityNew = Column(Integer)
-    NtfActivityChange = Column(Integer)
-    NtfActivityReminder = Column(Integer)
+    NtfActivityCancel = Column(Boolean)
+    NtfActivityNew = Column(Boolean)
+    NtfActivityChange = Column(Boolean)
+    NtfActivityReminder = Column(Boolean)
     NtfReminderDays = Column(Integer)
     NtfReminderHours = Column(Integer)
     ShowFromDays = Column(Integer)
-    NtfActivityConfirm = Column(Integer)
-    NtfActivityNewCust = Column(Integer)
-    Closed = Column(Integer)
+    NtfActivityConfirm = Column(Boolean)
+    NtfActivityNewCust = Column(Boolean)
+    Closed = Column(Boolean)
     CreatedDate = Column(Date)
 
     Schedules = relationship('UserSchedule', cascade="all, delete-orphan")
 
     #def __repr__(self):
     #    return "<User(Active='%s', AcessGroup='%s', Password='%s')>" % (self.Active, self.AcessGroup, self.Password)
+
+    SUPER = 0
+    ADMIN = 1
+    PROF = 2
+    CUST = 3
 
     @classmethod
     def fieldsDefinition(cls):
@@ -190,7 +196,6 @@ class User(Base,Record,UserMixin):
         self.EditSchedule = EditSchedule
 
     def check(self):
-        if hasattr(self,"_new") and not self.id: return Error("Completar Código")
         if self.UserType==3:
             self.CompanyId = None
         if current_user.UserType in (1,2) and self.UserType in (1,2,3):
@@ -259,20 +264,33 @@ class User(Base,Record,UserMixin):
         session = Session()
         record = session.query(UserFavorite).filter_by(UserId=current_user.id,FavoriteId=self.id).first()
         if record and record.Checked:
+            session.close()
             return 1
+        session.close()
         return 0
-
-    def getField(self,fieldname):
-        if getattr(self,fieldname): return getattr(self,fieldname)
-        elif self.CompanyId:
-            compay = Company.getRecordById(self.CompanyId)
-            if company and getattr(company,fieldname):
-                return getattr(company,fieldname)
 
     @classmethod
     def getRecordTitle(self):
         return ['Name']
 
+    @classmethod
+    def getLinksTo(self):
+        res = {}
+        res['UserType'] = {self.CUST: 'Cliente'}
+        if current_user.UserType==0:
+            res['UserType'][self.SUPER] = 'Super'
+            res['UserType'][self.ADMIN] = 'Administrador'
+        if current_user.UserType==1:
+            res['UserType'][self.ADMIN] = 'Administrador'
+            res['UserType'][self.PROF] = 'Profesional'
+        res['CompanyId'] = {}
+        session = Session()
+        records = session.query(Company)
+        for record in records:
+            res['CompanyId'][record.id] = [record.Name,record.Closed]
+        session.close()
+
+        return res
 
 class UserSchedule(Base,DetailRecord):
     __tablename__ = 'userschedule'
@@ -280,13 +298,13 @@ class UserSchedule(Base,DetailRecord):
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     StartTime = Column(Time)
     EndTime = Column(Time)
-    d1 = Column(Integer)
-    d2 = Column(Integer)
-    d3 = Column(Integer)
-    d4 = Column(Integer)
-    d5 = Column(Integer)
-    d6 = Column(Integer)
-    d7 = Column(Integer)
+    d1 = Column(Boolean)
+    d2 = Column(Boolean)
+    d3 = Column(Boolean)
+    d4 = Column(Boolean)
+    d5 = Column(Boolean)
+    d6 = Column(Boolean)
+    d7 = Column(Boolean)
 
     @classmethod
     def fieldsDefinition(cls):

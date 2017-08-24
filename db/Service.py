@@ -28,9 +28,11 @@ class Service(Base,Record):
         res['Price'] = {'Type': 'flaot', 'Label': 'Precio', 'Input': 'number'}
         return res
 
+    def beforeInsert(self):
+        self.CompanyId = current_user.CompanyId
+        return True
+
     def check(self):
-        if hasattr(self,"_new"):
-            self.CompanyId = current_user.CompanyId
         if not self.Name: return Error("Debe Completar el Nombre")
         return True
 
@@ -51,5 +53,17 @@ class Service(Base,Record):
     @classmethod
     def getRecordTitle(self):
         return ['Name']
+
+    @classmethod
+    def getLinksTo(self):
+        res = {}
+        res['CompanyId'] = {}
+        session = Session()
+        records = session.query(Company)
+        for record in records:
+            res['CompanyId'][record.id] = [record.Name,0]
+        session.close()
+        return res
+
 
 Base.metadata.create_all(engine)

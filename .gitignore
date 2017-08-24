@@ -53,3 +53,8 @@ dondefluir/static/files/User/ImageProfile.6
 *.pyc
 tools/__pycache__/DBTools.cpython-35.pyc
 *.pyc
+*.pyc
+*.pyc
+__pycache__/settings.cpython-35.pyc
+*.pyc
+*.pyc

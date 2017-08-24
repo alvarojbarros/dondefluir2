@@ -61,6 +61,8 @@ class Company(Base,Record):
     def canUserDelete(self):
         if current_user.UserType == 0:
             return True
+        else:
+            return False
 
     @classmethod
     def getRecordTitle(self):

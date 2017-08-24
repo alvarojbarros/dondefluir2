@@ -16,7 +16,7 @@ class UserFavorite(Base,Record):
     UserId = Column(Integer, ForeignKey(User.id), nullable=False)
     FavoriteId = Column(Integer, ForeignKey(User.id), nullable=False)
     CompanyId = Column(Integer, ForeignKey(Company.id), nullable=False)
-    Checked = Column(Boolean)
+    Checked = Column(Integer)
 
     def beforeInsert(self):
         Record.beforeInsert(self)
@@ -30,7 +30,7 @@ class UserFavorite(Base,Record):
         res['id'] = {'Type': 'text', 'Hidde': True}
         res['UserId'] = {'Type': 'integer'}
         res['FavoriteId'] = {'Type': 'integer'}
-        res['Checked'] = {'Type': 'boolean'}
+        res['Checked'] = {'Type': 'integer'}
         return res
 
 Index('UserFavorite', UserFavorite.UserId, UserFavorite.FavoriteId, unique=True)

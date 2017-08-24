@@ -3,7 +3,7 @@
 {% block fields_view %}
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false" >
     <td v-for="row in record.Columns">
-        <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'activityform.html\',\'' + record.id + '\')'">
+        <a href="#" :onClick="'showActivity('+record.id+')'">
             {%raw%}{{row}}{%endraw%}
         </a>
     </td>
@@ -12,18 +12,23 @@
 
 {% block button_script %}
 <script type=text/javascript>
-  columns = "{0:('Horario','.TransDate de .StartTime a .EndTime')" +
-    ",1:('Servicio','.ServiceId')" +
-    ",2:('Estado','.Status')"
+    columns = "{0:('Horario','.TransDate de .StartTime a .EndTime')"
+    columns += ",1:('Servicio','.ServiceId')"
+    columns += ",2:('Estado','.Status')"
+  if ({{current_user.UserType}}==0){
+    columns += ",3:('Profesional','.ProfId')"
+    columns += ",4:('Cliente','.CustId')";
+  }
   if ({{current_user.UserType}}==1){
-    columns += ",3:('Profesional','.ProfId')";
+    columns += ",3:('Profesional','.ProfId')"
     columns += ",4:('Cliente','.CustId')";
   }
   if ({{current_user.UserType}}==2){
     columns += ",3:('Cliente','.CustId')";
   }
   if ({{current_user.UserType}}==3){
-    columns += ",3:('Profesional','.ProfId')";
+    columns += ",3:('Empresa','.CompanyId')"
+    columns += ",4:('Profesional','.ProfId')"
   }
   columns += "}";
 

@@ -1,3 +1,13 @@
 {% extends "recordtable.html" %}
 
+{% block fields_view %}
+  <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
+      <td v-for="row in record.Columns">
+          <a href="#" :onClick="'showService(' + record.id + ')'">
+            {%raw%}{{row}}{%endraw%}
+          </a>
+      </td>
+  </tr>
+{% endblock %}
+
 

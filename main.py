@@ -227,74 +227,79 @@ def update_linkto():
     return jsonify(result=links)
 
 
-@app.route('/_save_record')
-def save_record():
-    table = request.args.get('TableName')
-    TableClass = getTableClass(table)
-    fields = {}
-    for key in request.args:
-        if key not in ['TableName','_state']:
-            fields[key] = request.args.get(key,None)
-            if fields[key]=='null': fields[key] = None
-    _id = request.args.get('id')
-    _state = int(request.args.get('_state'))
-
+def saveNewRecord(TableClass,fields):
+    del fields['id']
+    new_record = TableClass()
+    getDetailDict(fields)
     session = Session()
     session.expire_on_commit = False
-    if not _state:
-        if not _id:
-            del fields['id']
-        new_record = TableClass()
-        getDetailDict(fields)
-        for key in fields:
-            #defValue = TableClass.getDefValue(key)
-            setValue(new_record,key,fields.get(key,None))
-        new_record._new = True
-        if not new_record.beforeInsert():
-            return jsonify(result={'res': False,'Error':'Error en Campos'})
-        res = new_record.check()
-        if not res:
-            return jsonify(result={'res': False,'Error':str(res)})
-        session.add(new_record)
-        res = new_record.afterInsert()
-        if not res:
-            return jsonify(result={'res': False,'Error':str(res)})
-        try:
-            session.commit()
-        except Exception as e:
-            session.rollback()
-            session.close()
-            return jsonify(result={'res': False,'Error':str(e)})
-        new_record.callAfterCommitInsert()
+    new_record.fromJSON(fields)
+    if not new_record.beforeInsert():
+        return jsonify(result={'res': False, 'Error': 'Error en Campos'})
+    res = new_record.check()
+    if not res:
+        return jsonify(result={'res': False, 'Error': str(res)})
+    session.add(new_record)
+    res = new_record.afterInsert()
+    if not res:
+        return jsonify(result={'res': False, 'Error': str(res)})
+    try:
+        session.commit()
+    except Exception as e:
+        session.rollback()
         session.close()
-        return jsonify(result={'res':True,'id':new_record.id,'syncVersion':new_record.syncVersion})
-    else:
-        record = session.query(TableClass).filter_by(id=_id).first()
-        if not record.checkSyncVersion(fields.get('syncVersion',None)):
-            return jsonify(result={'res': False,'Error':'Otro Usuario ha modoficado el Registro'})
-        getDetailDict(fields)
-        if not record:
-            return jsonify(result={'res': False,'Error':'Registro no Encontrado'})
-        record.setOldFields()
-        for key in fields:
-            setValue(record,key,fields.get(key,None))
-        res = record.check()
-        if not res:
-            return jsonify(result={'res': False,'Error':str(res)})
-        record.syncVersion += 1
-        res = record.afterUpdate()
-        if not res:
-            return jsonify(result={'res': False,'Error':str(res)})
-        try:
-            session.commit()
-        except Exception as e:
-            session.rollback()
-            session.close()
-            return jsonify(result={'res': False,'Error':str(e)})
-        record.callAfterCommitUpdate()
+        return jsonify(result={'res': False, 'Error': str(e)})
+    new_record.callAfterCommitInsert()
+    RunJS = new_record.afterSaveJS()
+    session.close()
+    return jsonify(result={'res': True, 'record': new_record.toJSON(), 'RunJS': RunJS})
+
+def updateRecord(TableClass,fields):
+    getDetailDict(fields)
+    session = Session()
+    session.expire_on_commit = False
+    record = session.query(TableClass).filter_by(id=fields['id']).first()
+    if not record:
+        return jsonify(result={'res': False, 'Error': 'Registro no Encontrado'})
+    if not record.checkSyncVersion(fields.get('syncVersion', None)):
+        return jsonify(result={'res': False, 'Error': 'Otro Usuario ha modoficado el Registro'})
+    record.fromJSON(fields)
+    res = record.check()
+    if not res:
+        return jsonify(result={'res': False, 'Error': str(res)})
+    record.syncVersion += 1
+    res = record.afterUpdate()
+    if not res:
+        return jsonify(result={'res': False, 'Error': str(res)})
+    try:
+        session.commit()
+    except Exception as e:
+        session.rollback()
         session.close()
-        RunJS = record.afterSaveJS()
-        return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion,'RunJS':RunJS})
+        return jsonify(result={'res': False, 'Error': str(e)})
+    record.callAfterCommitUpdate()
+    session.close()
+    RunJS = record.afterSaveJS()
+    return jsonify(result={'res': True, 'record': record.toJSON(), 'RunJS': RunJS})
+
+
+@app.route('/_save_record',methods=["GET", "POST"])
+def save_record():
+    if request.method == 'POST':
+        table = request.form.get('TableName')
+        TableClass = getTableClass(table)
+        res = {}
+        for key in request.form:
+            if key not in ['TableName','_state']:
+                res[key] = request.form.get(key,None)
+                if res[key]=='null': res[key] = None
+        id = request.form.get('id',None)
+        session = Session()
+        session.expire_on_commit = False
+        if not id:
+            return saveNewRecord(TableClass,res)
+        else:
+            return updateRecord(TableClass,res)
 
 @app.route('/_delete_record')
 def delete_record():
@@ -332,6 +337,25 @@ def get_template():
         functions = request.args.get('Functions')
     res = render_template(template,var=var)
     return jsonify(result={'html':res, 'functions': functions})
+
+def getRecordByFilters2(table,filters):
+    TableClass = getTableClass(table)
+    session = Session()
+    if not filters:
+        record = TableClass()
+        record.defaults()
+    else:
+        record = session.query(TableClass).filter_by(**filters).first()
+        if not record:
+            return {'res':False}
+    fields = TableClass.getFields()
+    recordTitle = TableClass.getRecordTitle()
+    canEdit = TableClass.canUserEdit(record)
+    canDelete = TableClass.canUserDelete()
+    links = TableClass.getLinksTo()
+    res = record.toJSON()
+    session.close()
+    return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
 
 def getRecordByFilters(table,filters,NotFilterFields=False):
     #NotFilterFields = False
@@ -398,13 +422,13 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
 @app.route('/_get_record')
 def get_record():
     table = request.args.get('TableName')
-    _state = request.args.get('_state','')
-    NotFilterFields = request.args.get('NotFilterFields',None)
+    #NotFilterFields = request.args.get('NotFilterFields',None)
     filters = {}
     for f in request.args:
         if f not in ['TableName','NotFilterFields','_state']:
             filters[f] = request.args[f]
-    res = getRecordByFilters(table,filters,NotFilterFields)
+    #res = getRecordByFilters(table,filters,NotFilterFields)
+    res = getRecordByFilters2(table,filters)
     return jsonify(result=res)
 
 @app.route('/_get_current_user_type')

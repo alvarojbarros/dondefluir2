@@ -71,7 +71,7 @@
         <li class="dropdown" id="user-menu">
            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{image_url}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{current_user.Name}}</b> </a>
            <ul class="dropdown-menu dropdown-user animated flipInY">
-              <li><a href="#" onClick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><i class="ti-user"></i>  Perfil</a></li>
+              <li><a href="#" onClick="showProfile()"><i class="ti-user"></i>  Perfil</a></li>
               <li><a href="#" onClick="getTemplate({'Template':'changepwd.html','runFunction':'OpenCloseMenu()'})"><i class="ti-user"></i>  Modificar Password</a></li>
               <li><a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i>  Ayuda</a></li>
               <li><a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i>  Cerrar sesión</a></li>

@@ -7,7 +7,7 @@
 
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false && record.Closed==0" >
     <td v-for="row in record.Columns">
-        <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">
+        <a href="#" :onClick="'showUser(' + record.id + ')'">
             {%raw%}{{row}}{%endraw%}
         </a>
     </td>

@@ -27,7 +27,7 @@
 <div id="recordButtons">
   <div id="div-buttons">
   {% block buttons %}
-    <button v-if="canEdit==true" class="btn btn-info btn-rounded waves-effect waves-light m-r-10 m-b-10" onclick="saveRecord('record_form','{{var['Table']}}')" >
+    <button v-if="canEdit==true" class="btn btn-info btn-rounded waves-effect waves-light m-r-10 m-b-10" onclick="saveRecord('{{var['Table']}}')" >
       <span class="btn-label">
         <i class="fa fa-check">
         </i>
@@ -246,7 +246,7 @@
 
                 {% if getCanUserDeleteRow(var['Table']) %}
                   <div class="col-xs-12">
-                    <button :id="'delete'+index" v-on:click="removeRow(field,index)" type="button"
+                    <button :id="'delete'+index" :onclick="removeRow(field,index)" type="button"
                       class="btn btn-danger btn-rounded waves-effect waves-light m-r-10 m-b-10">
                       <span class="btn-label">
                         <i class="fa fa-minus">

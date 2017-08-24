@@ -29,9 +29,11 @@ class UserService(Base,Record):
         res['ServiceId'] = {'Type': 'integer', 'Label': 'Servicio', 'Input': 'combo','Level':[0,1],'LinkTo':{'Table':'Service','Show':['Name']}}
         return res
 
+    def beforeInsert(self):
+        self.CompanyId = current_user.CompanyId
+        return True
+
     def check(self):
-        if hasattr(self,"_new"):
-            self.CompanyId = current_user.CompanyId
         if not self.UserId: return Error("Completar Usuario")
         if not self.ServiceId: return Error("Completar Servicio")
         return True
@@ -49,6 +51,27 @@ class UserService(Base,Record):
     @classmethod
     def getRecordTitle(self):
         return ['UserId','ServiceId']
+
+    @classmethod
+    def getLinksTo(self):
+        res = {}
+        res['ServiceId'] = {}
+        session = Session()
+        records = session.query(Service)
+        if current_user.UserType>0:
+            records = records.filter_by(CompanyId=current_user.CompanyId)
+        for record in records:
+            res['ServiceId'][record.id] = [record.Name,0]
+        session.close()
+
+        res['UserId'] = {}
+        records = session.query(User).filter(User.UserType<3)
+        if current_user.UserType>0:
+            records = records.filter_by(CompanyId=current_user.CompanyId)
+        for record in records:
+            res['UserId'][record.id] = [record.Name,0]
+        session.close()
+        return res
 
 
 Index('UserService', UserService.UserId, UserService.ServiceId, unique=True)

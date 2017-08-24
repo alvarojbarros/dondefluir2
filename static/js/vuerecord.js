@@ -14,16 +14,13 @@ var vue_record = new Vue({
   el: '#recordFields',
   data: {
     values: '',
+    record: '',
+    links: '',
+    fields: '',
     table: '',
     oldRecord: '',
     favorite: '',
     classname: '',
-  },
-
-  methods: {
-	removeRow: function (field,index) {
-		this.values.record[field].splice(index,1);
-	},
   },
 
   watch: {

@@ -88,7 +88,7 @@ function setProffesional(id,current_user_id,add_activities){
 
 function setFavorite(element,t){
   if (t=='0'){favId = vue_record.values.id}
-  if (t=='1'){favId = vue_record.values.record.id}
+  if (t=='1'){favId = vue_record.record.id}
   $.getJSON($SCRIPT_ROOT + '/_set_favorite',{favId: favId}, function(data) {
       if (data.result['res']==true){
 		  favorite = document.getElementById('Favorite');
@@ -96,7 +96,7 @@ function setFavorite(element,t){
 		 	  if (data.result['Status']==true) {
 		 	  	  if (t=="1"){
 					  vue_record.values.fields.Favorite.Label = 'Eliminar de Favoritos'
-					  vue_record.values.record.Favorite = 1
+					  vue_record.record.Favorite = 1
 					  vue_record.values.fields.Favorite.Class = 'btn btn-danger btn-rounded waves-effect waves-light m-t-20'
 				  }
 		 	  	  if (t=="0"){
@@ -360,10 +360,10 @@ function setServicePrice(){
 }
 
 function getTemplateM(vars){
-	vars['Functions'] = 'runSearchBoxOnKey()'
 	OpenCloseMenu();
 	getTemplate(vars,function(){
 		vue_title.Title = vars['Name'];
+		runSearchBoxOnKey()
 	});
 }
 
@@ -432,6 +432,3 @@ function getNewUsersReport(){
 	getTemplateM(vars)
 }
 
-function getMyCompany(company_id){
-	getRecordForm('Company','recordform.html',company_id)
-}

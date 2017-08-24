@@ -32,7 +32,8 @@ function newRecord(Table,TemplateName) {
     var vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate(vars,function(){
 		getRecord({TableName: Table},function (data){
-			Vue.set(vue_record,'values', data);
+			Vue.set(vue_record,'record', data.record);
+			Vue.set(vue_record,'links', data.links);
 			Vue.set(vue_record,'table', Table);
 			Vue.set(vue_buttons,'canEdit', data.canEdit);
 			Vue.set(vue_buttons,'canDelete', data.canDelete);
@@ -79,34 +80,42 @@ function sendFiles(table,id){
 	});
 }
 
-function saveRecord(form_id,table) {
-    fields = vue_record.values.record;
-    fields['TableName'] = table;
+function saveRecord(table) {
+    fields = vue_record.record;
+    fields.TableName = table;
   	var _state = document.getElementById('_state');
-    fields['_state'] = _state.value
-    $.getJSON($SCRIPT_ROOT + '/_save_record', fields, function(data) {
-      	res = data.result['res']
+    fields._state = _state.value
+
+	$.ajax({
+	  type: "POST",
+	  url: "/_save_record",
+	  data: fields,
+	  success: function (data) {
+      	res = data.result.res
       	messages.error_msg  = '';
       	if (res){
-      		vue_record.values.record.id = data.result['id'];
-      		vue_record.values.record.syncVersion = data.result['syncVersion'];
-      		vue_record.values._state = 1
-      		//setCustomVue(table,data.result)
-      		if (data.result['Name']){
-				vue_title.recordName = data.result['Name']
+      		vue_record.record = data.result.record;
+      		vue_record._state = 1
+      		if (data.result.Name){
+				vue_title.recordName = data.result.Name
 			}else{
-				vue_title.recordName = data.result['id']
+				vue_title.recordName = data.result.id
 			}
-      		sendFiles(table,data.result['id']);
+      		sendFiles(table,data.result.id);
 			setMessageTimeout('Registro Grabado')
       		if (data.result.RunJS){
 				var callback_function = new Function(data.result.RunJS);
 				callback_function();
 			}
 	  	}else{
-			messages.error_msg = data.result['Error'];
+			messages.error_msg = data.result.Error;
 		};
-    });
+	  },
+	  dataType: "json"
+	});
+
+    //$.getJSON($SCRIPT_ROOT + '/_save_record', fields, function(data) {
+    //});
 
 };
 
@@ -284,16 +293,18 @@ function checkFileSize(e){
 }
 
 function addNewRow(field){
-	fields = vue_record.values.fields[field].fieldsDefinition;
+	fields = vue_record.fields[field];
 	new_row = {}
 	for (dfield in fields){
-		if (dfield.substring(0,2)=='__'){
-			continue;
-		}
 		new_row[dfield] = null;
 	}
-	vue_record.values.record[field].push(new_row)
+	vue_record.record[field].push(new_row)
 }
+
+function removeRow(field,index) {
+	vue_record.record[field].splice(index,1);
+}
+
 
 function AddToLocalStorage(html){
 
@@ -511,4 +522,90 @@ function RunReport(){
 
 function setTableColumns(columns){
     vue_recordlist.columns = columns;
+}
+
+function setVue(data){
+    Vue.set(vue_record,'record', data.record);
+    Vue.set(vue_record,'links', data.links);
+    Vue.set(vue_record,'fields', data.fields);
+    Vue.set(vue_title,'Title', data.record.Name);
+}
+
+function showProfile(){
+	vars = {'Template': 'userform.html','Profile': '1'}
+	getTemplate(vars,function(){
+        getRecord({TableName: 'User',id: vue_user_menu.current_user_id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', true);
+        })
+	});
+}
+
+function showUser(user_id){
+	vars = {'Template': 'userform.html','Profile': '0'}
+	getTemplate(vars,function(){
+        getRecord({TableName: 'User',id: user_id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', data.canEdit);
+            Vue.set(vue_buttons,'canDelete', data.canDelete);
+        })
+	});
+}
+
+function showCompany(company_id){
+	vars = {'Template': 'companyform.html'}
+	getTemplate(vars,function(){
+        getRecord({TableName: 'Company',id: company_id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', data.canEdit);
+            Vue.set(vue_buttons,'canDelete', data.canDelete);
+        })
+	});
+}
+
+function showService(id){
+	vars = {'Template': 'serviceform.html'}
+	getTemplate(vars,function(){
+        getRecord({TableName: 'Service',id: id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', data.canEdit);
+            Vue.set(vue_buttons,'canDelete', data.canDelete);
+        })
+	});
+}
+
+function showUserService(id){
+	vars = {'Template': 'userserviceform.html'}
+	getTemplate(vars,function(){
+        getRecord({TableName: 'UserService',id: id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', data.canEdit);
+            Vue.set(vue_buttons,'canDelete', data.canDelete);
+        })
+	});
+}
+
+function showActivity(id){
+	vars = {'Template': 'activityform.html'}
+	getTemplate(vars,function(){
+        getRecord({TableName: 'Activity',id: id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', data.canEdit);
+            Vue.set(vue_buttons,'canDelete', data.canDelete);
+        })
+	});
+}
+
+function showNotification(id,set_read){
+	vars = {'Template': 'notificationform.html'}
+	getTemplate(vars,function(){
+        if (set_read){
+            setNotificationRead(id);
+        }
+        getRecord({TableName: 'Notification',id: id},function (data){
+            setVue(data);
+            Vue.set(vue_buttons,'canEdit', data.canEdit);
+            Vue.set(vue_buttons,'canDelete', data.canDelete);
+        })
+	});
 }
