@@ -25,24 +25,6 @@ class Notification(Base,Record):
         super(self.__class__,self).__init__()
         #super().__init__()
 
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['UserId'] = {'Type': 'integer','Hidde': True }
-        res['Comment'] = {'Type': 'text', 'Label': 'Comentario', 'Input':'text','Readonly':1}
-        res['Action'] = {'Type': 'text','Hidde': True}
-        res['Status'] = {'Type': 'integer', 'Label': 'Estado', 'Input': 'combo','Values': {0: 'No Leída',1: 'Leída'}}
-        res['TransDate'] = {'Type': 'datetime','Label':'Fecha', 'Input':'datetime','Readonly':1}
-        res['Description'] = {'Type': 'text', 'Label': 'Descripción','Input':'textarea','rows':'4','Readonly':1}
-        return res
-
-    @classmethod
-    def htmlView(cls):
-        Tabs = {}
-        Tabs[0] = {"Fields": [[0,["Comment"]],[1,["Status"]],[2,["Fecha"]],[3,["Description"]]]}
-        return Tabs
-
     def defaults(self):
         self.TransDate = now()
         self.Status = 0

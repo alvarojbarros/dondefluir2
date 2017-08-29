@@ -130,9 +130,9 @@
               <div class="white-box">
                 <div class="r-icon-stats text-center">
                   <i class="ti-user bg-megna"></i>
-                    <a href="#" onclick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><h3>PERFIL PROFESIONAL</h3></a>
-                    <a href="#" onclick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><strong>Completa tu perfil</strong></a> para que los clientes conozcan tus talentos.
-                    <a href="#" onclick="getRecordForm('User','recordform.html',id='{{current_user.id}}')"><strong>Configura los horarios de tu agenda</strong></a> y gestiona tu tiempo y tu espacio.
+                    <a href="#" onclick="showProfile()"><h3>PERFIL PROFESIONAL</h3></a>
+                    <a href="#" onclick="showProfile()"><strong>Completa tu perfil</strong></a> para que los clientes conozcan tus talentos.
+                    <a href="#" onclick="showProfile()"><strong>Configura los horarios de tu agenda</strong></a> y gestiona tu tiempo y tu espacio.
                 </div>
               </div>
             </div>
@@ -165,7 +165,7 @@
              <div>{%raw%}{{news}}{%endraw%}</div>
           </li>
           <li v-for="record in values" class="list-group-item">
-            <a href="#" :onClick="'getRecordForm(\'Notification\',\'recordform.html\',\'' + record.id + '\',\'setNotificationRead('+record.id+')\')'" >
+            <a href="#" :onClick="'showNotification(' + record.id + ',true)'" >
             {%raw%}{{record.TransDate}} - {{record.Comment}}{%endraw%}</a>
           </li>
          </div>
@@ -174,7 +174,7 @@
         <div class="white-box">
           <h3 class="box-title">Pr&oacute;ximas Actividades</h3>
           <li v-for="record in values" class="list-group-item">
-          <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'activityform.html\',\'' + record.id + '\')'">
+          <a href="#" :onClick="'showActivity(' + record.id + ')'">
             <div v-if="user_type==3">
               {%raw%}{{record.TransDate}} de {{record.StartTime}} a {{record.EndTime}} - {{record.ServiceId}} -
                 {{record.CompanyId}} - {{record.ProfId}} - {{record.Status}}{%endraw%}
@@ -200,7 +200,8 @@
 
 <script type=text/javascript>
   getCurrentUser(function(){
-    getRecordList('Activity','Comment,StartTime,EndTime,TransDate,id,Status,ServiceId,CustId,CompanyId,ProfId','5','TransDate');
+    columns = getActivityColumns({{current_user.UserType}})
+    getRecordList('Activity','Comment,StartTime,EndTime,TransDate,id,Status,ServiceId,CustId,CompanyId,ProfId','5','TransDate',false,columns);
   });
   setVueDashboard()
   Vue.set(vue_dashboard,'user_type',{{current_user.UserType}});

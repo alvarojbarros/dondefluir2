@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Boolean
 from tools.dbconnect import engine,Session
 from flask_login import current_user
 from db.Company import Company
@@ -15,18 +15,8 @@ class Service(Base,Record):
     id = Column(Integer, primary_key=True)
     Name = Column(String(100))
     CompanyId = Column(Integer, ForeignKey(Company.id), nullable=False)
-    OnlinePayment = Column(Integer)
+    OnlinePayment = Column(Boolean)
     Price = Column(Float)
-
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'text','Hidde': True,'Readonly':1}
-        res['Name'] = {'Type': 'text', 'Label': 'Nombre', 'Input': 'text'}
-        res['CompanyId'] = {'Type': 'integer', 'Label': 'Empresa', 'Input': 'combo','Level':[0],'LinkTo':{'Table':'Company','Show':['Name']}}
-        res['OnlinePayment'] = {'Type': 'integer', 'Label': 'Habilitar Pagos en línea', 'Input': 'checkbox'}
-        res['Price'] = {'Type': 'flaot', 'Label': 'Precio', 'Input': 'number'}
-        return res
 
     def beforeInsert(self):
         self.CompanyId = current_user.CompanyId

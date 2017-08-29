@@ -283,69 +283,6 @@ def objectToStringExport(fname,obj):
     f.write(jsonobj)
     f.close()
 
-def setValue(record,key,val):
-    if isinstance(val,list):
-        detailName = key
-        detail = getattr(record,detailName)
-        var = {}
-        ClassName = record.fieldsDefinition()[detailName]['Class']
-        exec('from %s.%s import %s as Detail' % (db_foder,record.__class__.__name__,ClassName),var)
-        Detail = var['Detail']
-
-        for drow in detail:
-            found = False
-            for row in val:
-                if row['id'] and int(row['id'])==drow.id:
-                    found = True
-                    break
-            if not found:
-                detail.remove(drow)
-
-        for row in val:
-            found = False
-            for drow in detail:
-                if row['id'] and int(row['id'])==drow.id:
-                    found = True
-                    break
-            if not found:
-                drow = Detail()
-                detail.append(drow)
-            for fname in row:
-                field = record.fieldsDefinition()[detailName]['fieldsDefinition'][fname]
-                dval = row[fname]
-                if field['Type']=='integer':
-                    if not dval or dval=='null':
-                        dval = None
-                    elif dval=='false':
-                        dval = 0
-                    elif dval=='true':
-                        dval = 1
-                    else:
-                        dval = int(dval)
-                if field['Type']=='time':
-                    if not dval or dval=='null':
-                        dval = None
-                setattr(drow,fname,dval)
-    else:
-        rdef = record.fieldsDefinition()
-        if key in rdef:
-            field = rdef[key]
-            if field['Type']=='integer':
-                if not val or val=='null':
-                    val = None
-                elif val=='false':
-                    val = 0
-                elif val=='true':
-                    val = 1
-                else:
-                    val = int(val)
-            elif field['Type'] in ('time','float'):
-                if not val or val=='null':
-                    val = None
-            if field['Type']=='text' and not val:
-                val = None
-            setattr(record,key,val)
-
 def getDetailDict(fields):
     to_remove = []
     to_add = []
@@ -437,7 +374,41 @@ def mapEnum(records,fvalues,fname):
         l.append(r)
     return l
 
-def setColumns(res,columns,filtersKeys,filters):
+
+def setColumns(records,links,filtersKeys,filters):
+    r = []
+    for column in records:
+        if column.__class__.__name__=='result':
+            columns = column.keys()
+        else:
+            columns = [c.key for c in column.__table__.columns]
+        row = {}
+        for key in columns:
+            value = getattr(column,key)
+            if isinstance(value,datetime):
+                value = value.strftime("%d/%m/%Y %H:%M")
+            elif isinstance(value,date):
+                value = value.strftime("%d/%m/%Y")
+            elif isinstance(value,time):
+                value = value.strftime("%H:%M")
+            elif (isinstance(value,int) or isinstance(value,str)) and key in links:
+                link_field = links[key]
+                if value in link_field:
+                    value = link_field[value][0]
+            row[key] = value
+
+            if key in filtersKeys:
+                if key not in filters:
+                    filters[key] = []
+                value = row[key]
+                if value not in filters[key]:
+                    filters[key].append(value)
+
+        row['_Skip'] = False
+        row['_Skip2'] = False
+        r.append(row)
+    return r
+
     for r in res:
         for key in r.keys():
             if key in filtersKeys:
@@ -446,12 +417,12 @@ def setColumns(res,columns,filtersKeys,filters):
                 value = r[key]
                 if value not in filters[key]:
                     filters[key].append(value)
-        r['_Skip'] = False
-        r['_Skip2'] = False
+        r.__setattr__('_Skip',False)
+        r.__setattr__('_Skip2',False)
         if columns:
             indexs = sorted(columns)
-            r['Columns'] = {}
-            r['Titles'] = {}
+            r.__setattr__('Columns', {})
+            r.__setattr__('Titles',{})
             for k in indexs:
                 value = columns[k][1]
                 column = columns[k][1]
@@ -460,8 +431,8 @@ def setColumns(res,columns,filtersKeys,filters):
                     if '.' in column_field:
                         fname = column_field.replace('.','')
                         if r[fname]:
-                            value = value.replace(column_field,r[fname])
+                            value = value.replace(column_field,str(r[fname]))
                         else:
                             value = value.replace(column_field, '')
-                r['Titles'][k] = columns[k][0]
-                r['Columns'][k] = value
+                r.Titles[k] = columns[k][0]
+                r.Columns[k] = value

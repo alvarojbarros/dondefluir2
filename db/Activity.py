@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, Date, Time, Float, or_
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, Date, Time, Float, or_, Boolean
 from tools.dbconnect import engine,MediumText,Session
 from tools.Record import Record,DetailRecord
 from sqlalchemy.ext.declarative import declarative_base
@@ -13,6 +13,7 @@ from db.UserService import UserService
 from db.Notification import Notification
 from flask_login import current_user
 from sqlalchemy.orm import relationship,aliased
+from sqlalchemy.sql.expression import cast
 from tools.MailTools import sendMailNewActivity,sendMailUpdateActivity,sendMailConfirmActivity,sendMailCancelActivity,sendMailNewCustActivity
 
 Base = declarative_base()
@@ -33,8 +34,8 @@ class Activity(Base,Record):
     Description = Column(MediumText())
     Users = relationship('ActivityUsers', cascade="all, delete-orphan")
     Schedules = relationship('ActivitySchedules', cascade="all, delete-orphan")
-    Status = Column(Integer)
-    OnlinePayment = Column(Integer)
+    Status = Column(Boolean)
+    OnlinePayment = Column(Boolean)
 
     StatusList = ['Tomar este curso','Anular Inscripción']
 
@@ -59,49 +60,6 @@ class Activity(Base,Record):
         #super().__init__()
 
     @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['CustId'] = {'Type': 'integer', 'Label': 'Cliente', 'Input': 'combo','LinkTo':{'Table':'User','Show':['Name']\
-            ,'Method':'getCustomer','Params':"{'favorite':True}" \
-            ,'Filters': {'UserType':[3]},'Params':"{'favorite':True}"},'ShowIf':['Type',["0"],-1]}
-        res['ProfId'] = {'Type': 'integer', 'Label': 'Profesional', 'Input': 'combo','LinkTo':{'Table':'User','Show':['Name'] \
-            ,'Filters': {'UserType':[0,1,2]}}}
-        res['CompanyId'] = {'Type': 'text', 'Label': 'Empresa', 'Input': 'combo','LinkTo':{'Table':'Company','Show':['Name']}}
-        res['ServiceId'] = {'Type': 'text', 'Label': 'Servicio', 'Input': 'combo','LinkTo':{'Table':'Service','Show':['Name']} \
-            ,'AfterChange':'setServicePrice()'}
-        res['Comment'] = {'Type': 'text', 'Label': 'Comentario', 'Input':'text','ShowIf':['Type',["1","2"],-1]}
-        res['Type'] = {'Type': 'integer', 'Label': 'Tipo de actividad', 'Input': 'combo' \
-            ,'Values': {0: 'Cita',1: 'Curso',2:'Evento'},'OnChange':'updateLinkTo()'}
-        if current_user.UserType==3:
-            res['Type']['Hidde'] = True
-        res['Users'] = {'Type':[],'Class':'ActivityUsers', 'fieldsDefinition': ActivityUsers.fieldsDefinition(),'Level':[0,1,2],'htmlView':ActivityUsers.htmlView()}
-        res['Schedules'] = {'Type':[],'Label':'Horarios','Class':'ActivitySchedules', 'fieldsDefinition': ActivitySchedules.fieldsDefinition(),'Level':[0,1,2,3],'htmlView':ActivitySchedules.htmlView()}
-        res['Image'] = {'Type': 'text', 'Label': 'Imagen', 'Input': 'fileinput','Level':[0,1,2]}
-        res['MaxPersons'] = {'Type': 'integer', 'Label': 'Cupos', 'Input': 'integer','Level':[0,1,2]}
-        res['Price'] = {'Type': 'float', 'Label': 'Valor', 'Input': 'number','Level':[0,1,2,3]}
-        res['Description'] = {'Type': 'text', 'Label': 'Descripción','Input':'textarea','rows':'4','Level':[0,1,2]}
-        res['Status'] = {'Type': 'integer', 'Label': 'Estado', 'Input': 'combo','Values': {0: 'Solicitada',1: 'Confirmada',2:'Cancelada'},'Level':[0,1,2,3]}
-        res['OnlinePayment'] = {'Type': 'integer', 'Label': 'Habilitar Pagos en línea', 'Input': 'checkbox','Level':[0,1,2,3]}
-        return res
-
-    @classmethod
-    def htmlView(cls):
-        Tabs = {}
-        if current_user.UserType==3:
-            pass
-            Tabs[0] = {"Name":"Información", "Fields": [[0,["CompanyId","ProfId"]],[4,["Type","Comment"]],[2,["ServiceId","Status"]] \
-                ,[5,["Price","OnlinePayment"]]]}
-            Tabs[1] = {"Name": "Horarios", "Fields": [[0, ["Schedules"]]]}
-        else:
-            Tabs[0] = {"Name":"Información", "Fields": [[0,["CompanyId","ProfId"]],[4,["Type","Comment"]],[2,["CustId","ServiceId","Status"]] \
-                ,[5,["Price","OnlinePayment"]]]}
-            Tabs[1] = {"Name":"Horarios","Fields": [[0,["Schedules"]]]}
-            Tabs[2] = {"Name":"Curso/Evento",'Level':[0,1,2],"Fields": [[0,["MaxPersons","Image"]],[1,["Description"]]],'ShowIf':['Type',["1","2"],-1]}
-            Tabs[3] = {"Name":"Participantes",'Level':[0,1,2],"Fields": [[0,["Users"]]],'ShowIf':['Type',["1","2"],-1]}
-        return Tabs
-
-    @classmethod
     def getEventList(cls,UserId=None,CompanyId=None,limit=None,order_by=None,desc=None):
         UserProf = aliased(User)
         session = Session()
@@ -112,9 +70,11 @@ class Activity(Base,Record):
             .join(Company,cls.CompanyId==Company.id)\
             .join(UserProf,cls.ProfId==UserProf.id)\
             .outerjoin(Service,cls.ServiceId==Service.id)\
-            .with_entities(cls.Comment,UserProf.id.label('ProfId'),ActivitySchedules.TransDate,ActivitySchedules.StartTime \
-            ,ActivitySchedules.EndTime,cls.id,cls.Status,Company.id.label('CompanyId')\
-            ,Service.id.label('ServiceId'))
+            .with_entities(cls.Comment,UserProf.Name.label('ProfId') \
+            ,ActivitySchedules.TransDate \
+            ,ActivitySchedules.StartTime \
+            ,ActivitySchedules.EndTime,cls.id,cls.Status,Company.Name.label('CompanyId')\
+            ,Service.Name.label('ServiceId'))
         if UserId:
            records = records.filter(cls.ProfId==UserId)
         if CompanyId:
@@ -163,11 +123,6 @@ class Activity(Base,Record):
         session.close()
         return records
 
-    @classmethod
-    def getRecordListCalendar(cls,TableClass,custId=None,limit=None,order_by=None,desc=None,ProfId=None):
-        records = cls.getRecordList(TableClass,custId,limit,order_by,desc,ProfId,Alias=True)
-        return records
-
 
     @classmethod
     def getUserFieldsReadOnly(cls,record,fieldname):
@@ -191,10 +146,14 @@ class Activity(Base,Record):
     @classmethod
     def recordListFilters(cls):
         if current_user.UserType==2:
-            return ['Type','ServiceId','Status','CustId']
+            return ['Type','ServiceId','Status','CustId'],\
+                   {'Type':'Tipo de Actividad','ServiceId':'Servicio','Status':'Estado','CustId':'Cliente'}
         if current_user.UserType==3:
-            return ['CompanyId','ServiceId','Status','ProfId']
-        return ['Type','ServiceId','Status','ProfId','CustId']
+            return ['CompanyId','ServiceId','Status','ProfId']\
+                   ,{'CompanyId':'Empresa','ServiceId':'Servicio','Status':'Estado','ProfId':'Profesional'}
+        return ['Type','ServiceId','Status','ProfId','CustId'], \
+                {'Type':'Tipo de Actividad','ServiceId': 'Servicio', 'Status': 'Estado'
+                    , 'ProfId': 'Profesional','CustId':'Cliente'}
 
     def defaults(self):
         if current_user.UserType in (0,1,2):
@@ -393,24 +352,6 @@ class Activity(Base,Record):
 
         return True
 
-    def getLinkToFromRecord(self,TableClass):
-        if TableClass==Service:
-            session = Session()
-            if self.ProfId:
-                records = session.query(UserService)\
-                    .filter_by(UserId=self.ProfId)\
-                    .join(Service,UserService.ServiceId==Service.id)\
-                    .with_entities(Service.id,Service.Name)
-            else:
-                records = session.query(UserService).join(Service,UserService.ServiceId==Service.id)\
-                    .filter_by(CompanyId=self.CompanyId)\
-                    .with_entities(Service.id,Service.Name)
-
-            session.close()
-            return records
-        else:
-            return TableClass.getRecordList(TableClass)
-
     @classmethod
     def getLinksTo(self):
         res = {'CompanyId':{},'ProfId':{},'ServiceId':{},'Type':{},'Status':{},'CustId':{}}
@@ -470,22 +411,6 @@ class ActivityUsers(Base,DetailRecord):
     activity_id = Column(Integer, ForeignKey('activity.id'), nullable=False)
     CustId = Column(Integer, ForeignKey(User.id), nullable=False)
 
-    @classmethod
-    def fieldsDefinition(cls):
-        res = DetailRecord.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['CustId'] = {'Type': 'integer', 'Label': 'Cliente', 'Input': 'combo','LinkTo':{'Table':'User','Show':['Name']},'Class':'col-xs-12 p-b-20'}
-        res['__order__'] = cls.fieldsOrder()
-        return res
-
-    @classmethod
-    def fieldsOrder(cls):
-        return ['id','CustId']
-
-    @classmethod
-    def htmlView(cls):
-        return {0: ['id','CustId']}
-
 class ActivitySchedules(Base,DetailRecord):
     __tablename__ = 'activityschedules'
     id = Column(Integer, primary_key=True)
@@ -493,26 +418,6 @@ class ActivitySchedules(Base,DetailRecord):
     TransDate = Column(Date)
     StartTime = Column(Time)
     EndTime = Column(Time)
-
-    @classmethod
-    def fieldsDefinition(cls):
-        res = DetailRecord.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['TransDate'] = {'Type': 'date', 'Label': 'Fecha','Input':'date','Class':'col-xs-12 col-sm-3 p-b-20'}
-        res['StartTime'] = {'Type': 'time','Label': 'Desde','Input':'time','Class':'col-xs-6 col-sm-3 p-b-20'}
-        res['EndTime'] = {'Type': 'time', 'Label': 'Hasta','Input':'time','Class':'col-xs-6 col-sm-3 p-b-20'}
-        res['__order__'] = cls.fieldsOrder()
-        res['__lenght__'] = "3"
-        return res
-
-    @classmethod
-    def fieldsOrder(cls):
-        return ['id','TransDate','StartTime','EndTime']
-
-    @classmethod
-    def htmlView(cls):
-        return {0: ['id','TransDate','StartTime','EndTime']}
-
 
     @classmethod
     def getUserFieldsReadOnly(cls,fieldname):

@@ -64,6 +64,6 @@ var vue_record = new Vue({
             }
             this.oldRecord = $.extend(true,{},this.values.record)
         }
-	}
-
+	},
 })
+

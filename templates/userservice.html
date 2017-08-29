@@ -4,20 +4,16 @@
 {% endblock %}
 
 {% block fields_view %}
-  <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
-      <td v-for="row in record.Columns">
-          <a href="#" :onClick="'showUserService(' + record.id + ')'">
-            {%raw%}{{row}}{%endraw%}
-          </a>
-      </td>
-  </tr>
+<tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
+    <td><record-row :record="record" :text="record.UserId" class_name="UserService"></record-row></td>
+    <td><record-row :record="record" :text="record.ServiceId" class_name="UserService"></record-row></td>
+</tr>
 {% endblock %}
 
 
 {% block button_script %}
 <script type=text/javascript>
   refreshList();
-  columns = "{0:('Usuario','.UserId'),1:('Servicio','.ServiceId')}"
-  getRecordList('UserService','UserId,ServiceId,CompanyId,id',null,null,false,columns);
+  getRecordList('UserService','UserId,ServiceId,CompanyId,id',null,null,false);
 </script>
 {% endblock %}

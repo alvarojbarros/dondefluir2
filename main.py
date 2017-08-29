@@ -16,6 +16,7 @@ from db.Service import Service
 from db.Activity import Activity,ActivitySchedules,ActivityUsers
 from db.Payment import Payment
 from sqlalchemy import or_
+from tools.dbconnect import Session
 
 
 app.config.update(
@@ -207,7 +208,6 @@ def save_files():
 @app.route('/_update_linkto')
 def update_linkto():
     table = request.args.get('TableName')
-    fieldname = request.args.get('FieldName')
     fields = {}
     for key in request.args:
         if key not in ['TableName','_state']:
@@ -217,13 +217,8 @@ def update_linkto():
     TableClass = getTableClass(table)
     record = TableClass()
     record.defaults()
-    fieldsDef = TableClass.getfieldsDefinition(record)
-    getDetailDict(fieldsDef)
-    for key in fields:
-        value = fields.get(key,None)
-        if value:
-            setValue(record,key,value)
-    links = getLinksTo(fieldsDef,record,fieldname)
+    getDetailDict(fields)
+    links = record.getLinksTo()
     return jsonify(result=links)
 
 
@@ -338,7 +333,7 @@ def get_template():
     res = render_template(template,var=var)
     return jsonify(result={'html':res, 'functions': functions})
 
-def getRecordByFilters2(table,filters):
+def getRecordByFilters(table,filters):
     TableClass = getTableClass(table)
     session = Session()
     if not filters:
@@ -357,67 +352,6 @@ def getRecordByFilters2(table,filters):
     session.close()
     return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
 
-def getRecordByFilters(table,filters,NotFilterFields=False):
-    #NotFilterFields = False
-    res = {}
-    TableClass = getTableClass(table)
-    session = Session()
-    record = None
-    if filters:
-        record = session.query(TableClass).filter_by(**filters).first()
-    if filters and not record:
-        return {'res':False}
-    if not filters:
-        record = TableClass()
-        record.defaults()
-    fields = TableClass.getfieldsDefinition(record)
-    htmlView = TableClass.getHtmlView()
-    recordTitle = TableClass.getRecordTitle()
-    canEdit = TableClass.canUserEdit(record)
-    canDelete = TableClass.canUserDelete()
-    if not NotFilterFields:
-        filterFiedlsByUserAccess(fields)
-    links = getLinksTo(fields,record)
-    if record:
-        if not NotFilterFields:
-            record.filterFields(fields)
-        from datetime import time,date
-        for fname in fields:
-            value = None
-            if not TableClass.isPersistent(fname):
-                if 'Method' in fields[fname]:
-                    value = eval("record.%s" % fields[fname]['Method'])
-            else:
-                value = getattr(record,fname)
-            if isinstance(value,list):
-                res[fname] = []
-                for row in value:
-                    rfields = fields[fname]['fieldsDefinition']
-                    rres = {}
-                    for rfname in rfields:
-                        if rfname[:2]=='__':
-                            continue
-                        rvalue = getattr(row,rfname)
-                        if isinstance(rvalue,time):
-                            rvalue = str(rvalue)
-                        elif isinstance(rvalue,date):
-                            rvalue = str(rvalue)
-                        if value==None:
-                            value = ''
-                        rres[rfname] = rvalue
-                    res[fname].append(rres)
-            else:
-                if isinstance(value,time):
-                    value = str(value)
-                elif isinstance(value,datetime):
-                    value = value.strftime("%Y-%m-%dT%H:%M:%S")
-                elif isinstance(value,date):
-                    value = str(value)
-                if value==None:
-                    value = ''
-                res[fname] = value
-    session.close()
-    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
 
 @app.route('/_get_record')
 def get_record():
@@ -427,8 +361,7 @@ def get_record():
     for f in request.args:
         if f not in ['TableName','NotFilterFields','_state']:
             filters[f] = request.args[f]
-    #res = getRecordByFilters(table,filters,NotFilterFields)
-    res = getRecordByFilters2(table,filters)
+    res = getRecordByFilters(table,filters)
     return jsonify(result=res)
 
 @app.route('/_get_current_user_type')
@@ -442,23 +375,17 @@ def record_list():
     order_by = request.args.get('OrderBy',None)
     desc = request.args.get('Desc',None)
     limit = request.args.get('Limit',None)
-    columns = request.args.get('Columns',None)
-    if columns: columns = eval(columns)
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
-    fieldsDef = TableClass.fieldsDefinition()
-    filtersKeys = TableClass.recordListFilters()
-    filtersNames = {}
-    for field in filtersKeys:
-        filtersNames[field] = fieldsDef[field]['Label']
+    filtersKeys,filtersNames = TableClass.recordListFilters()
     filters = {}
-    res = fillRecordList(records,fields,fieldsDef)
+    links = TableClass.getLinksTo()
+    print(links)
+    res = setColumns(records,links,filtersKeys,filters)
     for fieldname in fields:
-        if fieldname  in fieldsDef and 'Input' in fieldsDef[fieldname] and fieldsDef[fieldname]['Input']=='fileinput':
+        if fieldname[:6]=='Image':
             for dic in res:
                 dic[fieldname] = getImageLink(table,dic['id'],fieldname)
-    setColumns(res,columns,filtersKeys,filters)
-
     return jsonify(result={'records': res,'filters': filters, 'filtersNames': filtersNames})
 
 @app.route('/_get_report')
@@ -512,20 +439,6 @@ def getCompanyTemplate():
         return "company_icon.html"
     else:
         return "company.html"
-
-def getPaymentsTableName():
-    if current_user.UserType==3:
-        return "Mis Pagos"
-    elif current_user.UserType==0:
-        return "Pagos"
-    else:
-        return "Pagos Recibidos"
-
-def addElementToList(Elements,Element,UserType):
-    if ('Level' not in Element) or (UserType in Element['Level']):
-        if not Element['Module'] in Elements:
-            Elements[Element['Module']] = {}
-        Elements[Element['Module']][Element['Index']] = Element
 
 def getMyFunction(function,params):
     res = eval('%s(%s)' % (function,str(params)))
@@ -708,6 +621,18 @@ def getCalendarDates(profId,AddActivities=False):
     session.close()
     return dates
 
+@app.route('/_get_favorite')
+def get_favorite():
+    from db.UserFavorite import UserFavorite
+    favId = request.args.get('favId')
+    session = Session()
+    session.expire_on_commit = False
+    record = session.query(UserFavorite).filter_by(UserId=current_user.id,FavoriteId=favId).first()
+    if not record or not record.Checked:
+        return jsonify(result=False)
+    else:
+        return jsonify(result=True)
+
 @app.route('/_set_favorite')
 def set_favorite():
     from db.UserFavorite import UserFavorite
@@ -843,7 +768,7 @@ def getCalendarData(UserId):
     for record in records:
         st = "%sT%s" %(record.TransDate.strftime('%Y-%m-%d'),record.StartTime.strftime('%H:%M:%S'))
         et = "%sT%s" %(record.TransDate.strftime('%Y-%m-%d'),record.EndTime.strftime('%H:%M:%S'))
-        onclick = ''' getRecordForm('Activity','recordform.html',id='%i')''' % record.id
+        onclick = ''' showActivity(%i)''' % record.id
         id = 'activity_%i' % record.id
         #tooltip = "%s\n" % record.Comment
         #tooltip += "Fecha: %s\n" % record.TransDate.strftime('%Y-%m-%d')
@@ -919,11 +844,9 @@ def get_current_date():
 
 @app.route('/_event_list')
 def event_list():
-    fields = request.args.get('Fields').split(',')
     order_by = request.args.get('OrderBy',None)
     desc = request.args.get('Desc',None)
     limit = request.args.get('Limit',None)
-    columns = eval(request.args.get('Columns',{}))
     UserId = None
     CompanyId = None
     if current_user.UserType==1:
@@ -931,15 +854,13 @@ def event_list():
     elif current_user.UserType==2:
         UserId = current_user.id
     records = Activity.getEventList(UserId,CompanyId,limit=limit,order_by=order_by,desc=desc)
-    fieldsDef = Activity.fieldsDefinition()
-    res = fillRecordList(records,fields,fieldsDef)
-    setColumns(res, columns, [], [])
     ids = []
     events = []
-    for r in res:
-        if r['id'] not in ids:
-            ids.append(r['id'])
+    for r in records:
+        if r.id not in ids:
+            ids.append(r.id)
             events.append(r)
+    events = setColumns(events,[],[],[])
     return jsonify(result=events)
 
 @app.route('/_cancel_activity')
@@ -1036,11 +957,8 @@ def customer_list():
         elif vars[key] in ('false', 'False'):
             vars[key] = False
     records = getCustomer(vars)
-    fieldsDef = User.fieldsDefinition()
-    fields = request.args.get('Fields').split(',')
-    columns = eval(request.args.get('Columns','{}'))
-    res = fillRecordList(records,fields,fieldsDef)
-    setColumns(res,columns,[],[])
+    links = User.getLinksTo()
+    res = setColumns(records,links,[],[])
     return jsonify(result={'records': res,'filters': [], 'filtersNames': []})
 
 @app.route('/_get_service_price')

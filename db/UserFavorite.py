@@ -16,22 +16,13 @@ class UserFavorite(Base,Record):
     UserId = Column(Integer, ForeignKey(User.id), nullable=False)
     FavoriteId = Column(Integer, ForeignKey(User.id), nullable=False)
     CompanyId = Column(Integer, ForeignKey(Company.id), nullable=False)
-    Checked = Column(Integer)
+    Checked = Column(Boolean)
 
     def beforeInsert(self):
         Record.beforeInsert(self)
         user = User.getRecordById(self.FavoriteId)
         if user and user.CompanyId:
             self.CompanyId = user.CompanyId
-
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'text', 'Hidde': True}
-        res['UserId'] = {'Type': 'integer'}
-        res['FavoriteId'] = {'Type': 'integer'}
-        res['Checked'] = {'Type': 'integer'}
-        return res
 
 Index('UserFavorite', UserFavorite.UserId, UserFavorite.FavoriteId, unique=True)
 

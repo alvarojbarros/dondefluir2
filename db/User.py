@@ -58,63 +58,6 @@ class User(Base,Record,UserMixin):
     PROF = 2
     CUST = 3
 
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['Email'] = {'Type': 'text', 'Label': 'Email','Input':'text'}
-        res['Password'] = {'Type': 'text', 'Label': 'Password','Input':'password'}
-        res['Active'] = {'Type': 'integer', 'Label': 'Activo', 'Input': 'checkbox','Level':[0]}
-        res['UserType'] = {'Type': 'integer', 'Label': 'Tipo de Usuario', 'Input': 'combo', \
-            'Values': {0: 'Super',1: 'Administrador',2: 'Profesional',3: 'Cliente'},\
-            'ValuesLevel':{0:[0,1,2,3],1:[1,2,3],2:[3],3:[]},'ShowIf':['UserType',["0","1","2"],-1]}
-        res['CompanyId'] = {'Type': 'integer', 'Label': 'Empresa', 'Input': 'combo','Level':[0]\
-            ,'LinkTo':{'Table':'Company','Show':['Name']},'ShowIf':['UserType',["0","1","2"],-1]}
-        res['Name'] = {'Type': 'text', 'Label': 'Nombre', 'Input': 'text'}
-        res['Title'] = {'Type': 'text', 'Label': 'Profesión', 'Input': 'text','Level':[0,1,2]}
-        res['FindMe'] = {'Type': 'integer', 'Label': 'Perfil Público. Activa esta opción para que los usuarios puedan ver tu perfil en la plataforma', 'Input': 'checkbox','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['FixedSchedule'] = {'Type': 'integer', 'Label': 'Horarios Fijos', 'Input': 'checkbox','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['MinTime'] = {'Type': 'integer', 'Label': 'Tiempo Mínimo', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['MaxTime'] = {'Type': 'integer', 'Label': 'Tiempo Máximo', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['ShowDays'] = {'Type': 'integer', 'Label': 'Disponibilidad de horarios desde: Días de anterioridad mínima para solicitar citas.', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['ShowFromDays'] = {'Type': 'integer', 'Label': 'Disponibilidad de horarios hasta: cantidad máxima de días visibles en la agenda para los usuarios.', 'Input': 'integer','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['Phone'] = {'Type': 'text', 'Label': 'Teléfono', 'Input': 'text'}
-        res['Comment'] = {'Type': 'text', 'Label': 'Perfil Profesional','Input':'textarea','rows':'4','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['Address'] = {'Type': 'text', 'Label': 'Dirección', 'Input': 'text'}
-        res['City'] = {'Type': 'text', 'Label': 'Ciudad', 'Input': 'text'}
-        res['EditSchedule'] = {'Type': 'integer', 'Label': 'Editar Agenda', 'Input': 'combo', \
-            'Values': {0: 'SI',1: 'NO'},'Level':[0,1],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['Schedules'] = {'Type':[],'Label':'Horarios','Class':'UserSchedule',\
-            'fieldsDefinition': UserSchedule.fieldsDefinition(),'Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['Favorite'] = {'Type': 'integer', 'Label': 'Agregar a Favoritos', 'Input': 'button','Level':[0,1,2],'Persistent':False, \
-            'Method':'getFavorite()','onClick': 'setFavorite(this,"1")','Class':'btn btn-primary btn-rounded waves-effect waves-light m-t-20'}
-        res['ImageProfile'] = {'Type': 'text', 'Label': 'Imagen de Perfil', 'Input': 'fileinput' ,\
-                               'SubLabel':'Tamaño sugerido: 300px x 300px. Peso máximo: 150kb'}
-        res['NtfActivityNew'] = {'Type': 'integer', 'Label': 'Nueva Actividad', 'Input': 'checkbox'}
-        res['NtfActivityCancel'] = {'Type': 'integer', 'Label': 'Actividad Cancelada', 'Input': 'checkbox'}
-        res['NtfActivityChange'] = {'Type': 'integer', 'Label': 'Actividad Modificada', 'Input': 'checkbox'}
-        res['NtfActivityReminder'] = {'Type': 'integer', 'Label': 'Recordatorio de Actividad ', 'Input': 'checkbox'}
-        res['NtfReminderDays'] = {'Type': 'integer', 'Label': 'Días de Antelación para Recordatorio', 'Input': 'integer'}
-        res['NtfReminderHours'] = {'Type': 'integer', 'Label': 'Horas de Antelación para Recordatorio', 'Input': 'integer'}
-        res['NtfActivityConfirm'] = {'Type': 'integer', 'Label': 'Actividad Confirmada', 'Input': 'checkbox'}
-        res['NtfActivityNewCust'] = {'Type': 'integer', 'Label': 'Nuevos Clientes', 'Input': 'checkbox','Level':[0,1,2],'ShowIf':['UserType',["0","1","2"],-1]}
-        res['Closed'] = {'Type': 'integer', 'Label': 'Cerrado', 'Input': 'checkbox','Level': [0]}
-        res['CreatedDate'] = {'Type': 'date','Hidde': True}
-        return res
-
-    @classmethod
-    def htmlView(cls):
-        Tabs = {}
-        Tabs[0] = {"Name":"Información del Usuario", "Fields": [[0,["Name","Phone"]],[3,["Address","City"]] \
-            ,[6,["Comment"]],[7,["Title","ImageProfile"]]]}
-        Tabs[1] = {"Name":"Configuración del Usuario", "Fields": [[0,["Email","Password"]],[2,["UserType","Closed"]] \
-            ,[4,["CompanyId","EditSchedule"]],[6,["FindMe"]],[7,["Favorite"]]]}
-        Tabs[2] = {"Name":"Agenda","Fields": [[0,["ShowFromDays","ShowDays"]],[1,["FixedSchedule"]],[2,["MaxTime","MinTime"]],[3,["Schedules"]]]\
-            ,'ShowIf':['UserType',["0","1","2"],-1]}
-        Tabs[3] = {"Name":"Notificaciones por correo", "Fields": [[0,["NtfActivityNew","NtfActivityCancel"]] \
-            ,[2,["NtfActivityConfirm","NtfActivityNewCust"]],[2,["NtfActivityChange"]]]}
-        return Tabs
-
     def filterFields(self,fields):
         #filtro de campo por tipo de usuario
         filters = {3:['Title','FindMe','FixedSchedule','MinTime','MaxTime','EditSchedule','Schedules','ShowDays','ShowFromDays','Comment']}
@@ -205,17 +148,14 @@ class User(Base,Record,UserMixin):
 
     @classmethod
     def getRecordList(cls,TableClass,limit=None,order_by=None,desc=None):
+        session = Session()
+        records = session.query(cls)
         if current_user.UserType==1:
-            session = Session()
-            records = session.query(cls).filter(cls.CompanyId==current_user.CompanyId,cls.UserType>=1)
-            session.close()
+            records = records.filter(cls.CompanyId==current_user.CompanyId,cls.UserType>=1)
         elif current_user.UserType==2:
-            session = Session()
-            records = session.query(cls).filter(cls.CompanyId==current_user.CompanyId, \
+            records = records.filter(cls.CompanyId==current_user.CompanyId, \
                 or_(cls.UserType==3,cls.id==current_user.id))
-            session.close()
-        else:
-            records = Record.getRecordList(TableClass)
+        session.close()
         return records
 
     @classmethod
@@ -276,13 +216,14 @@ class User(Base,Record,UserMixin):
     @classmethod
     def getLinksTo(self):
         res = {}
-        res['UserType'] = {self.CUST: 'Cliente'}
+        res['UserType'] = {self.CUST: ['Cliente',0]}
         if current_user.UserType==0:
-            res['UserType'][self.SUPER] = 'Super'
-            res['UserType'][self.ADMIN] = 'Administrador'
+            res['UserType'][self.SUPER] = ['Super',0]
+            res['UserType'][self.ADMIN] = ['Administrador',0]
+            res['UserType'][self.PROF] = ['Profesional', 0]
         if current_user.UserType==1:
-            res['UserType'][self.ADMIN] = 'Administrador'
-            res['UserType'][self.PROF] = 'Profesional'
+            res['UserType'][self.ADMIN] = ['Administrador',0]
+            res['UserType'][self.PROF] = ['Profesional',0]
         res['CompanyId'] = {}
         session = Session()
         records = session.query(Company)
@@ -305,37 +246,6 @@ class UserSchedule(Base,DetailRecord):
     d5 = Column(Boolean)
     d6 = Column(Boolean)
     d7 = Column(Boolean)
-
-    @classmethod
-    def fieldsDefinition(cls):
-        res = DetailRecord.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['StartTime'] = {'Type': 'time', 'Label': 'Desde','Input':'time','Class':'col-xs-6 p-b-20'}
-        res['EndTime'] = {'Type': 'time', 'Label': 'Hasta','Input':'time','Class':'col-xs-6 p-b-20'}
-        res['d1'] = {'Type': 'integer', 'Label': 'Lu', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['d2'] = {'Type': 'integer', 'Label': 'Ma', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['d3'] = {'Type': 'integer', 'Label': 'Mi', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['d4'] = {'Type': 'integer', 'Label': 'Ju', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['d5'] = {'Type': 'integer', 'Label': 'Vi', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['d6'] = {'Type': 'integer', 'Label': 'Sa', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['d7'] = {'Type': 'integer', 'Label': 'Do', 'Input': 'checkbox','Class':'col-xs-3 col-sm-1 p-b-20'}
-        res['__order__'] = cls.fieldsOrder()
-        res['__lenght__'] = "1"
-        return res
-
-    @classmethod
-    def htmlView(cls):
-        Tabs = {}
-        Tabs['0'] = ['StartTime','EndTime']
-        Tabs['1'] = ['d1','d2','d3','d4','d5','d6','d7']
-        return Tabs
-
-    @classmethod
-    def fieldsOrder(cls):
-        return ['id','StartTime','EndTime','d1','d2','d3','d4','d5','d6','d7']
-
-    def fieldsDetail(self):
-        return []
 
 Index('Email', User.Email, unique=True)
 

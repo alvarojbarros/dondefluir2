@@ -1,11 +1,12 @@
 Vue.config.devtools = true;
 
 var vue_activity = new Vue({
-  el: '#activity-payment',
+  el: '#activity-payment-div',
   data: {
     Paid: '',
     record: '',
     KeyPayco: '',
+    ShowPayment: false,
   },
   methods: {
     getScript: function(params,KeyPayco) {

@@ -1,11 +1,11 @@
 {% extends "recordtable.html" %}
 {% block fields_view %}
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
-    <td v-for="row in record.Columns">
-        <a href="#" :onClick="'showEvent(\'' + record.id + '\')'">
-            {%raw%}{{row}}{%endraw%}
-        </a>
-    </td>
+    <td><record-row :record="record" :text="record.Comment" class_name="Event"></record-row></td>
+    <td><record-row :record="record" :text="record.CompanyId" class_name="Event"></record-row></td>
+    <td><record-row :record="record" :text="record.ProfId" class_name="Event"></record-row></td>
+    <td><record-row :record="record" :text="record.TransDate + ' de ' + record.StartTime + ' a ' + record.EndTime"
+    class_name="Event"></record-row></td>
 </tr>
 {% endblock %}
 

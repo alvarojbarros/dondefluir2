@@ -448,10 +448,8 @@ function getCurrentUser(callback){
   }
 }
 
-function getRecordList(table,fields,limit,order_by,desc,columns){
-
+function getRecordList(table,fields,limit,order_by,desc){
 	var vars = {'Table': table,'Fields': fields }
-	if (columns) {vars['Columns'] = columns;}
 	if (limit) {vars['Limit'] = limit;}
 	if (order_by) {vars['OrderBy'] = order_by;}
 	if (desc) {vars['Desc'] = desc;}
@@ -545,10 +543,13 @@ function showUser(user_id){
 	vars = {'Template': 'userform.html','Profile': '0'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: user_id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', data.canEdit);
-            Vue.set(vue_buttons,'canDelete', data.canDelete);
-        })
+            $.getJSON($SCRIPT_ROOT + '/_get_favorite', {'favId': user_id} ,function(data2) {
+                setVue(data);
+                Vue.set(vue_buttons,'canEdit', data.canEdit);
+                Vue.set(vue_buttons,'canDelete', data.canDelete);
+                Vue.set(vue_record,'favorite', data2.result);
+            });
+        });
 	});
 }
 
@@ -592,6 +593,24 @@ function showActivity(id){
             setVue(data);
             Vue.set(vue_buttons,'canEdit', data.canEdit);
             Vue.set(vue_buttons,'canDelete', data.canDelete);
+            Vue.set(vue_buttons,'id', data.record.id);
+
+            Vue.set(vue_buttons,'Status', data.record.Status);
+            Vue.set(vue_activity,'record',data.record)
+            if (data.record && data.record.OnlinePayment && data.record.Price){
+                Vue.set(vue_activity,'ShowPayment',true);
+            }
+            if (data.record.OnlinePayment==1){
+                $.getJSON($SCRIPT_ROOT + '/_get_payment', {'activityId': data.record.id
+                , 'userId': data.record.CustId,'companyId': data.record.CompanyId}
+                    , function(data2) {
+                    Vue.set(vue_activity,'Paid',data2.result.res)
+                    if (!data2.result.res){
+                        Vue.set(vue_activity,'KeyPayco',data2.result.KeyPayco)
+                    }
+                });
+            }
+
         })
 	});
 }
@@ -608,4 +627,29 @@ function showNotification(id,set_read){
             Vue.set(vue_buttons,'canDelete', data.canDelete);
         })
 	});
+}
+
+function getActivityColumns(user_type){
+
+    columns = "{0:('Horario','.TransDate de .StartTime a .EndTime')"
+    columns += ",1:('Servicio','.ServiceId')"
+    columns += ",2:('Estado','.Status')"
+    if (user_type==0){
+        columns += ",3:('Profesional','.ProfId')"
+        columns += ",4:('Cliente','.CustId')";
+    }
+    if (user_type==1){
+        columns += ",3:('Profesional','.ProfId')"
+        columns += ",4:('Cliente','.CustId')";
+    }
+    if (user_type==2){
+        columns += ",3:('Cliente','.CustId')";
+    }
+    if (user_type==3){
+        columns += ",3:('Empresa','.CompanyId')"
+        columns += ",4:('Profesional','.ProfId')"
+    }
+    columns += "}";
+    return columns;
+
 }

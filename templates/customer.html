@@ -6,18 +6,13 @@
 {% block fields_view %}
 
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false && record.Closed==0" >
-    <td v-for="row in record.Columns">
-        <a href="#" :onClick="'showUser(' + record.id + ')'">
-            {%raw%}{{row}}{%endraw%}
-        </a>
-    </td>
+    <td><record-row :record="record" :text="record.Name" class_name="User"></record-row></td>
 </tr>
 
 {% endblock %}
 
 {% block button_script %}
 <script type=text/javascript>
-  columns = "{0:('Nombre','.Name')}"
-  getCustomerList('User','Name,id,UserType,Closed',{{var['favorite']}},null,null,false,columns);
+  getCustomerList('User','Name,id,UserType,Closed',{{var['favorite']}},null,null,false);
 </script>
 {% endblock %}

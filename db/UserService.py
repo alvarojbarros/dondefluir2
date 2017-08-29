@@ -20,15 +20,6 @@ class UserService(Base,Record):
     CompanyId = Column(Integer, ForeignKey(Company.id), nullable=False)
     ServiceId = Column(Integer, ForeignKey(Service.id), nullable=False)
 
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'text','Hidde': True,'Readonly':1}
-        res['CompanyId'] = {'Type': 'integer','Hidde': True}
-        res['UserId'] = {'Type': 'integer', 'Label': 'Usuario', 'Input': 'combo','Level':[0,1],'LinkTo':{'Table':'User','Show':['Name']}}
-        res['ServiceId'] = {'Type': 'integer', 'Label': 'Servicio', 'Input': 'combo','Level':[0,1],'LinkTo':{'Table':'Service','Show':['Name']}}
-        return res
-
     def beforeInsert(self):
         self.CompanyId = current_user.CompanyId
         return True
@@ -40,12 +31,11 @@ class UserService(Base,Record):
 
     @classmethod
     def getRecordList(cls,TableClass,limit=None,order_by=None,desc=None):
-        if current_user.UserType==1:
-            session = Session()
-            records = session.query(cls).filter_by(CompanyId=current_user.CompanyId)
-            session.close()
-        else:
-            records = Record.getRecordList(TableClass)
+        session = Session()
+        records = session.query(cls)
+        if current_user.UserType == 1:
+            records = records.filter_by(CompanyId=current_user.CompanyId)
+        session.close()
         return records
 
     @classmethod

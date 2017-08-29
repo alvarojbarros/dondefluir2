@@ -2,6 +2,9 @@
 {% block fields_view %}
 
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false" >
+    <td><record-row :record="record" :text="record.TransDate" class_name="Notification" ></record-row></td>
+    <td><record-row :record="record" :text="record.Comment" class_name="Notification" ></record-row></td>
+
     <td v-for="row in record.Columns">
         <b v-if="record.Status.substring(0, 1)=='N'">
             <a href="#" :onClick="'showNotification(' + record.id + ',true)'" >

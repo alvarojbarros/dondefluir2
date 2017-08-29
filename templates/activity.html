@@ -2,36 +2,25 @@
 
 {% block fields_view %}
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false" >
-    <td v-for="row in record.Columns">
-        <a href="#" :onClick="'showActivity('+record.id+')'">
-            {%raw%}{{row}}{%endraw%}
-        </a>
-    </td>
+    <td><record-row :record="record" :text="record.TransDate + ' de ' + record.StartTime + ' a ' + record.EndTime"
+    class_name="Activity"></record-row></td>
+    <td><record-row :record="record" :text="record.Type" class_name="Activity"></record-row></td>
+    <td><record-row :record="record" :text="record.Service" class_name="Activity"></record-row></td>
+    <td><record-row :record="record" :text="record.Status" class_name="Activity"></record-row></td>
+    {% if current_user.UserType in [0,1,3] %}
+        <td><record-row :record="record" :text="record.ProfId" class_name="Activity"></record-row></td>
+    {% endif %}
+    {% if current_user.UserType in [0,1,2] %}
+        <td><record-row :record="record" :text="record.CustId" class_name="Activity"></record-row></td>
+    {% endif %}
+    {% if current_user.UserType in [0,3] %}
+        <td><record-row :record="record" :text="record.CompanyId" class_name="Activity"></record-row></td>
+    {% endif %}
 </tr>
 {% endblock %}
 
 {% block button_script %}
 <script type=text/javascript>
-    columns = "{0:('Horario','.TransDate de .StartTime a .EndTime')"
-    columns += ",1:('Servicio','.ServiceId')"
-    columns += ",2:('Estado','.Status')"
-  if ({{current_user.UserType}}==0){
-    columns += ",3:('Profesional','.ProfId')"
-    columns += ",4:('Cliente','.CustId')";
-  }
-  if ({{current_user.UserType}}==1){
-    columns += ",3:('Profesional','.ProfId')"
-    columns += ",4:('Cliente','.CustId')";
-  }
-  if ({{current_user.UserType}}==2){
-    columns += ",3:('Cliente','.CustId')";
-  }
-  if ({{current_user.UserType}}==3){
-    columns += ",3:('Empresa','.CompanyId')"
-    columns += ",4:('Profesional','.ProfId')"
-  }
-  columns += "}";
-
-  getRecordList('Activity','Comment,StartTime,EndTime,TransDate,id,Status,ServiceId,CustId,CompanyId,ProfId,Type','','TransDate',false,columns);
+        getRecordList('Activity','Comment,StartTime,EndTime,TransDate,id,Status,ServiceId,CustId,CompanyId,ProfId,Type','','TransDate',false);
 </script>
 {% endblock %}

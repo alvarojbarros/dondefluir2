@@ -80,8 +80,7 @@
 {% block button_script %}
 <script type=text/javascript>
   refreshList();
-  columns = "{0:('Nombre','.Name')}";
-  getRecordList('{{var['Table']}}','Name,id',null,null,false,columns);
+  getRecordList('{{var['Table']}}','Name,id',null,null,false);
 </script>
 {% endblock %}
 

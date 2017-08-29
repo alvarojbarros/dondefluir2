@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, Time
-from tools.dbconnect import engine,MediumText
+from tools.dbconnect import engine,MediumText,Session
 from tools.Record import Record
 from sqlalchemy.ext.declarative import declarative_base
 from tools.Tools import *
@@ -24,31 +24,6 @@ class Company(Base,Record):
     OnlinePayment = Column(Integer)
     KeyPayco = Column(String(50))
     Closed = Column(Integer)
-
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'text', 'Hidde':True, 'Label': 'Código','Input':'integer','Readonly':1}
-        res['Active'] = {'Type': 'integer', 'Label': 'Activo', 'Input': 'checkbox','Level':[0]}
-        res['Name'] = {'Type': 'text', 'Label': 'Nombre', 'Input': 'text'}
-        res['Phone'] = {'Type': 'text', 'Label': 'Teléfono', 'Input': 'text'}
-        res['Email'] = {'Type': 'text', 'Label': 'Email', 'Input': 'text'}
-        res['WebSite'] = {'Type': 'text', 'Label': 'Web Site', 'Input': 'text'}
-        res['Comment'] = {'Type': 'text', 'Label': 'Comentario', 'Input':'textarea','rows':'4'}
-        res['Address'] = {'Type': 'text', 'Label': 'Dirección', 'Input': 'text'}
-        res['City'] = {'Type': 'text', 'Label': 'Ciudad', 'Input': 'text'}
-        res['ImageProfile'] = {'Type': 'text', 'Label': 'Imagen de Perfil. Tamaño sugerido: 300px x 300px. Peso máximo: 150kb', 'Input': 'fileinput'}
-        res['OnlinePayment'] = {'Type': 'integer', 'Label': 'Habilitar Pagos en línea', 'Input': 'checkbox'}
-        res['KeyPayco'] = {'Type': 'text', 'Label': 'Clave ePayco', 'Input': 'text'}
-        res['Closed'] = {'Type': 'integer', 'Label': 'Cerrado', 'Input': 'checkbox','Level': [0]}
-        return res
-
-    @classmethod
-    def htmlView(cls):
-        Tabs = {}
-        Tabs[0] = {"Name":"", "Fields": [[0,["Active"]],[1,["Name"]],[2,["Address","City"]],[3,["Phone"]],[4,["Email"]],[5,["WebSite"]],[6,["Comment"]] \
-            ,[7,["ImageProfile"]],[8,["KeyPayco","OnlinePayment"]],[9,["Closed"]]]}
-        return Tabs
 
     def defaults(self):
         self.Closed = 0
@@ -79,6 +54,5 @@ class Company(Base,Record):
         if current_user.UserType==3:
             return 2
         return 0
-
 
 Base.metadata.create_all(engine)

@@ -21,16 +21,6 @@ class UserNote(Base,Record):
     TransDate = Column(DateTime)
     Note = Column(MediumText())
 
-    @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'integer','Hidde': True}
-        res['UserId'] = {'Type': 'integer','Hidde': True}
-        res['ProfId'] = {'Type': 'integer', 'Hidde': True}
-        res['CompanyId'] = {'Type': 'text', 'Hidde': True}
-        res['TransDate'] = {'Type': 'datetime', 'Hidde': True}
-        res['Note'] = {'Type': 'text', 'Label': 'Nota','Input':'textarea','rows':'4','cols':'50'}
-        return res
 
     @classmethod
     def getRecordList(cls,TableClass,custId=None,limit=None,order_by=None,desc=None):

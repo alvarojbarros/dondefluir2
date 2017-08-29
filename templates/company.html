@@ -13,22 +13,14 @@
 
 {% block fields_view %}
 <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false && record.Closed==0" >
-    <td v-for="row in record.Columns">
-        <a href="#" v-if="user_type==3" :onClick="'showCompany(\''+record.id+'\',\''+record.Name+'\',\''+user_id+'\')'">
-            {%raw%}{{row}}{%endraw%}
-        </a>
-        <a href="#" v-if="user_type!=3" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">
-            {%raw%}{{row}}{%endraw%}
-        </a>
-    </td>
+    <td><record-row :record="record" :text="record.Name" class_name="Company" user_type="user_type"></record-row></td>
 </tr>
 
 {% endblock %}
 
-{% block button_script %}
+    {% block button_script %}
 <script type=text/javascript>
   refreshList();
-  columns = "{0:('Nombre','.Name')}"
-  getRecordList('{{var['Table']}}','Name,id,Closed',null,null,false,columns);
+  getRecordList('Company','Name,id,Closed',null,null,false);
 </script>
 {% endblock %}

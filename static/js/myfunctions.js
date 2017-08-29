@@ -5,20 +5,20 @@ function showProfessional(id,Name,current_user_id){
     var index = vue_title.indexNr ;
 	vars = {Template: 'showprofessional.html',profId: id}
 	getTemplate(vars,function (){
-		setProffesional(id,current_user_id);
+        setProffesional(id,current_user_id);
         vue_title.moduleNr = moduleNr;
         vue_title.indexNr = index;
-		vue_title.tableName = titleName;
+        vue_title.tableName = titleName;
 	})
 }
 
-function showCompany(id,Name,current_user_id){
+function showCompanyProfile(id,Name){
 	var titleName = vue_title.Title;
     var moduleNr = vue_title.moduleNr;
     var index = vue_title.indexNr ;
 	vars = {Template: 'showcompany.html',companyId: id}
 	getTemplate(vars,function (){
-		setCompany(id,current_user_id);
+		setCompany(id,vue_user_menu.current_user_id);
         vue_title.moduleNr = moduleNr;
         vue_title.indexNr = index;
 		vue_title.tableName = titleName;
@@ -69,12 +69,16 @@ function setProffesional(id,current_user_id,add_activities){
 			Vue.set(vue_schedule,'events',data2.result)
 		});
 
-		getRecordBy('UserFavorite',{UserId: current_user_id, FavoriteId: data.record.id},function(recordFav){
+        $.getJSON($SCRIPT_ROOT + '/_get_favorite', {'favId': id} ,function(data2) {
+            Vue.set(vue_record,'favorite', data2.result);
+        });
+
+		/*getRecordBy('UserFavorite',{UserId: current_user_id, FavoriteId: data.record.id},function(recordFav){
 			if (recordFav && recordFav.record && recordFav.record.Checked){
 				Vue.set(vue_record,'favorite', 'Eliminar de Favoritos');
 				Vue.set(vue_record,'classname', 'btn btn-danger btn-rounded waves-effect waves-light m-t-20');
 			}
-		});
+		}); */
 		getRecordBy('Company',{id: data.record.CompanyId},function(company){
 			Vue.set(vue_title,'companyName', company.record.Name);
 			Vue.set(vue_title,'companyId', data.record.CompanyId);
@@ -83,8 +87,10 @@ function setProffesional(id,current_user_id,add_activities){
 			if (!data.record.Address){record_address.innerHTML = company.Address;}
 			if (!data.record.City){record_city.innerHTML = company.City;} */
 		});
+
 	});
 }
+
 
 function setFavorite(element,t){
   if (t=='0'){favId = vue_record.values.id}
@@ -312,6 +318,9 @@ function setCustomVue(TemplateName,record,Table){
 		Vue.set(vue_buttons,'id', record.id);
 		Vue.set(vue_buttons,'Status', record.Status);
 		Vue.set(vue_activity,'record',record)
+		if (record && record.OnlinePayment && record.Price){
+		    Vue.set(vue_activity,'ShowPayment',true);
+		}
 		if (record.OnlinePayment==1){
 			$.getJSON($SCRIPT_ROOT + '/_get_payment', {'activityId': record.id, 'userId': record.CustId,'companyId': record.CompanyId}
 				, function(data) {

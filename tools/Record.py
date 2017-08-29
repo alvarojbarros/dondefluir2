@@ -56,13 +56,6 @@ class Record(object):
     syncVersion = Column(Integer)
 
     @classmethod
-    def fieldsDefinition(cls):
-        res = {}
-        res['syncVersion'] = {'Type': 'integer','Hidde': True}
-        res['id'] = {'Type': 'integer','Hidde': True}
-        return res
-
-    @classmethod
     def getFields(cls):
         res = {}
         for column in cls.__table__.columns:
@@ -88,6 +81,7 @@ class Record(object):
         for column in self.__table__.columns:
             value = json.get(column.key,None)
             if value:
+                print(column.key,value)
                 value = fromJSONValue(column.type.__class__.__name__ ,value)
                 self.__setattr__(column.key,value)
         relationships = self.__mapper__.relationships
@@ -195,49 +189,6 @@ class Record(object):
         return 0
 
     @classmethod
-    def isPersistent(cls,fieldname):
-        fields = cls.fieldsDefinition()
-        if 'Persistent' in fields[fieldname] and not fields[fieldname]['Persistent']:
-            return False
-        return True
-
-    @classmethod
-    def getfieldsDefinition(cls,record):
-        res = cls.fieldsDefinition()
-        for fname in res:
-            readonly = cls.getUserFieldsReadOnly(record,fname)
-            if readonly:
-                res[fname]['Readonly'] = readonly
-            if res[fname]['Type']==[]:
-                dres = res[fname]['fieldsDefinition']
-                dclass = res[fname]['Class']
-                var = {}
-                exec('from %s import %s as DetailName' % (cls.__module__,dclass),var)
-                DetailClass = var['DetailName']
-                for dname in dres:
-                    dreadonly = DetailClass.getUserFieldsReadOnly(dname)
-                    if dreadonly:
-                        dres[dname]['Readonly'] = dreadonly
-                if 'htmlView' not in res[fname]:
-                    res[fname]['htmlView'] = DetailClass.htmlView()
-        res = cls.customGetFieldsDefinition(record,res)
-        return res
-
-    @classmethod
-    def customGetFieldsDefinition(cls,record,res):
-        return res
-
-    @classmethod
-    def htmlView(cls):
-        Tabs = {}
-        Tabs[0] = {'Fields':[]}
-        FieldsDefinition = cls.fieldsDefinition()
-        for field in cls.fieldsDefinition():
-            if 'Hidde' not in FieldsDefinition[field]:
-                Tabs[0]['Fields'].append([12,[field]])
-        return Tabs
-
-    @classmethod
     def getHtmlView(cls):
         Tabs = cls.htmlView()
         if not Tabs: return Tabs
@@ -261,14 +212,6 @@ class Record(object):
         records = session.query(cls)
         session.close()
         return records
-
-    @classmethod
-    def getDefValue(cls,fieldname):
-        Type = cls.fieldsDefinition()[fieldname]['Type']
-        if Type==[]: return 0
-        elif Type=='integer': return 0
-        elif Type=='text': return ''
-        return None
 
     @classmethod
     def getRecordList(cls,TableClass,limit=None,order_by=None,desc=None):
@@ -316,12 +259,9 @@ class Record(object):
     def getLinksTo(self):
         return {}
 
-    def getLinkToFromRecord(self,TableClass):
-        return TableClass.getRecordList(TableClass)
-
     @classmethod
     def recordListFilters(cls):
-        return []
+        return [],[]
 
     @classmethod
     def getRecordTitle(self):
@@ -329,30 +269,14 @@ class Record(object):
 
     def setOldFields(self):
         self.OldFields = {}
-        for field in self.fieldsDefinition():
-            fieldDef = self.fieldsDefinition()[field]
-            if 'Persistent' not in fieldDef or fieldDef['Persistent']==True:
-                self.OldFields[field] = copy.copy(getattr(self,field))
+        for column in self.__table__.columns:
+            self.OldFields[column.key] = copy.copy(getattr(self, column.key))
 
     def afterSaveJS(self):
         return ''
 
 
 class DetailRecord(object):
-
-    @classmethod
-    def htmlView(cls):
-        rows = {}
-        rows[0] = cls.fieldsDefinition().keys()
-        return rows
-
-    @classmethod
-    def fieldsDefinition(cls):
-        return {}
-
-    @classmethod
-    def fieldsOrder(cls):
-        return cls.fieldsDefinition().keys()
 
     @classmethod
     def getUserFieldsReadOnly(cls,fieldname):

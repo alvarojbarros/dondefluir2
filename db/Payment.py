@@ -29,26 +29,6 @@ class Payment(Base,Record):
     AutorizationCode = Column(String(20))
 
     @classmethod
-    def fieldsDefinition(cls):
-        res = Record.fieldsDefinition()
-        res['id'] = {'Type': 'text','Hidde': True,'Readonly':1}
-        res['UserId'] = {'Type': 'integer','Label':'Usuario','Input': 'combo','LinkTo':{'Table':'User','Show':['Name']}}
-        res['ActivityId'] = {'Type': 'text','Hidde': True,'Readonly':1}
-        res['CompanyId'] = {'Type': 'integer', 'Label': 'Empresa', 'Input': 'combo','LinkTo':{'Table':'Company','Show':['Name']}}
-        res['Amount'] = {'Type': 'float', 'Label': 'Valor', 'Input': 'number'}
-        res['ResponseCode'] = {'Type': 'integer', 'Label': 'Estado', 'Input': 'combo','Values': {0: 'No Recibido' ,1: 'Aprobado' \
-            ,2: 'Rechazado' ,3: 'Pendiente' ,4: 'Fallida'}}
-        res['TransDate'] = {'Type': 'datetime', 'Label': 'Fecha','Input':'datetime'}
-        res['Reference'] = {'Type': 'text', 'Label': 'Referencia', 'Input': 'text'}
-        res['Reason'] = {'Type': 'text', 'Label': 'Motivo', 'Input': 'text'}
-        res['TransactionId'] = {'Type': 'text', 'Label': 'Recibo', 'Input': 'text'}
-        res['Currency'] = {'Type': 'text', 'Label': 'Moneda', 'Input': 'text'}
-        res['BankName'] = {'Type': 'text', 'Label': 'Banco', 'Input': 'text'}
-        res['AutorizationCode'] = {'Type': 'text', 'Label': 'Autorización', 'Input': 'text'}
-        res['Response'] = {'Type': 'text', 'Label': 'Respuesta', 'Input': 'text'}
-        return res
-
-    @classmethod
     def canUserCreate(self):
         return False
 

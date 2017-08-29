@@ -34,7 +34,7 @@
                       <a href="javascript:void(0)" class="list-group-item active">{%raw%}{{d[0]['FechaStr']}}{%endraw%}</a>
                       <div v-for="value in d" href="#" class="list-group-item">
                         <a v-if="value['id']" href="#"
-                          :onClick="'getRecordForm(\'Activity\',\'activityform.html\',\'' + value['id'] + '\')'">
+                          :onClick="'showActivity('+ value['id'] +')'">
                             <strong>{%raw%}{{value['StartTime']}} a {{value['EndTime']}} {%endraw%}</strong>
                           <div style="display: inline;" v-if="value['Service'] || value['Comment'] || value['Customer']"> - </div>
                           <div style="display: inline;" v-if="value['Service']">Servicio: {%raw%}{{value['Service']}}{%endraw%}</div>
