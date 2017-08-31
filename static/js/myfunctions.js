@@ -253,13 +253,12 @@ function setVueDashboard(){
 	});
 }
 
-function getEventList(fields,columns){
+function getEventList(){
 
-	var vars = {'Table': 'Activity','Fields': fields,'Columns':columns }
 	vars['OrderBy'] = 'TransDate';
 	Vue.set(vue_recordlist,'table', 'Activity');
 	Vue.set(vue_recordlist,'user_type', vue_user_menu.current_user_type);
-	$.getJSON($SCRIPT_ROOT + '/_event_list', vars ,function(data) {
+	$.getJSON($SCRIPT_ROOT + '/_event_list', {},function(data) {
 		Vue.set(vue_recordlist,'values', data.result);
 	});
 }

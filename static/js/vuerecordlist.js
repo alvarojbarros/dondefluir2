@@ -20,7 +20,7 @@ var vue_recordlist = new Vue({
 })
 
 var RecordRow = {
-  props: ['record','text','class_name','user_type'],
+  props: ['record','text','class_name','user_type','_Skip2'],
   template: '<a href="#" v-on:click="call_onclick">{{text}}</a>',
   methods: {
     call_onclick: function () {

@@ -11,7 +11,6 @@ import tools.DBTools
 from tools.Record import Record,DetailRecord
 from sqlalchemy.ext.declarative import declarative_base
 from tools.Tools import *
-import enum
 
 Base = declarative_base()
 

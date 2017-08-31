@@ -214,21 +214,75 @@ function sortDict(obj){
 	return Object.keys(obj).sort()
 }
 
+function findComponent(id){
+    var components = [];
+    for (k in vue_recordlist.$children){
+        component = vue_recordlist.$children[k];
+        if (component.record.id==id){
+            components.push(component);
+        }
+    }
+    return components;
+}
+
+var normalize = (function() {
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+      to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+      mapping = {};
+
+  for(var i = 0, j = from.length; i < j; i++ )
+      mapping[ from.charAt( i ) ] = to.charAt( i );
+
+  return function( str ) {
+      var ret = [];
+      for( var i = 0, j = str.length; i < j; i++ ) {
+          var c = str.charAt( i );
+          if( mapping.hasOwnProperty( str.charAt( i ) ) )
+              ret.push( mapping[ c ] );
+          else
+              ret.push( c );
+      }
+      return ret.join( '' );
+  }
+
+})();
 
 function searchBoxOnKey(e){
 	var filter = $(e).val().toLowerCase();
     for (r in vue_recordlist.values){
         record = vue_recordlist.values[r]
+        components = findComponent(record.id);
+        if (components.length>0 && (!vue_recordlist.values[r].text_list)){
+            vue_recordlist.values[r].text_list = [];
+            for (k in components){
+                component = components[k];
+                vue_recordlist.values[r].text_list.push(component.text.toLowerCase())
+            }
+        }
         var found = true;
         words = filter.split(' ');
         for (j = 0; j < words.length; j++) {
             var word = words[j];
             var word_found = false
             if (word){
-                for (k in record.Columns){
-                    a = record.Columns[k].toLowerCase();
-                    if (a.indexOf(word)>-1) {
-                        word_found = true;
+                word = normalize(word);
+                if (components.length>0){
+                    for (k in components){
+                        component = components[k];
+                        a = normalize(component.text.toLowerCase());
+                        if (a.indexOf(word)>-1) {
+                            word_found = true;
+                        }
+                    }
+                }else{
+                    if (vue_recordlist.values[r].text_list){
+                        for (k in vue_recordlist.values[r].text_list){
+                            text = vue_recordlist.values[r].text_list[k]
+                            a = normalize(text);
+                            if (a.indexOf(word)>-1) {
+                                word_found = true;
+                            }
+                        }
                     }
                 }
                 if (!word_found){
@@ -242,7 +296,6 @@ function searchBoxOnKey(e){
 		} else {
 			record._Skip2 = true;
 		}
-
     }
 }
 
@@ -251,8 +304,8 @@ function runSearchBoxOnKey(){
 		$(this).attr('data-search-term', $(this).text().toLowerCase());
 	});
 
-	$('.live-search-box').on('keyup', function(){
-		searchBoxOnKey(this);
+	$('.live-search-box').on('keyup', function(event){
+        searchBoxOnKey(this);
 	});
 }
 

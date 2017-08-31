@@ -12,10 +12,6 @@
 
 {% block button_script %}
 <script type=text/javascript>
-  columns = "{0:('Descripción','.Comment')" +
-    ",1:('Empresa','.CompanyId')" +
-    ",2:('Profesional','.ProfId')" +
-    ",3:('Fecha de Inicio','.TransDate de .StartTime a .EndTime')}"
-  getEventList('Comment,StartTime,EndTime,TransDate,id,ServiceId,CompanyId,ProfId',columns);
+  getEventList('Comment,StartTime,EndTime,TransDate,id,ServiceId,CompanyId,ProfId);
 </script>
 {% endblock %}
