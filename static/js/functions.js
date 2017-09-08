@@ -174,44 +174,32 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 
 
 function getRecord(filters,callbalck,values) {
-    console.log(filters);
-    socket.emit('_get_record', filters, values, function (data) {
-        console.log(data.result);
-        if (data.result.record.id){
-            data.result['_state'] = 1
-        }else{
-            data.result['_state'] = 0
-        }
-        callbalck(data.result)
+    $.ajax({
+            url: "/_get_record",
+            type: "POST",
+            data: {'data': JSON.stringify({filters: filters, values: values})},
+            success: function (data) {
+                if (data.result.record.id){
+                    data.result['_state'] = 1
+                }else{
+                    data.result['_state'] = 0
+                }
+                callbalck(data.result)
+            }
     });
-    return;
 }
 
 
-/*function getRecord(filters,callbalck,values){
-  $.getJSON($SCRIPT_ROOT + '/_get_record', {Filters: filters,Values: values}, function(data) {
-    if (data.result.record.id){
-    	data.result['_state'] = 1
-	}else{
-    	data.result['_state'] = 0
-	}
-    callbalck(data.result)
-  });
-
-}*/
-
 function getRecordBy(Table,filters,callbalck){
   filters.TableName = Table;
-  /*$.getJSON($SCRIPT_ROOT + '/_get_record', filters, function(data) {
-    callbalck(data.result)
-  });*/
-
-    console.log(filters)
-    socket.emit('_get_record',filters,{}, function (data) {
-        console.log(data.result);
-        callbalck(data.result)
-    });
-
+    $.ajax({
+            url: "/_get_record",
+            type: "POST",
+            data: {'data': JSON.stringify({filters: filters, values: {}})},
+            success: function (data) {
+                callbalck(data.result)
+            }
+        });
 }
 
 

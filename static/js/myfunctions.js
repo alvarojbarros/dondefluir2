@@ -92,39 +92,6 @@ function setProffesional(id,current_user_id,add_activities){
 }
 
 
-function setFavorite(element,t){
-  if (t=='0'){favId = vue_record.values.id}
-  if (t=='1'){favId = vue_record.record.id}
-  $.getJSON($SCRIPT_ROOT + '/_set_favorite',{favId: favId}, function(data) {
-      if (data.result['res']==true){
-		  favorite = document.getElementById('Favorite');
-		  if (favorite){
-		 	  if (data.result['Status']==true) {
-		 	  	  if (t=="1"){
-					  vue_record.values.fields.Favorite.Label = 'Eliminar de Favoritos'
-					  vue_record.record.Favorite = 1
-					  vue_record.values.fields.Favorite.Class = 'btn btn-danger btn-rounded waves-effect waves-light m-t-20'
-				  }
-		 	  	  if (t=="0"){
-					  Vue.set(vue_record,'favorite', 'Eliminar de Favoritos');
-					  Vue.set(vue_record,'classname', 'btn btn-danger btn-rounded waves-effect waves-light m-t-20');
-				  }
-		  	  }else{
-		 	  	  if (t=="1"){
-					  vue_record.values.record.Favorite = 0
-					  vue_record.values.fields.Favorite.Label = 'Agregar a Favoritos'
-					  vue_record.values.fields.Favorite.Class = 'btn btn-primary btn-rounded waves-effect waves-light m-t-20'
-				  }
-		 	  	  if (t=="0"){
-					  Vue.set(vue_record,'favorite', 'Agregar a Favoritos');
-					  Vue.set(vue_record,'classname', 'btn btn-primary btn-rounded waves-effect waves-light m-t-20');
-				  }
-			  }
-		  }
-	  }
-  });
-}
-
 function showNotes(){
 	var id = document.getElementById('id');
 	var name = document.getElementById('Name');

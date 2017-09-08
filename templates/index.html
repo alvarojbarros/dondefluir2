@@ -41,9 +41,9 @@
       {% block script_imports1 %}
       {% endblock %}
 
-      <script src="{{ url_for('static', filename='js/socket.io.js') }}"></script>
+      <!--script src="{{ url_for('static', filename='js/socket.io.js') }}"></script-->
       <script type=text/javascript>
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        //var socket = io.connect('http://' + document.domain + ':' + location.port);
       </script>
       <script type=text/javascript>
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};

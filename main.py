@@ -17,7 +17,7 @@ from db.Activity import Activity,ActivitySchedules,ActivityUsers
 from db.Payment import Payment
 from sqlalchemy import or_
 from tools.dbconnect import Session
-from flask_socketio import SocketIO, send, emit
+#from flask_socketio import SocketIO, send, emit
 
 
 app.config.update(
@@ -40,7 +40,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-socketio = SocketIO(app, manage_session=False)
+#socketio = SocketIO(app, manage_session=False)
 
 # some protected url
 @app.route('/')
@@ -358,15 +358,21 @@ def getRecordByFilters(table,filters,values):
     return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
 
 
-@socketio.on('_get_record')
-def get_record(filters,values):
-    table = filters.get('TableName')
-    dic = {}
-    for f in filters:
-        if f not in ['TableName','NotFilterFields','_state']:
-            dic[f] = filters[f]
-    res = getRecordByFilters(table,dic,values)
-    return {'result': res}
+#@socketio.on('_get_record')
+@app.route('/_get_record', methods=['POST'])
+def get_record():
+    if request.method == "POST":
+        print(request.form.get('data'))
+        data = json.loads(request.form.get('data'))
+        values = data.get('values')
+        filters = data.get('filters')
+        table = filters.get('TableName')
+        dic = {}
+        for f in filters:
+            if f not in ['TableName','NotFilterFields','_state']:
+                dic[f] = filters[f]
+        res = getRecordByFilters(table,dic,values)
+        return jsonify(result=res)
 
 @app.route('/_get_current_user_type')
 def get_current_user_type():
@@ -1017,5 +1023,5 @@ def utility_processor():
         )
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0")
-    #app.run(host= '0.0.0.0')
+    #socketio.run(app, host="0.0.0.0")
+    app.run(host= '0.0.0.0')
