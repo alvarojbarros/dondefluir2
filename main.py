@@ -284,20 +284,21 @@ def updateRecord(TableClass,fields):
 @app.route('/_save_record',methods=["GET", "POST"])
 def save_record():
     if request.method == 'POST':
-        table = request.form.get('TableName')
+        data = json.loads(request.form.get('data'))
+        print(data)
+        fields = data.get('fields')
+        table = data.get('TableName')
         TableClass = getTableClass(table)
         res = {}
-        for key in request.form:
-            if key not in ['TableName','_state']:
-                res[key] = request.form.get(key,None)
-                if res[key]=='null': res[key] = None
-        id = request.form.get('id',None)
+        for key in fields:
+            if fields[key]=='null': fields[key] = None
+        id = fields.get('id',None)
         session = Session()
         session.expire_on_commit = False
         if not id:
-            return saveNewRecord(TableClass,res)
+            return saveNewRecord(TableClass,fields)
         else:
-            return updateRecord(TableClass,res)
+            return updateRecord(TableClass,fields)
 
 @app.route('/_delete_record')
 def delete_record():
@@ -362,7 +363,6 @@ def getRecordByFilters(table,filters,values):
 @app.route('/_get_record', methods=['POST'])
 def get_record():
     if request.method == "POST":
-        print(request.form.get('data'))
         data = json.loads(request.form.get('data'))
         values = data.get('values')
         filters = data.get('filters')

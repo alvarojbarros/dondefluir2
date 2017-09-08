@@ -81,15 +81,14 @@ function sendFiles(table,id){
 }
 
 function saveRecord(table) {
+    console.log(table)
     fields = vue_record.record;
-    fields.TableName = table;
   	var _state = document.getElementById('_state');
-    fields._state = _state.value
 
 	$.ajax({
 	  type: "POST",
 	  url: "/_save_record",
-	  data: fields,
+	  data: {'data': JSON.stringify({fields: fields, TableName: table, _state: _state.value})},
 	  success: function (data) {
       	res = data.result.res
       	messages.error_msg  = '';
@@ -599,7 +598,7 @@ function setVue(data,canEdit,canDelete){
 }
 
 function showProfile(){
-	vars = {'Template': 'userform.html','Profile': '1'}
+	vars = {'Template': 'userform.html','Profile': '1', Table: 'User'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: vue_user_menu.current_user_id},function (data){
             setVue(data,true,false);
@@ -608,7 +607,7 @@ function showProfile(){
 }
 
 function showUser(user_id){
-	vars = {'Template': 'userform.html','Profile': '0'}
+	vars = {'Template': 'userform.html','Profile': '0', Table: 'User'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: user_id},function (data){
             $.getJSON($SCRIPT_ROOT + '/_get_favorite', {'favId': user_id} ,function(data2) {
@@ -620,7 +619,7 @@ function showUser(user_id){
 }
 
 function showCompany(company_id){
-	vars = {'Template': 'companyform.html'}
+	vars = {Template: 'companyform.html', Table: 'Company'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Company',id: company_id},function (data){
             setVue(data,data.canEdit,data.canDelete);
@@ -629,7 +628,7 @@ function showCompany(company_id){
 }
 
 function showService(id){
-	vars = {'Template': 'serviceform.html'}
+	vars = {'Template': 'serviceform.html', Table: 'Service'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Service',id: id},function (data){
             setVue(data,data.canEdit,data.canDelete);
@@ -638,7 +637,7 @@ function showService(id){
 }
 
 function showUserService(id){
-	vars = {'Template': 'userserviceform.html'}
+	vars = {'Template': 'userserviceform.html', Table: 'UserService'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'UserService',id: id},function (data){
             setVue(data,data.canEdit,data.canDelete);
@@ -647,7 +646,7 @@ function showUserService(id){
 }
 
 function showActivity(id){
-	vars = {'Template': 'activityform.html'}
+	vars = {'Template': 'activityform.html', Table: 'Activity'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Activity',id: id},function (data){
             setVue(data,data.canEdit,data.canDelete);
@@ -673,7 +672,7 @@ function showActivity(id){
 }
 
 function showNotification(id,set_read){
-	vars = {'Template': 'notificationform.html'}
+	vars = {'Template': 'notificationform.html', Table: 'Notification'}
 	getTemplate(vars,function(){
         if (set_read){
             setNotificationRead(id);
