@@ -352,49 +352,49 @@ class Activity(Base,Record):
 
         return True
 
-    def getLinksTo(self):
+    @classmethod
+    def getLinksTo(self,record_list):
         res = {'CompanyId':{},'ProfId':{},'ServiceId':{},'Type':{},'Status':{},'CustId':{}}
         session = Session()
-        print(1111)
         if current_user.UserType==3:
-            records = session.query(Company).filter_by(id=self.CompanyId)
+            records = session.query(Company)\
+                .filter(Company.id.in_([r.CompanyId for r in record_list]))
         elif current_user.UserType>0:
             records = session.query(Company).filter_by(id=current_user.CompanyId)
-        print(records)
-        print(1112)
         for record in records:
             res['CompanyId'][record.id] = [record.Name,record.Closed]
         session.close()
         session = Session()
         records = session.query(User)
         if current_user.UserType==3:
-            records = records.filter_by(id=self.ProfId)
+            records = records.filter(User.id.in_([r.ProfId for r in record_list]))
         elif current_user.UserType>0:
             records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType<3)
-        print(records)
         for record in records:
             res['ProfId'][record.id] = [record.Name,record.Closed]
 
         records = session.query(User)
         if current_user.UserType==3:
-            records = records.filter_by(id=self.CustId)
+            records = records.filter(User.id.in_([r.CustId for r in record_list]))
         elif current_user.UserType>0:
             records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType==3)
-        print(records)
         for record in records:
             res['CustId'][record.id] = [record.Name,record.Closed]
 
-        if self.ProfId:
+        try:
+            count = record_list.count()
+        except:
+            count = len(record_list)
+        if count==1 and  record_list[0].ProfId:
             records = session.query(UserService)\
-                .filter_by(UserId=self.ProfId)\
+                .filter_by(UserId=record_list[0].ProfId)\
                 .join(Service,Service.id==UserService.ServiceId)\
                 .with_entities(Service.id,Service.Name)
         else:
             records = session.query(UserService) \
                 .join(Service, Service.id == UserService.ServiceId) \
-                .filter_by(CompanyId=self.CompanyId)\
+                .filter(Service.CompanyId.in_([r.CompanyId for r in record_list]))\
                 .with_entities(Service.id,Service.Name)
-        print(records)
         for record in records:
             #print(record.Name,record.id )
             res['ServiceId'][record.id] = [record.Name,0]
