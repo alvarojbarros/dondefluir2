@@ -133,28 +133,24 @@ function showNotes(){
 }
 
 function setActivity(TransDate,StartTime,EndTime,ProfId,CompanyId,CustId){
-	Vue.set(vue_record.values.record,'ProfId', ProfId);
-	Vue.set(vue_record.values.record,'CustId', CustId);
-	vue_record.values.record.CompanyId = CompanyId
-	vue_record.values.record.Status = 0
-	vue_record.values.record.Type = 0
-	vue_record.values.record.Schedules.push({'StartTime': StartTime,'TransDate': TransDate, 'EndTime': EndTime})
-	updateLinkTo()
+	vue_record.record.Status = 0;
+	vue_record.record.Type = 0;
+	vue_record.record.Schedules.push({'StartTime': StartTime,'TransDate': TransDate, 'EndTime': EndTime})
+	//updateLinkTo()
 }
 
 
 function createActivity(TransDate,StartTime,EndTime,ProfId,CompanyId,CustId){
 	vars = {Template: 'activityform.html',Table:'Activity'}
 	getTemplate(vars,function(){
+		values = {ProfId :ProfId,CompanyId: CompanyId,CustId: CustId}
 		getRecord({TableName:'Activity'},function (data){
 			Vue.set(vue_record,'table', 'Activity');
-			Vue.set(vue_record,'values', data);
-			Vue.set(vue_buttons,'canEdit', data.canEdit);
-			Vue.set(vue_buttons,'canDelete', data.canDelete);
+            setVue(data,data.canEdit,data.canDelete);
 			setCustomVue('activityform.html',data.record,'Activity')
 			vue_title.Title = 'Nuevo Actividad'
-			setActivity(TransDate,StartTime,EndTime,ProfId,CompanyId,CustId);
-		})
+			setActivity(TransDate,StartTime,EndTime);
+		},values)
 	})
 }
 

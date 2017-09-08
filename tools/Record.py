@@ -81,7 +81,6 @@ class Record(object):
         for column in self.__table__.columns:
             value = json.get(column.key,None)
             if value:
-                print(column.key,value)
                 value = fromJSONValue(column.type.__class__.__name__ ,value)
                 self.__setattr__(column.key,value)
         relationships = self.__mapper__.relationships

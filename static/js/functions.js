@@ -171,8 +171,25 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 	}
 }
 
-function getRecord(filters,callbalck){
-  $.getJSON($SCRIPT_ROOT + '/_get_record', filters, function(data) {
+
+
+function getRecord(filters,callbalck,values) {
+    console.log(filters);
+    socket.emit('_get_record', filters, values, function (data) {
+        console.log(data.result);
+        if (data.result.record.id){
+            data.result['_state'] = 1
+        }else{
+            data.result['_state'] = 0
+        }
+        callbalck(data.result)
+    });
+    return;
+}
+
+
+/*function getRecord(filters,callbalck,values){
+  $.getJSON($SCRIPT_ROOT + '/_get_record', {Filters: filters,Values: values}, function(data) {
     if (data.result.record.id){
     	data.result['_state'] = 1
 	}else{
@@ -180,13 +197,21 @@ function getRecord(filters,callbalck){
 	}
     callbalck(data.result)
   });
-}
+
+}*/
 
 function getRecordBy(Table,filters,callbalck){
   filters.TableName = Table;
-  $.getJSON($SCRIPT_ROOT + '/_get_record', filters, function(data) {
+  /*$.getJSON($SCRIPT_ROOT + '/_get_record', filters, function(data) {
     callbalck(data.result)
-  });
+  });*/
+
+    console.log(filters)
+    socket.emit('_get_record',filters,{}, function (data) {
+        console.log(data.result);
+        callbalck(data.result)
+    });
+
 }
 
 
@@ -575,19 +600,21 @@ function setTableColumns(columns){
     vue_recordlist.columns = columns;
 }
 
-function setVue(data){
+function setVue(data,canEdit,canDelete){
     Vue.set(vue_record,'record', data.record);
     Vue.set(vue_record,'links', data.links);
     Vue.set(vue_record,'fields', data.fields);
     Vue.set(vue_title,'Title', data.record.Name);
+    Vue.set(vue_record,'current_user_type', vue_user_menu.current_user_type);
+    Vue.set(vue_buttons,'canEdit', canEdit);
+    Vue.set(vue_buttons,'canDelete', canDelete);
 }
 
 function showProfile(){
 	vars = {'Template': 'userform.html','Profile': '1'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: vue_user_menu.current_user_id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', true);
+            setVue(data,true,false);
         })
 	});
 }
@@ -597,9 +624,7 @@ function showUser(user_id){
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: user_id},function (data){
             $.getJSON($SCRIPT_ROOT + '/_get_favorite', {'favId': user_id} ,function(data2) {
-                setVue(data);
-                Vue.set(vue_buttons,'canEdit', data.canEdit);
-                Vue.set(vue_buttons,'canDelete', data.canDelete);
+                setVue(data,data.canEdit,data.canDelete);
                 Vue.set(vue_record,'favorite', data2.result);
             });
         });
@@ -610,9 +635,7 @@ function showCompany(company_id){
 	vars = {'Template': 'companyform.html'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Company',id: company_id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', data.canEdit);
-            Vue.set(vue_buttons,'canDelete', data.canDelete);
+            setVue(data,data.canEdit,data.canDelete);
         })
 	});
 }
@@ -621,9 +644,7 @@ function showService(id){
 	vars = {'Template': 'serviceform.html'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Service',id: id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', data.canEdit);
-            Vue.set(vue_buttons,'canDelete', data.canDelete);
+            setVue(data,data.canEdit,data.canDelete);
         })
 	});
 }
@@ -632,9 +653,7 @@ function showUserService(id){
 	vars = {'Template': 'userserviceform.html'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'UserService',id: id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', data.canEdit);
-            Vue.set(vue_buttons,'canDelete', data.canDelete);
+            setVue(data,data.canEdit,data.canDelete);
         })
 	});
 }
@@ -643,11 +662,8 @@ function showActivity(id){
 	vars = {'Template': 'activityform.html'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Activity',id: id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', data.canEdit);
-            Vue.set(vue_buttons,'canDelete', data.canDelete);
+            setVue(data,data.canEdit,data.canDelete);
             Vue.set(vue_buttons,'id', data.record.id);
-
             Vue.set(vue_buttons,'Status', data.record.Status);
             Vue.set(vue_activity,'record',data.record)
             if (data.record && data.record.OnlinePayment && data.record.Price){
@@ -675,9 +691,7 @@ function showNotification(id,set_read){
             setNotificationRead(id);
         }
         getRecord({TableName: 'Notification',id: id},function (data){
-            setVue(data);
-            Vue.set(vue_buttons,'canEdit', data.canEdit);
-            Vue.set(vue_buttons,'canDelete', data.canDelete);
+            setVue(data,data.canEdit,data.canDelete);
         })
 	});
 }

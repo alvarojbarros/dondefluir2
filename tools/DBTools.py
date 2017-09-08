@@ -6,8 +6,6 @@ import settings
 
 def getImageLink(table,id,fieldname):
     fname = '%s/%s.%s' %(table,fieldname,id)
-    print(fname)
-    print("%s/%s/%s" % (settings.images_url,settings.images_folder,fname))
     f = os.path.isfile("%s/%s/%s" % (settings.images_url,settings.images_folder,fname))
     if not f:
         url = url_for('static',filename='images/user.jpg')

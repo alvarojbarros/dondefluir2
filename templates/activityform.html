@@ -28,31 +28,37 @@
             <div class="white-box">
                 <h3 class="box-title"> Información </h3>
                 <div class="form-group">
-                    <div class="col-xs-12 col-md-6 p-b-20">
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="current_user_type!=3">
                         <label class="col-xs-12" for="CompanyId">Empresa</label>
                         <select class="form-control" id="CompanyId" name="CompanyId" v-model="record.CompanyId">
                             <option v-for="(value,key) in links['CompanyId']"  v-if="value[1]==0" :value="key">
                               {% raw %} {{value[0]}} {% endraw %}</option>
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-6 p-b-20">
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="current_user_type==3">
+                        <p style="color: green"><b>Empresa: {% raw %} {{links['CompanyId'][record.CompanyId][0]}} {% endraw %} </b><p>
+                    </div>
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="current_user_type!=3">
                         <label class="col-xs-12" for="ProfId">Profesional</label>
                         <select class="form-control" id="ProfId" name="ProfId" v-model="record.ProfId">
                             <option v-for="(value,key) in links['ProfId']"  v-if="value[1]==0" :value="key">
                               {% raw %} {{value[0]}} {% endraw %}</option>
                         </select>
                     </div>
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="current_user_type==3">
+                        <p style="color: green"><b>Profesional: {% raw %} {{links['ProfId'][record.ProfId][0]}} {% endraw %} </b><p>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-xs-12 col-md-6 p-b-20">
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="current_user_type!=3">
                         <label class="col-xs-12" for="Type">Tipo de Actividad</label>
                         <select class="form-control" id="Type" name="Type" v-model="record.Type">
                             <option v-for="(value,key) in links['Type']"  v-if="value[1]==0" :value="key">
                               {% raw %} {{value[0]}} {% endraw %}</option>
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-6 p-b-20">
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="record.Type!=0"  >
                         <label class="col-xs-12" for="Comment">Nombre de Curso/Evento</label>
                         <div class="col-xs-12">
                             <input class="form-control" id="Comment" name="Comment"
@@ -62,7 +68,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-xs-12 col-md-4 p-b-20" v-if="record.Type==0">
+                    <div class="col-xs-12 col-md-4 p-b-20" v-if="record.Type==0 && current_user_type!=3">
                         <label class="col-xs-12" for="CustId">Cliente</label>
                         <select class="form-control" id="CustId" name="CustId" v-model="record.CustId">
                             <option v-for="(value,key) in links['CustId']"  v-if="value[1]==0" :value="key">
@@ -76,23 +82,29 @@
                               {% raw %} {{value[0]}} {% endraw %}</option>
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-4 p-b-20">
+                    <div class="col-xs-12 col-md-4 p-b-20" v-if="current_user_type!=3">
                         <label class="col-xs-12" for="Status">Estado</label>
                         <select class="form-control" id="Status" name="Status" v-model="record.Status">
                             <option v-for="(value,key) in links['Status']"  v-if="value[1]==0" :value="key">
                               {% raw %} {{value[0]}} {% endraw %}</option>
                         </select>
                     </div>
+                    <div class="col-xs-12 col-md-4 p-b-20" v-if="current_user_type==3">
+                        <p style="color: green"><b>Estado: {% raw %} {{links['Status'][record.Status][0]}} {% endraw %} </b><p>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12 col-md-3 p-b-20">
+                    <div class="col-xs-12 col-md-3 p-b-20" v-if="current_user_type!=3">
                         <label class="col-xs-12" for="Price">Valor</label>
                         <div class="col-xs-12">
                             <input class="form-control" id="Price" name="Price" placeholder="Price"
                                    type="number" v-model="record.Price">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-6 p-b-20">
+                    <div class="col-xs-12 col-md-3 p-b-20" v-if="current_user_type==3">
+                        <p style="color: green"><b>Valor: {% raw %} {{record.Price}} {% endraw %} </b><p>
+                    </div>
+                    <div class="col-xs-12 col-md-6 p-b-20" v-if="current_user_type!=3">
                         <div class="checkbox checkbox-primary">
                             <input class="fxhdr" id="OnlinePayment" name="OnlinePayment" type="checkbox" v-model="record.OnlinePayment">
                             <label for="OnlinePayment">Habilitar Pagos en Línea</label>
@@ -110,7 +122,14 @@
                     <div id="Schedules" class="col-xs-12 col-md-12 p-b-20">
                         <div v-for="(row,index) in record.Schedules" :id="'row'+(index+1)"
                                 name="SchedulesRows" :rownr="index+1"  class="col-xs-12 p-b-20 schedulerows">
-                            <div class="col-xs-12 col-sm-12 p-b-20">
+                            <div class="col-xs-12 col-sm-12 p-b-20" v-if="current_user_type==3">
+                                <p style="color: green"><b>
+                                    {% raw %}
+                                    {{record.Schedules[index].TransDate}} de {{record.Schedules[index].StartTime}} a {{record.Schedules[index].EndTime}}
+                                    {% endraw %}
+                                </b><p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 p-b-20" v-if="current_user_type!=3">
                                 <div class="col-xs-4 p-b-20">
                                     <label>Fecha </label>
                                     <input detail="Schedules" id="TransDate" name="TransDate" type="date" class="form-control"
@@ -127,7 +146,7 @@
                                     v-model="record.Schedules[index].EndTime">
                                 </div>
                             </div>
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" v-if="current_user_type!=3">
                                 <button :id="'delete'+index" type="button" :onclick="'removeRow(\'Schedules\','+index+')'"
                                         class="btn btn-danger btn-rounded waves-effect waves-light m-r-10 m-b-10">
                                     <span class="btn-label">
@@ -136,7 +155,7 @@
                                 </button>
                             </div>
                         </div>
-                        <button onclick="addNewRow('Schedules')" type="button"
+                        <button onclick="addNewRow('Schedules')" type="button" v-if="current_user_type!=3"
                                 class="btn btn-warning btn-rounded waves-effect waves-light m-r-10 m-b-10">
                             <span class="btn-label">
                                 <i class="fa fa-plus"></i>
@@ -190,7 +209,7 @@
             </div>
         </div>
     </div>
-    <div class="row" v-if="record.Type==1 || record.Type==2">
+    <div class="row" v-if="(record.Type==1 || record.Type==2) && current_user_type!=3">
         <div class="col-xs-12">
             <div class="white-box">
                 <h3 class="box-title"> Clientes </h3>

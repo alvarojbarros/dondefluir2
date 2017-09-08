@@ -17,6 +17,7 @@ from db.Activity import Activity,ActivitySchedules,ActivityUsers
 from db.Payment import Payment
 from sqlalchemy import or_
 from tools.dbconnect import Session
+from flask_socketio import SocketIO, send, emit
 
 
 app.config.update(
@@ -38,6 +39,8 @@ mail = Mail(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
+
+socketio = SocketIO(app, manage_session=False)
 
 # some protected url
 @app.route('/')
@@ -333,12 +336,14 @@ def get_template():
     res = render_template(template,var=var)
     return jsonify(result={'html':res, 'functions': functions})
 
-def getRecordByFilters(table,filters):
+def getRecordByFilters(table,filters,values):
     TableClass = getTableClass(table)
     session = Session()
     if not filters:
         record = TableClass()
         record.defaults()
+        for f in values:
+            record.__setattr__(f,values[f])
     else:
         record = session.query(TableClass).filter_by(**filters).first()
         if not record:
@@ -347,22 +352,21 @@ def getRecordByFilters(table,filters):
     recordTitle = TableClass.getRecordTitle()
     canEdit = TableClass.canUserEdit(record)
     canDelete = TableClass.canUserDelete()
-    links = TableClass.getLinksTo()
+    links = record.getLinksTo()
     res = record.toJSON()
     session.close()
     return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
 
 
-@app.route('/_get_record')
-def get_record():
-    table = request.args.get('TableName')
-    #NotFilterFields = request.args.get('NotFilterFields',None)
-    filters = {}
-    for f in request.args:
+@socketio.on('_get_record')
+def get_record(filters,values):
+    table = filters.get('TableName')
+    dic = {}
+    for f in filters:
         if f not in ['TableName','NotFilterFields','_state']:
-            filters[f] = request.args[f]
-    res = getRecordByFilters(table,filters)
-    return jsonify(result=res)
+            dic[f] = filters[f]
+    res = getRecordByFilters(table,dic,values)
+    return {'result': res}
 
 @app.route('/_get_current_user_type')
 def get_current_user_type():
@@ -380,7 +384,6 @@ def record_list():
     filtersKeys,filtersNames = TableClass.recordListFilters()
     filters = {}
     links = TableClass.getLinksTo()
-    print(links)
     res = setColumns(records,links,filtersKeys,filters)
     for fieldname in fields:
         if fieldname[:6]=='Image':
@@ -1014,4 +1017,5 @@ def utility_processor():
         )
 
 if __name__ == "__main__":
-    app.run(host= '0.0.0.0')
+    socketio.run(app, host="0.0.0.0")
+    #app.run(host= '0.0.0.0')

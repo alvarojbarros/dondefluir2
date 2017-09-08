@@ -2,6 +2,7 @@ Vue.config.devtools = true;
 
 Vue.component('button-favorite',{
   props: ['record_id','button_class','favorite'],
+  name: 'button-favorite',
   template: '' +
             '<button type="button" id="Favorite"  ' +
             '    :class="isFavorite" v-on:click="setFavorite"> ' +

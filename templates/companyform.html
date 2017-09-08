@@ -103,6 +103,23 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12 col-md-6 p-b-20">
+                        <label class="col-xs-12" for="KeyPayco">Clave ePayco</label>
+                        <div class="col-xs-12">
+                            <input class="form-control" id="KeyPayco" name="KeyPayco" placeholder="Clave ePayco"
+                                   type="text" v-model="record.KeyPayco">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 p-b-20">
+                        <div class="checkbox checkbox-primary">
+                            <input class="fxhdr" id="OnlinePayment" name="OnlinePayment" type="checkbox" v-model="record.OnlinePayment">
+                            <label for="OnlinePayment">Habilitar Pagos en línea</label>
+                        </div>
+                    </div>
+                </div>
+
                 {% if current_user.UserType==0 %}
                 <div class="form-group">
                     <div class="col-xs-12 col-md-12 p-b-20">

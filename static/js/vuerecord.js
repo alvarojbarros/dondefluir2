@@ -21,6 +21,7 @@ var vue_record = new Vue({
     oldRecord: '',
     favorite: '',
     classname: '',
+    current_user_type: '',
   },
 
   watch: {

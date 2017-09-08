@@ -34,7 +34,7 @@ class Activity(Base,Record):
     Description = Column(MediumText())
     Users = relationship('ActivityUsers', cascade="all, delete-orphan")
     Schedules = relationship('ActivitySchedules', cascade="all, delete-orphan")
-    Status = Column(Boolean)
+    Status = Column(Integer)
     OnlinePayment = Column(Boolean)
 
     StatusList = ['Tomar este curso','Anular Inscripción']
@@ -352,39 +352,51 @@ class Activity(Base,Record):
 
         return True
 
-    @classmethod
     def getLinksTo(self):
         res = {'CompanyId':{},'ProfId':{},'ServiceId':{},'Type':{},'Status':{},'CustId':{}}
         session = Session()
-        records = session.query(Company)
-        if current_user.UserType>0:
-            records = records.filter_by(id=current_user.CompanyId)
+        print(1111)
+        if current_user.UserType==3:
+            records = session.query(Company).filter_by(id=self.CompanyId)
+        elif current_user.UserType>0:
+            records = session.query(Company).filter_by(id=current_user.CompanyId)
         print(records)
+        print(1112)
         for record in records:
             res['CompanyId'][record.id] = [record.Name,record.Closed]
-
+        session.close()
+        session = Session()
         records = session.query(User)
-        if current_user.UserType>0:
+        if current_user.UserType==3:
+            records = records.filter_by(id=self.ProfId)
+        elif current_user.UserType>0:
             records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType<3)
+        print(records)
         for record in records:
             res['ProfId'][record.id] = [record.Name,record.Closed]
 
         records = session.query(User)
-        if current_user.UserType>0:
+        if current_user.UserType==3:
+            records = records.filter_by(id=self.CustId)
+        elif current_user.UserType>0:
             records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType==3)
+        print(records)
         for record in records:
             res['CustId'][record.id] = [record.Name,record.Closed]
 
         if self.ProfId:
             records = session.query(UserService)\
                 .filter_by(UserId=self.ProfId)\
-                .join(Service,UserService.ServiceId==Service.id)\
+                .join(Service,Service.id==UserService.ServiceId)\
                 .with_entities(Service.id,Service.Name)
         else:
-            records = session.query(UserService).join(Service,UserService.ServiceId==Service.id)\
+            records = session.query(UserService) \
+                .join(Service, Service.id == UserService.ServiceId) \
                 .filter_by(CompanyId=self.CompanyId)\
                 .with_entities(Service.id,Service.Name)
+        print(records)
         for record in records:
+            #print(record.Name,record.id )
             res['ServiceId'][record.id] = [record.Name,0]
 
         res['Type'][self.TYPE_MEETING] = ['Cita',0]
