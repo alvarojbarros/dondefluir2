@@ -221,7 +221,7 @@ def update_linkto():
     record = TableClass()
     record.defaults()
     getDetailDict(fields)
-    links = record.getLinksTo()
+    links = TableClass.getLinksTo([record])
     return jsonify(result=links)
 
 
@@ -352,7 +352,7 @@ def getRecordByFilters(table,filters,values):
     recordTitle = TableClass.getRecordTitle()
     canEdit = TableClass.canUserEdit(record)
     canDelete = TableClass.canUserDelete()
-    links = record.getLinksTo()
+    links = TableClass.getLinksTo([record])
     res = record.toJSON()
     session.close()
     return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
@@ -383,7 +383,7 @@ def record_list():
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     filtersKeys,filtersNames = TableClass.recordListFilters()
     filters = {}
-    links = TableClass.getLinksTo()
+    links = TableClass.getLinksTo(records)
     res = setColumns(records,links,filtersKeys,filters)
     for fieldname in fields:
         if fieldname[:6]=='Image':
@@ -960,7 +960,7 @@ def customer_list():
         elif vars[key] in ('false', 'False'):
             vars[key] = False
     records = getCustomer(vars)
-    links = User.getLinksTo()
+    links = User.getLinksTo(records)
     res = setColumns(records,links,[],[])
     return jsonify(result={'records': res,'filters': [], 'filtersNames': []})
 

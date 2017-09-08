@@ -48,7 +48,7 @@ class Notification(Base,Record):
         return 'getNotifications()'
 
     @classmethod
-    def getLinksTo(cls):
+    def getLinksTo(cls,record_list):
         res = {'Status': {}}
         res['Status'][0] = ['No Leída',0]
         res['Status'][1] = ['Leída',0]

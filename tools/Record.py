@@ -255,7 +255,7 @@ class Record(object):
         return record
 
     @classmethod
-    def getLinksTo(self):
+    def getLinksTo(self,record_list):
         return {}
 
     @classmethod

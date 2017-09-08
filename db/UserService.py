@@ -43,7 +43,7 @@ class UserService(Base,Record):
         return ['UserId','ServiceId']
 
     @classmethod
-    def getLinksTo(self):
+    def getLinksTo(self,record_list):
         res = {}
         res['ServiceId'] = {}
         session = Session()

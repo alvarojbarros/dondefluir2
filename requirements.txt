@@ -1,0 +1,7 @@
+Flask
+flask_login
+flask_mail
+sqlalchemy
+pymysql
+mako
+flask_socketio

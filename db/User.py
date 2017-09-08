@@ -213,7 +213,7 @@ class User(Base,Record,UserMixin):
         return ['Name']
 
     @classmethod
-    def getLinksTo(self):
+    def getLinksTo(self,record_list):
         res = {}
         res['UserType'] = {self.CUST: ['Cliente',0]}
         if current_user.UserType==0:
