@@ -39,7 +39,6 @@ function getCalendar(user_id) {
 				return false;
 			}
 			if (event.onclick) {
-				console.log(event.onclick)
 				var onclick_function = new Function(event.onclick);
 				onclick_function();
 				return false;

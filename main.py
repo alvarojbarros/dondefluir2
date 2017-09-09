@@ -210,21 +210,13 @@ def save_files():
 
 @app.route('/_update_linkto',methods=['POST'])
 def update_linkto():
-    print(1)
     if request.method == "POST":
-        print(2)
         data = json.loads(request.form.get('data'))
-        print(3,data)
         table = data.get('TableName')
-        print(4,table)
         fields = data.get('fields')
-        print(5,fields)
         TableClass = getTableClass(table)
-        print(6)
         record = TableClass()
-        print(7)
         record.fromJSON(fields)
-        print(8)
         links = TableClass.getLinksTo([record])
         return jsonify(result=links)
 
@@ -289,7 +281,6 @@ def updateRecord(TableClass,fields):
 def save_record():
     if request.method == 'POST':
         data = json.loads(request.form.get('data'))
-        print(data)
         fields = data.get('fields')
         table = data.get('TableName')
         TableClass = getTableClass(table)

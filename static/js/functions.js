@@ -77,7 +77,6 @@ function sendFiles(table,id){
 }
 
 function saveRecord(table) {
-    console.log(table)
     fields = vue_record.record;
   	var _state = document.getElementById('_state');
 

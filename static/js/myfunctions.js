@@ -112,8 +112,7 @@ function createActivity(TransDate,StartTime,EndTime,ProfId,CompanyId,CustId){
 	getTemplate(vars,function(){
 		values = {ProfId :ProfId,CompanyId: CompanyId,CustId: CustId}
 		getRecord({TableName:'Activity'},function (data){
-			Vue.set(vue_record,'table', 'Activity');
-            setVue(data,data.canEdit,data.canDelete);
+            setVue(data,data.canEdit,data.canDelete,'Activity');
 			setCustomVue('activityform.html',data.record,'Activity')
 			vue_title.Title = 'Nuevo Actividad'
 			setActivity(TransDate,StartTime,EndTime);
@@ -236,7 +235,6 @@ function showEvent(id){
     var vars = {Template: 'event.html',Table: 'Activity', id: id}
 	getTemplate(vars,function (){
 		$.getJSON($SCRIPT_ROOT + '/_get_calendar_events', {'eventId':id},function(data) {
-			console.log(data.result)
 			Vue.set(vue_event,'events', data.result);
 			Vue.set(vue_event,'current_user_id',vue_user_menu.current_user_id)
 			for (index in data.result){

@@ -58,7 +58,6 @@ var vue_record = new Vue({
             for (fieldname in this.record){
                 if (this.oldRecord[fieldname]!=this.record[fieldname]){
                     if (this.events[fieldname] && this.events[fieldname].AfterChange){
-                        console.log(fieldname,this.events[fieldname].AfterChange)
                         var call_function = new Function(fieldname, this.events[fieldname].AfterChange);
                         call_function(fieldname);
                     }
