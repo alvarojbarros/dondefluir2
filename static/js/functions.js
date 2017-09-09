@@ -32,11 +32,7 @@ function newRecord(Table,TemplateName) {
     var vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate(vars,function(){
 		getRecord({TableName: Table},function (data){
-			Vue.set(vue_record,'record', data.record);
-			Vue.set(vue_record,'links', data.links);
-			Vue.set(vue_record,'table', Table);
-			Vue.set(vue_buttons,'canEdit', data.canEdit);
-			Vue.set(vue_buttons,'canDelete', data.canDelete);
+			setVue(data,data.canEdit,data.canDelete,Table)
 			setCustomVue(TemplateName,data.record,Table);
 			vue_title.Title = 'Nuevo Registro'
 		})
@@ -117,60 +113,6 @@ function saveRecord(table) {
     //});
 
 };
-
-
-function getRecordForm(Table,TemplateName,id,callName,runFunction){
-	var titleName = vue_title.Title;
-    var moduleNr = vue_title.moduleNr;
-    var index = vue_title.indexNr ;
-	if (runFunction){
-		var callback_function = new Function(runFunction);
-		callback_function();
-	}
-    var vars = {Template: TemplateName,Table: Table, id: id}
-	if (callName){
-		var callback_function = new Function(callName);
-		getTemplate(vars,function(){
-			callback_function();
-			getRecord({TableName: Table,id: id},function (data){
-                vue_title.moduleNr = moduleNr;
-                vue_title.indexNr = index;
-				Vue.set(vue_record,'table', Table);
-				Vue.set(vue_title,'tableName', titleName);
-				Vue.set(vue_record,'values', data);
-				Vue.set(vue_buttons,'canEdit', data.canEdit);
-				Vue.set(vue_buttons,'canDelete', data.canDelete);
-				setCustomVue(TemplateName,data.record,Table);
-				if (data.record['Name']){
-					vue_title.recordName = data.record['Name']
-				}else{
-					vue_title.recordName = data.record['id']
-				}
-			})
-		})
-	    //getTemplate(vars,null);
-	}else{
-	    getTemplate(vars,function (){
-			getRecord({TableName: Table,id: id},function (data){
-                vue_title.moduleNr = moduleNr;
-                vue_title.indexNr = index;
-				Vue.set(vue_record,'table', Table);
-				Vue.set(vue_title,'tableName', titleName);
-				Vue.set(vue_record,'values', data);
-				Vue.set(vue_buttons,'canEdit', data.canEdit);
-				Vue.set(vue_buttons,'canDelete', data.canDelete);
-				setCustomVue(TemplateName,data.record,Table);
-				if (data.record['Name']){
-					vue_title.recordName = data.record['Name']
-				}else{
-					vue_title.recordName = data.record['id']
-				}
-			})
-		});
-	}
-}
-
-
 
 function getRecord(filters,callbalck,values) {
     $.ajax({
@@ -531,18 +473,21 @@ function getRecordList(table,fields,limit,order_by,desc){
 
 
 function updateLinkTo(fieldname){
-	fields = vue_record.values.record;
-	fields['TableName'] = vue_record.table;
-	if (fieldname){
-		fields['FieldName'] = fieldname;
-	}
-	$.getJSON($SCRIPT_ROOT + '/_update_linkto', fields,function(data) {
-		if (fieldname){
-			vue_record.values.links[fieldname] = data.result[fieldname];
-		}else{
-			vue_record.values.links = data.result;
-		}
-	});
+	fields = vue_record.record;
+    $.ajax({
+            url: "/_update_linkto",
+            type: "POST",
+            data: {'data': JSON.stringify({fields: fields, TableName: vue_record.table})},
+            success: function (data) {
+                console.log(data)
+                if (fieldname){
+                    vue_record.links[fieldname] = data.result[fieldname];
+                }else{
+                    vue_record.links = data.result;
+                }
+            }
+    });
+
 }
 
 function updateRecordList(div,Filter){
@@ -587,21 +532,22 @@ function setTableColumns(columns){
     vue_recordlist.columns = columns;
 }
 
-function setVue(data,canEdit,canDelete){
+function setVue(data,canEdit,canDelete,table){
+    Vue.set(vue_record,'table', table);
     Vue.set(vue_record,'record', data.record);
     Vue.set(vue_record,'links', data.links);
-    Vue.set(vue_record,'fields', data.fields);
     Vue.set(vue_title,'Title', data.record.Name);
     Vue.set(vue_record,'current_user_type', vue_user_menu.current_user_type);
     Vue.set(vue_buttons,'canEdit', canEdit);
     Vue.set(vue_buttons,'canDelete', canDelete);
+    Vue.set(vue_record,'events', data.events);
 }
 
 function showProfile(){
 	vars = {'Template': 'userform.html','Profile': '1', Table: 'User'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: vue_user_menu.current_user_id},function (data){
-            setVue(data,true,false);
+            setVue(data,true,false,'User');
         })
 	});
 }
@@ -611,7 +557,7 @@ function showUser(user_id){
 	getTemplate(vars,function(){
         getRecord({TableName: 'User',id: user_id},function (data){
             $.getJSON($SCRIPT_ROOT + '/_get_favorite', {'favId': user_id} ,function(data2) {
-                setVue(data,data.canEdit,data.canDelete);
+                setVue(data,data.canEdit,data.canDelete,'User');
                 Vue.set(vue_record,'favorite', data2.result);
             });
         });
@@ -622,7 +568,7 @@ function showCompany(company_id){
 	vars = {Template: 'companyform.html', Table: 'Company'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Company',id: company_id},function (data){
-            setVue(data,data.canEdit,data.canDelete);
+            setVue(data,data.canEdit,data.canDelete,'Company');
         })
 	});
 }
@@ -631,7 +577,7 @@ function showService(id){
 	vars = {'Template': 'serviceform.html', Table: 'Service'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Service',id: id},function (data){
-            setVue(data,data.canEdit,data.canDelete);
+            setVue(data,data.canEdit,data.canDelete,'Service');
         })
 	});
 }
@@ -640,7 +586,7 @@ function showUserService(id){
 	vars = {'Template': 'userserviceform.html', Table: 'UserService'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'UserService',id: id},function (data){
-            setVue(data,data.canEdit,data.canDelete);
+            setVue(data,data.canEdit,data.canDelete,'UserService');
         })
 	});
 }
@@ -649,7 +595,7 @@ function showActivity(id){
 	vars = {'Template': 'activityform.html', Table: 'Activity'}
 	getTemplate(vars,function(){
         getRecord({TableName: 'Activity',id: id},function (data){
-            setVue(data,data.canEdit,data.canDelete);
+            setVue(data,data.canEdit,data.canDelete,'Activity');
             Vue.set(vue_buttons,'id', data.record.id);
             Vue.set(vue_buttons,'Status', data.record.Status);
             Vue.set(vue_activity,'record',data.record)

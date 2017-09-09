@@ -5,6 +5,8 @@ var vue_event = new Vue({
   data: {
     events: '',
     ProfName: '',
+    ProfId: '',
+    current_user_id: '',
   },
   methods: {
     getScript: function(id,params) {

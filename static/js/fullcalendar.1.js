@@ -31,15 +31,6 @@ function getCalendar(user_id) {
 		},
 
 		eventRender: function(event, element) {
-			//console.log(event.title)
-			//console.log(element)
-			//element.attr('outerHTML', event.title);
-			//element.attr('innerHTML', event.title);
-			//element.attr('text', event.title);
-			//element.attr('content', event.title);
-			//element.attr('data-toggle', 'tooltip');
-			//$(element).tooltip({title: event.tooltip});
-			//element.attr('id', 'event.id');
 		},
 
 		eventClick: function(event) {
@@ -48,6 +39,7 @@ function getCalendar(user_id) {
 				return false;
 			}
 			if (event.onclick) {
+				console.log(event.onclick)
 				var onclick_function = new Function(event.onclick);
 				onclick_function();
 				return false;

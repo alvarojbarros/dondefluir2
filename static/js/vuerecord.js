@@ -17,6 +17,7 @@ var vue_record = new Vue({
     record: '',
     links: '',
     fields: '',
+    events: '',
     table: '',
     oldRecord: '',
     favorite: '',
@@ -53,17 +54,17 @@ var vue_record = new Vue({
        },
     },
 	updated: function () {
-
-        if (this.values && this.values.record){
-            for (fieldname in this.values.record){
-                if (this.oldRecord[fieldname]!=this.values.record[fieldname]){
-                    if (this.values.fields[fieldname] && this.values.fields[fieldname].AfterChange){
-                        var call_function = new Function(this.values.fields[fieldname].AfterChange);
-                        call_function();
+        if (this.record){
+            for (fieldname in this.record){
+                if (this.oldRecord[fieldname]!=this.record[fieldname]){
+                    if (this.events[fieldname] && this.events[fieldname].AfterChange){
+                        console.log(fieldname,this.events[fieldname].AfterChange)
+                        var call_function = new Function(fieldname, this.events[fieldname].AfterChange);
+                        call_function(fieldname);
                     }
                 }
             }
-            this.oldRecord = $.extend(true,{},this.values.record)
+            this.oldRecord = $.extend(true,{},this.record)
         }
 	},
 })

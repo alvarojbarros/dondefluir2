@@ -274,6 +274,9 @@ class Record(object):
     def afterSaveJS(self):
         return ''
 
+    @classmethod
+    def getEvents(self):
+        return {}
 
 class DetailRecord(object):
 

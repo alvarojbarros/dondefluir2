@@ -59,13 +59,6 @@
                           <td v-for="row in values[0].Titles">{%raw%}{{row}}{%endraw%}</td>
                       </tr>
                     {% block fields_view %}
-                      <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
-                          <td v-for="row in record.Columns">
-                              <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">
-                                {%raw%}{{row}}{%endraw%}
-                              </a>
-                          </td>
-                      </tr>
                     {% endblock %}
                     </table>
                 </div>

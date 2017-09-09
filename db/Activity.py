@@ -416,6 +416,9 @@ class Activity(Base,Record):
     def getRecordTitle(self):
         return ['ProfId','CustId','ServiceId']
 
+    @classmethod
+    def getEvents(self):
+        return {'ProfId': {'AfterChange':'updateLinkTo()'}}
 
 class ActivityUsers(Base,DetailRecord):
     __tablename__ = 'activityusers'

@@ -218,7 +218,7 @@ function setVueDashboard(){
 
 function getEventList(){
 
-	vars['OrderBy'] = 'TransDate';
+	vars = {OrderBy: 'TransDate'};
 	Vue.set(vue_recordlist,'table', 'Activity');
 	Vue.set(vue_recordlist,'user_type', vue_user_menu.current_user_type);
 	$.getJSON($SCRIPT_ROOT + '/_event_list', {},function(data) {
@@ -236,9 +236,12 @@ function showEvent(id){
     var vars = {Template: 'event.html',Table: 'Activity', id: id}
 	getTemplate(vars,function (){
 		$.getJSON($SCRIPT_ROOT + '/_get_calendar_events', {'eventId':id},function(data) {
+			console.log(data.result)
 			Vue.set(vue_event,'events', data.result);
+			Vue.set(vue_event,'current_user_id',vue_user_menu.current_user_id)
 			for (index in data.result){
     			Vue.set(vue_event,'ProfName', data.result[index][0].ProfName);
+    			Vue.set(vue_event,'ProfId', data.result[index][0].ProfId);
                 vue_title.Title = data.result[index][0].Comment;
 			}
 		});
@@ -339,37 +342,40 @@ function getTemplateM(vars){
 }
 
 function getProfessionals(fav){
-	var vars = {'Table': 'User', 'favorite': fav, 'Template': 'professional_icon.html', 'Name':'Profesionales'};
+	var vars = {'Table': 'User', 'favorite': fav, 'Template': 'professional_icon.html',
+	'Name':'Profesionales'};
 	getTemplateM(vars)
 }
 
 function getServices(){
-	var vars = {'Table': 'Service', 'Template': 'service.html', 'Name':'Servicios'};
+	var vars = {'Table': 'Service', 'Template': 'service.html', 'Name':'Servicios','TemplateForm':'serviceform.html'};
 	getTemplateM(vars)
 }
 
 function getProfServices(){
-	var vars = {'Table': 'UserService', 'Template': 'userservice.html', 'Name':'Servicios por Profesional'};
+	var vars = {'Table': 'UserService', 'Template': 'userservice.html', 'Name':'Servicios por Profesional'
+	    ,'TemplateForm':'userserviceform.html'};
 	getTemplateM(vars)
 }
 
 function getPayments(){
-	var vars = {'Table': 'Payment', 'Template': 'payment.html', 'Name':'Pagos'};
+	var vars = {'Table': 'Payment', 'Template': 'payment.html', 'Name':'Pagos','TemplateForm':'paymentform.html'};
 	getTemplateM(vars)
 }
 
 function getCustomers(fav){
-	var vars = {'Table': 'User', 'Template': 'customer.html', 'Name':'Clientes','favorite': fav, 'TemplateForm':'customerform.html'};
+	var vars = {'Table': 'User', 'Template': 'customer.html', 'Name':'Clientes'
+	    ,'favorite': fav, 'TemplateForm':'customerform.html'};
 	getTemplateM(vars)
 }
 
 function getCompanies(){
-	var vars = {'Table': 'Company', 'Template': 'company.html', 'Name':'Empresas'};
+	var vars = {'Table': 'Company', 'Template': 'company.html', 'Name':'Empresas','TemplateForm':'companyform.html'};
 	getTemplateM(vars)
 }
 
 function getUsers(){
-	var vars = {'Table': 'User', 'Template': 'users.html', 'Name':'Usuarios'};
+	var vars = {'Table': 'User', 'Template': 'users.html', 'Name':'Usuarios','TemplateForm':'userform.html'};
 	getTemplateM(vars)
 }
 
@@ -394,7 +400,7 @@ function getEvents(){
 }
 
 function getNotifications(){
-	var vars = {'Table':'Notification', 'Template': 'notification.html', 'Name':'Notificaciones'};
+	var vars = {'Table':'Notification', 'Template': 'notification.html', 'Name':'Notificaciones','TemplateForm':'userserviceform.html'};
 	getTemplateM(vars)
 }
 

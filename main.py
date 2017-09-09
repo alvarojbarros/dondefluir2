@@ -208,21 +208,25 @@ def save_files():
             f.save(os.path.join(path,fname))
     return jsonify(result={'res': True})
 
-@app.route('/_update_linkto')
+@app.route('/_update_linkto',methods=['POST'])
 def update_linkto():
-    table = request.args.get('TableName')
-    fields = {}
-    for key in request.args:
-        if key not in ['TableName','_state']:
-            fields[key] = request.args.get(key,None)
-            if fields[key]=='null': fields[key] = None
-
-    TableClass = getTableClass(table)
-    record = TableClass()
-    record.defaults()
-    getDetailDict(fields)
-    links = TableClass.getLinksTo([record])
-    return jsonify(result=links)
+    print(1)
+    if request.method == "POST":
+        print(2)
+        data = json.loads(request.form.get('data'))
+        print(3,data)
+        table = data.get('TableName')
+        print(4,table)
+        fields = data.get('fields')
+        print(5,fields)
+        TableClass = getTableClass(table)
+        print(6)
+        record = TableClass()
+        print(7)
+        record.fromJSON(fields)
+        print(8)
+        links = TableClass.getLinksTo([record])
+        return jsonify(result=links)
 
 
 def saveNewRecord(TableClass,fields):
@@ -353,25 +357,27 @@ def getRecordByFilters(table,filters,values):
     recordTitle = TableClass.getRecordTitle()
     canEdit = TableClass.canUserEdit(record)
     canDelete = TableClass.canUserDelete()
+    events = TableClass.getEvents()
     links = TableClass.getLinksTo([record])
     res = record.toJSON()
     session.close()
-    return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
+    return {'record': res, 'fields': fields, 'links': links,'recordTitle':recordTitle,'canEdit':canEdit
+        , 'canDelete':canDelete, 'events': events}
 
 
-#@socketio.on('_get_record')
 @app.route('/_get_record', methods=['POST'])
 def get_record():
     if request.method == "POST":
         data = json.loads(request.form.get('data'))
         values = data.get('values')
+        if not values: values = {}
         filters = data.get('filters')
         table = filters.get('TableName')
-        dic = {}
+        new_filters = {}
         for f in filters:
             if f not in ['TableName','NotFilterFields','_state']:
-                dic[f] = filters[f]
-        res = getRecordByFilters(table,dic,values)
+                new_filters[f] = filters[f]
+        res = getRecordByFilters(table, new_filters, values)
         return jsonify(result=res)
 
 @app.route('/_get_current_user_type')
@@ -389,7 +395,7 @@ def record_list():
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     filtersKeys,filtersNames = TableClass.recordListFilters()
     filters = {}
-    links = TableClass.getLinksTo(records)
+    links =     TableClass.getLinksTo(records)
     res = setColumns(records,links,filtersKeys,filters)
     for fieldname in fields:
         if fieldname[:6]=='Image':
@@ -724,7 +730,7 @@ def showProfessionalEvents(*args):
         res[r.id].append({'Comment': r.Comment,'TransDate': TransDate, 'StartTime': r.StartTime.strftime("%H:%M") \
             , 'Description': r.Description, 'Price': r.Price, 'MaxPersons': r.MaxPersons, 'OnlinePayment': r.OnlinePayment \
             , 'EndTime': r.EndTime.strftime("%H:%M"), 'Status': st, 'Persons': cnt, 'StatusValue': stv, 'Paid': paid \
-            , 'KeyPayco': r.KeyPayco, 'CompanyPayment':r.CompanyPayment,'ProfName': r.ProfName})
+            , 'KeyPayco': r.KeyPayco, 'CompanyPayment':r.CompanyPayment,'ProfName': r.ProfName, 'ProfId': r.ProfId})
         k += 1
     return res
 
@@ -772,7 +778,7 @@ def set_cust_to_event():
 
 
 def getCalendarData(UserId):
-    records = Activity.getRecordListCalendar(Activity,ProfId=UserId)
+    records = Activity.getRecordList(Activity,ProfId=UserId)
     list = []
     for record in records:
         st = "%sT%s" %(record.TransDate.strftime('%Y-%m-%d'),record.StartTime.strftime('%H:%M:%S'))
@@ -1005,8 +1011,6 @@ def utility_processor():
         return t.strftime(f)
     def getImageURL(table,id,fieldname):
         return getImageLink(table,id,fieldname)
-    def getRecord(table,id):
-        return getRecordByFilters(table,{'id': id})
     def getConst(const):
         if const=='USER_ID': return current_user.id
         return getattr(settings,const)
@@ -1018,7 +1022,6 @@ def utility_processor():
         ,getTemplate=getTemplate \
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
-        ,getRecord=getRecord \
         ,getConst=getConst \
         )
 
