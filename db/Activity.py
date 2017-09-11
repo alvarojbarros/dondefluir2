@@ -377,7 +377,8 @@ class Activity(Base,Record):
         if current_user.UserType==3:
             records = records.filter(User.id.in_([r.CustId for r in record_list]))
         elif current_user.UserType>0:
-            records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType==3)
+            #records = records.filter(User.CompanyId==current_user.CompanyId,User.UserType==3)
+            records = records.filter(User.UserType == 3)
         for record in records:
             res['CustId'][record.id] = [record.Name,record.Closed]
 
@@ -385,7 +386,7 @@ class Activity(Base,Record):
             count = record_list.count()
         except:
             count = len(record_list)
-        if count==1 and  record_list[0].ProfId:
+        if count==1 and record_list[0].ProfId:
             records = session.query(UserService)\
                 .filter_by(UserId=record_list[0].ProfId)\
                 .join(Service,Service.id==UserService.ServiceId)\
@@ -396,7 +397,6 @@ class Activity(Base,Record):
                 .filter(Service.CompanyId.in_([r.CompanyId for r in record_list]))\
                 .with_entities(Service.id,Service.Name)
         for record in records:
-            #print(record.Name,record.id )
             res['ServiceId'][record.id] = [record.Name,0]
 
         res['Type'][self.TYPE_MEETING] = ['Cita',0]
