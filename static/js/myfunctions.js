@@ -368,7 +368,7 @@ function getCustomers(fav){
 }
 
 function getCompanies(){
-	var vars = {'Table': 'Company', 'Template': 'company.html', 'Name':'Empresas','TemplateForm':'companyform.html'};
+	var vars = {'Table': 'Company', 'Template': 'company_icon.html', 'Name':'Empresas','TemplateForm':'companyform.html'};
 	getTemplateM(vars)
 }
 

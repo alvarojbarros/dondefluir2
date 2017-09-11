@@ -29,11 +29,17 @@
         <div class="white-box" v-if="values[k]">
             <div class="row">
                 <div class="col-md-4 col-sm-4 text-center">
-                    <a href="#"><img :src="values[k].ImageProfile" alt="user" class="img-circle img-responsive"></a>
+                    <a href="#"><img :src="values[k].ImageProfile" class="img-circle img-responsive"></a>
                 </div>
                 <div class="col-md-8 col-sm-8">
-                    <h3 class="box-title m-b-0"><a href="#" :onClick="'showCompany(\''+values[k].id+'\',\''+values[k].Name+'\',\''+user_id+'\')'">
-                    {%raw%}{{values[k].Name}}{%endraw%}</a></h3>
+                    <h3 class="box-title m-b-0" v-if="user_type!=3">
+                        <a href="#" :onClick="'showCompany(\''+values[k].id+'\',\''+values[k].Name+'\',\''+user_id+'\')'">
+                    {%raw%}{{values[k].Name}}{%endraw%}</a>
+                    </h3>
+                    <h3 class="box-title m-b-0" v-if="user_type==3">
+                        <a href="#" :onClick="'showCompanyProfile(\''+values[k].id+'\',\''+values[k].Name+'\',\''+user_id+'\')'">
+                    {%raw%}{{values[k].Name}}{%endraw%}</a>
+                    </h3>
                     <small>{%raw%}{{values[k].City}}{%endraw%}</small>
                     <p align="justify">{%raw%}{{values[k].Comment}}{%endraw%}</p>
                 </div>
