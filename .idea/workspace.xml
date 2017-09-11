@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="442434ac-cc38-4d35-beb0-6b28c24578d4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/myfunctions.js" afterPath="$PROJECT_DIR$/static/js/myfunctions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/company_icon.html" afterPath="$PROJECT_DIR$/templates/company_icon.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,8 +18,8 @@
       <file leaf-file-name="functions.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/functions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="565" column="7" lean-forward="false" selection-start-line="565" selection-start-column="7" selection-end-line="565" selection-end-column="7" />
+            <state relative-caret-position="329">
+              <caret line="464" column="43" lean-forward="false" selection-start-line="464" selection-start-column="31" selection-end-line="464" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -66,11 +65,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="company_icon.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="457">
+              <caret line="392" column="0" lean-forward="false" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="company_icon.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/company_icon.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="39" column="65" lean-forward="false" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+            <state relative-caret-position="428">
+              <caret line="55" column="18" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -79,8 +88,8 @@
       <file leaf-file-name="showcompany.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/showcompany.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1796">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="173">
+              <caret line="22" column="42" lean-forward="false" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -100,15 +109,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Vue.set(vue_record,'tab</find>
-      <find>Vue.set(vue_record,'tabl</find>
-      <find>Vue.set(vue_record,'table</find>
-      <find>s</find>
-      <find>showCompanyProfile</find>
-      <find>showCompanyProfil</find>
-      <find>showCompanyProfi</find>
-      <find>showCompanyProf</find>
-      <find>showCompanyPro</find>
       <find>showCompanyPr</find>
       <find>showCompanyP</find>
       <find>g</find>
@@ -130,6 +130,15 @@
       <find>n showCompany(</find>
       <find>showCompany</find>
       <find>n showCompany</find>
+      <find>getImageURL</find>
+      <find>n getRecordList</find>
+      <find>getRecordList</find>
+      <find>n getRecordList(</find>
+      <find>getRecordList(</find>
+      <find>degetRecordList(</find>
+      <find>defgetRecordList(</find>
+      <find>def getRecordList(</find>
+      <find>_record_list</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -190,13 +199,13 @@
         <option value="$PROJECT_DIR$/templates/events.html" />
         <option value="$PROJECT_DIR$/templates/event.html" />
         <option value="$PROJECT_DIR$/static/js/vueevent.js" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/static/js/fullcalendar.1.js" />
         <option value="$PROJECT_DIR$/templates/recordtable.html" />
         <option value="$PROJECT_DIR$/static/js/functions.js" />
         <option value="$PROJECT_DIR$/static/js/myfunctions.js" />
         <option value="$PROJECT_DIR$/static/js/vuerecordlist.js" />
         <option value="$PROJECT_DIR$/templates/company_icon.html" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -558,6 +567,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="45" column="19" lean-forward="false" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -565,6 +575,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
           <caret line="50" column="4" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
+          <folding>
+            <marker date="1504910919730" expanded="true" signature="391:1543" ph="..." />
+            <marker date="1504910919730" expanded="true" signature="1414:1543" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -572,6 +586,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
           <caret line="47" column="4" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="4" />
+          <folding>
+            <marker date="1504910919734" expanded="true" signature="380:1768" ph="..." />
+            <marker date="1504910919734" expanded="true" signature="1520:1768" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -623,6 +641,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="215" column="4" lean-forward="false" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -644,6 +663,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
           <caret line="276" column="16" lean-forward="false" selection-start-line="276" selection-start-column="16" selection-end-line="276" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -658,6 +678,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -666,16 +687,6 @@
         <state relative-caret-position="17">
           <caret line="84" column="8" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="771" column="36" lean-forward="false" selection-start-line="771" selection-start-column="36" selection-end-line="771" selection-end-column="36" />
-          <folding>
-            <marker date="1504926875500" expanded="true" signature="8668:8673" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -719,22 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/company.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="69" lean-forward="false" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/showcompany.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1796">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/menu_1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -759,14 +754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/functions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="565" column="7" lean-forward="false" selection-start-line="565" selection-start-column="7" selection-end-line="565" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/vuerecordlist.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -775,10 +762,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/company.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="69" lean-forward="false" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/showcompany.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="22" column="42" lean-forward="false" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/company_icon.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="39" column="65" lean-forward="false" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+        <state relative-caret-position="428">
+          <caret line="55" column="18" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/functions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="464" column="43" lean-forward="false" selection-start-line="464" selection-start-column="31" selection-end-line="464" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="392" column="0" lean-forward="false" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
           <folding />
         </state>
       </provider>

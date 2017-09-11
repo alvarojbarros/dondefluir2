@@ -389,7 +389,7 @@ def record_list():
     links =     TableClass.getLinksTo(records)
     res = setColumns(records,links,filtersKeys,filters)
     for fieldname in fields:
-        if fieldname[:6]=='Image':
+        if fieldname[:5]=='Image':
             for dic in res:
                 dic[fieldname] = getImageLink(table,dic['id'],fieldname)
     return jsonify(result={'records': res,'filters': filters, 'filtersNames': filtersNames})
