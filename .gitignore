@@ -58,3 +58,4 @@ tools/__pycache__/DBTools.cpython-35.pyc
 __pycache__/settings.cpython-35.pyc
 *.pyc
 *.pyc
+.idea/workspace.xml
